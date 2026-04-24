@@ -1,0 +1,175 @@
+/* ============================================
+   RESPONSIVE STYLES
+   Mobile-first breakpoints:
+   - sm: 480px
+   - md: 768px
+   - lg: 1024px
+   - xl: 1280px
+   ============================================ */
+
+/* ---- TABLET (max 1024px) ---- */
+@media (max-width: 1024px) {
+  :root { --sidebar-width: 220px; }
+
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+
+  .hero { padding: 120px 0 60px; }
+  .hero .container { flex-direction: column; gap: 40px; }
+  .hero-content { max-width: 100%; text-align: center; }
+  .hero-actions { justify-content: center; }
+  .hero-visual { width: 100%; justify-content: center; }
+
+  .auth-left { display: none; }
+  .auth-right { width: 100%; }
+
+  .cta-banner { padding: 40px 28px; }
+}
+
+/* ---- MOBILE (max 768px) ---- */
+@media (max-width: 768px) {
+  :root { --navbar-height: 60px; }
+
+  .container { padding: 0 16px; }
+  .section { padding: 56px 0; }
+
+  /* Navbar */
+  .navbar-nav { display: none; }
+  .hamburger { display: flex; }
+  .navbar-actions .btn { display: none; }
+  .navbar-actions .btn:last-child { display: inline-flex; }
+
+  /* Sidebar - hidden by default on mobile */
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1000;
+    width: var(--sidebar-width) !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 999; display: none;
+  }
+  .sidebar-overlay.active { display: block; }
+
+  .main-content { margin-left: 0 !important; }
+
+  /* Top navbar */
+  .top-navbar { padding: 0 16px; }
+  .search-bar { display: none; }
+  .page-title { font-size: 1rem; }
+
+  /* Stats grid */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* Grids */
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .dashboard-grid, .dashboard-grid-3 { grid-template-columns: 1fr; }
+
+  /* Hero */
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 0.95rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 100%; max-width: 280px; }
+
+  /* Features */
+  .features-grid { grid-template-columns: 1fr; }
+
+  /* Auth */
+  .auth-right { padding: 32px 24px; }
+  .auth-form-wrap { max-width: 100%; }
+
+  /* Profile */
+  .profile-header { padding: 24px 20px; }
+  .profile-stats-row { gap: 16px; }
+
+  /* Page header */
+  .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  /* Cards */
+  .card-body { padding: 16px; }
+  .modal { border-radius: var(--radius-lg); }
+  .modal-body { padding: 18px 20px; }
+  .modal-header { padding: 16px 20px 12px; }
+  .modal-footer { padding: 12px 20px 18px; }
+
+  /* Tabs */
+  .tabs { overflow-x: auto; }
+  .tab-btn { white-space: nowrap; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* Timer */
+  .timer-time { font-size: 3rem; }
+
+  /* Workout card */
+  .workout-card-meta { flex-wrap: wrap; gap: 8px; }
+
+  /* Challenges */
+  .badge-grid { grid-template-columns: repeat(4, 1fr); }
+
+  /* Sleep stages */
+  .sleep-stages { gap: 4px; }
+
+  /* FAB */
+  .fab { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.2rem; }
+
+  /* Toast */
+  .toast-container { top: 12px; right: 12px; left: 12px; }
+  .toast { min-width: unset; max-width: 100%; }
+
+  /* PB grid */
+  .pb-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Leaderboard */
+  .leaderboard-item { gap: 10px; }
+
+  /* Water tracker */
+  .water-tracker { gap: 6px; }
+  .water-cup { width: 34px; height: 44px; }
+}
+
+/* ---- SMALL MOBILE (max 480px) ---- */
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.75rem; }
+  .section-header h2 { font-size: 1.5rem; }
+  .cta-banner { padding: 32px 20px; }
+  .cta-banner h2 { font-size: 1.4rem; }
+  .badge-grid { grid-template-columns: repeat(3, 1fr); }
+  .pb-grid { grid-template-columns: 1fr; }
+  .profile-stats-row { gap: 12px; }
+  .profile-stat-value { font-size: 1.1rem; }
+  .timer-time { font-size: 2.5rem; }
+  .auth-right { padding: 24px 16px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- LARGE DESKTOP (min 1280px) ---- */
+@media (min-width: 1280px) {
+  .stats-grid { grid-template-columns: repeat(5, 1fr); }
+  .dashboard-grid { grid-template-columns: 3fr 2fr; }
+  .dashboard-grid-3 { grid-template-columns: 2fr 1fr; }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ---- PRINT ---- */
+@media print {
+  .sidebar, .top-navbar, .fab, .toast-container { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+  .page-content { padding: 0; }
+}
+
+/* ---- REDUCED MOTION ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

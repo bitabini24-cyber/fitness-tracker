@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LuxeShop – Premium e-commerce for electronics, fashion, and more. Shop the latest trends with fast delivery." />
+  <meta name="theme-color" content="#6c63ff" />
+  <title>LuxeShop – Premium Shopping Experience</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-page="home">
+
+  <!-- Page Loader -->
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <!-- Logo -->
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+
+      <!-- Nav Links -->
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link active">Home</a>
+        <div class="navbar__mega-trigger">
+          <a href="shop.html" class="navbar__nav-link">Shop ▾</a>
+          <div class="navbar__mega-menu" role="menu">
+            <a href="shop.html?category=electronics" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(108,99,255,0.1)">💻</div>
+              <div><div class="mega-menu__label">Electronics</div><div class="mega-menu__desc">14 products</div></div>
+            </a>
+            <a href="shop.html?category=clothing" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(255,101,132,0.1)">👕</div>
+              <div><div class="mega-menu__label">Clothing</div><div class="mega-menu__desc">12 products</div></div>
+            </a>
+            <a href="shop.html?category=footwear" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(67,233,123,0.1)">👟</div>
+              <div><div class="mega-menu__label">Footwear</div><div class="mega-menu__desc">11 products</div></div>
+            </a>
+            <a href="shop.html?category=home" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(247,151,30,0.1)">🏠</div>
+              <div><div class="mega-menu__label">Home & Kitchen</div><div class="mega-menu__desc">11 products</div></div>
+            </a>
+            <a href="shop.html?category=accessories" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(79,172,254,0.1)">⌚</div>
+              <div><div class="mega-menu__label">Accessories</div><div class="mega-menu__desc">11 products</div></div>
+            </a>
+            <a href="shop.html?category=computers" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(161,140,209,0.1)">🖥️</div>
+              <div><div class="mega-menu__label">Computers</div><div class="mega-menu__desc">11 products</div></div>
+            </a>
+          </div>
+        </div>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link">Cart</a>
+        <a href="account.html" class="navbar__nav-link">Account</a>
+      </nav>
+
+      <!-- Search -->
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input
+          class="navbar__search-input"
+          type="search"
+          placeholder="Search products..."
+          aria-label="Search products"
+          autocomplete="off"
+        />
+        <div class="search-dropdown" role="listbox" aria-label="Search results"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒
+          <span class="navbar__badge cart-badge" aria-label="Cart items" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥
+          <span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="shop.html?badge=sale" class="mobile-nav__link">🔥 Deals</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-label="Hero banner">
+      <div class="hero__bg">
+        <div class="hero__orb hero__orb-1"></div>
+        <div class="hero__orb hero__orb-2"></div>
+        <div class="hero__orb hero__orb-3"></div>
+        <div class="hero__grid"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__text">
+            <div class="hero__eyebrow">✦ New Season Collection 2025</div>
+            <h1 class="hero__title">
+              Discover <span class="gradient-text">Premium</span><br/>
+              Products You'll<br/>
+              <span class="gradient-text">Love</span>
+            </h1>
+            <p class="hero__subtitle">
+              Shop the latest trends in electronics, fashion, and lifestyle. 
+              Free shipping on orders over $100. New arrivals every week.
+            </p>
+            <div class="hero__cta">
+              <a href="shop.html" class="btn btn-primary btn-xl">
+                Shop Now →
+              </a>
+              <a href="shop.html?badge=sale" class="btn btn-lg" style="background:rgba(255,255,255,0.1);color:white;border:2px solid rgba(255,255,255,0.2);backdrop-filter:blur(10px);">
+                🔥 View Deals
+              </a>
+            </div>
+            <div class="hero__stats">
+              <div>
+                <div class="hero__stat-value">50K+</div>
+                <div class="hero__stat-label">Happy Customers</div>
+              </div>
+              <div>
+                <div class="hero__stat-value">500+</div>
+                <div class="hero__stat-label">Products</div>
+              </div>
+              <div>
+                <div class="hero__stat-value">4.9★</div>
+                <div class="hero__stat-label">Average Rating</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__visual">
+            <div class="hero__product-showcase">
+              <div class="hero__product-card">
+                <img
+                  class="hero__product-img"
+                  src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=80"
+                  alt="iPhone 15 Pro featured product"
+                  width="500" height="500"
+                />
+                <div class="flex-between" style="color:white;">
+                  <div>
+                    <div style="font-weight:700;font-size:1rem;">iPhone 15 Pro</div>
+                    <div style="opacity:0.7;font-size:0.875rem;">Electronics</div>
+                  </div>
+                  <div style="font-size:1.25rem;font-weight:900;color:var(--primary-light);">$999</div>
+                </div>
+              </div>
+
+              <div class="hero__floating-badge hero__floating-badge-1">
+                <div style="width:36px;height:36px;background:var(--success);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;">✓</div>
+                <div>
+                  <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);">Free Shipping</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted);">Orders over $100</div>
+                </div>
+              </div>
+
+              <div class="hero__floating-badge hero__floating-badge-2">
+                <div style="width:36px;height:36px;background:var(--secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;">★</div>
+                <div>
+                  <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);">Top Rated</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted);">4.9/5 stars</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="section" aria-labelledby="categories-heading">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__eyebrow">Browse</div>
+          <h2 class="section-header__title" id="categories-heading">Shop by Category</h2>
+          <p class="section-header__subtitle">Explore our curated collections across all categories</p>
+        </div>
+        <div class="grid-3" id="categories-grid" aria-label="Product categories">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED PRODUCTS ============ -->
+    <section class="section" style="background:var(--bg-3);" aria-labelledby="featured-heading">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__eyebrow">Handpicked</div>
+          <h2 class="section-header__title" id="featured-heading">Featured Products</h2>
+          <p class="section-header__subtitle">Our most popular items loved by thousands of customers</p>
+        </div>
+        <div class="grid-4" id="featured-products" aria-label="Featured products">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="flex-center" style="margin-top: var(--space-10);">
+          <a href="shop.html" class="btn btn-outline btn-lg">View All Products →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FLASH SALE ============ -->
+    <section class="section" aria-labelledby="flash-heading">
+      <div class="container">
+        <div class="flash-sale">
+          <div class="flash-sale__bg-text" aria-hidden="true">SALE</div>
+          <div class="flash-sale__header">
+            <h2 class="flash-sale__title" id="flash-heading">
+              <span class="flash-icon" aria-hidden="true">⚡</span>
+              Flash Sale
+            </h2>
+            <div class="countdown" aria-label="Sale countdown timer">
+              <div class="countdown__unit">
+                <div class="countdown__value" id="cd-hours">00</div>
+                <div class="countdown__label">Hours</div>
+              </div>
+              <span class="countdown__sep" aria-hidden="true">:</span>
+              <div class="countdown__unit">
+                <div class="countdown__value" id="cd-minutes">00</div>
+                <div class="countdown__label">Mins</div>
+              </div>
+              <span class="countdown__sep" aria-hidden="true">:</span>
+              <div class="countdown__unit">
+                <div class="countdown__value" id="cd-seconds">00</div>
+                <div class="countdown__label">Secs</div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-4" id="flash-products" aria-label="Flash sale products">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section" style="background:var(--bg-3);" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__eyebrow">Reviews</div>
+          <h2 class="section-header__title" id="testimonials-heading">What Our Customers Say</h2>
+          <p class="section-header__subtitle">Real reviews from real customers who love shopping with us</p>
+        </div>
+        <div class="grid-3">
+          <div class="testimonial-card reveal">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <p class="testimonial-card__text">Absolutely love the quality of products here. The iPhone 15 Pro I ordered arrived in perfect condition and the delivery was super fast. Will definitely shop again!</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar avatar avatar-md" aria-hidden="true">PM</div>
+              <div>
+                <div class="testimonial-card__name">Pogba Mengstu</div>
+                <div class="testimonial-card__role">Verified Buyer</div>
+              </div>
+              <div class="stars" style="margin-left:auto;" aria-label="5 stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal delay-2">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <p class="testimonial-card__text">The customer service is outstanding. Had a small issue with my order and it was resolved within hours. The MacBook Air M3 is exactly as described – stunning machine.</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar avatar avatar-md" style="background:rgba(255,101,132,0.1);color:var(--secondary);" aria-hidden="true">BB</div>
+              <div>
+                <div class="testimonial-card__name">Bitaniya Biniyam</div>
+                <div class="testimonial-card__role">Verified Buyer</div>
+              </div>
+              <div class="stars" style="margin-left:auto;" aria-label="5 stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal delay-3">
+            <div class="testimonial-card__quote" aria-hidden="true">"</div>
+            <p class="testimonial-card__text">Best online shopping experience I've had. The website is beautiful, easy to navigate, and the products are premium quality. The Nike Air Jordans fit perfectly!</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar avatar avatar-md" style="background:rgba(67,233,123,0.1);color:var(--accent);" aria-hidden="true">SW</div>
+              <div>
+                <div class="testimonial-card__name">Sisay Wondfraw</div>
+                <div class="testimonial-card__role">Verified Buyer</div>
+              </div>
+              <div class="stars" style="margin-left:auto;" aria-label="5 stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="section" aria-labelledby="newsletter-heading">
+      <div class="container">
+        <div class="newsletter reveal">
+          <h2 class="newsletter__title" id="newsletter-heading">Get Exclusive Deals</h2>
+          <p class="newsletter__subtitle">Subscribe to our newsletter and get 10% off your first order</p>
+          <form class="newsletter__form" id="newsletter-form" novalidate aria-label="Newsletter subscription">
+            <input
+              class="newsletter__input"
+              type="email"
+              placeholder="Enter your email address"
+              required
+              aria-label="Email address"
+              autocomplete="email"
+            />
+            <button type="submit" class="btn btn-lg" style="background:white;color:var(--primary);font-weight:700;flex-shrink:0;">
+              Subscribe →
+            </button>
+          </form>
+          <p style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:12px;">No spam, unsubscribe anytime. We respect your privacy.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="navbar__logo" style="margin-bottom:0;">
+            <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+            Luxe<span>Shop</span>
+          </a>
+          <p class="footer__brand-desc">Your premium destination for electronics, fashion, and lifestyle products. Quality guaranteed, delivered fast.</p>
+          <div class="footer__social" aria-label="Social media links">
+            <a href="#" class="footer__social-link" aria-label="Twitter">𝕏</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="footer__social-link" aria-label="Facebook">f</a>
+            <a href="#" class="footer__social-link" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Shop</h3>
+          <ul class="footer__links">
+            <li><a href="shop.html?category=electronics" class="footer__link">Electronics</a></li>
+            <li><a href="shop.html?category=clothing" class="footer__link">Clothing</a></li>
+            <li><a href="shop.html?category=footwear" class="footer__link">Footwear</a></li>
+            <li><a href="shop.html?badge=sale" class="footer__link">🔥 Deals</a></li>
+            <li><a href="shop.html?badge=new" class="footer__link">✨ New Arrivals</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Support</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Help Center</a></li>
+            <li><a href="#" class="footer__link">Track Order</a></li>
+            <li><a href="#" class="footer__link">Returns & Refunds</a></li>
+            <li><a href="#" class="footer__link">Shipping Info</a></li>
+            <li><a href="#" class="footer__link">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Company</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">About Us</a></li>
+            <li><a href="#" class="footer__link">Careers</a></li>
+            <li><a href="#" class="footer__link">Press</a></li>
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+        <div class="footer__payment-icons" aria-label="Accepted payment methods">
+          <span class="payment-icon">VISA</span>
+          <span class="payment-icon">MC</span>
+          <span class="payment-icon">AMEX</span>
+          <span class="payment-icon">PayPal</span>
+          <span class="payment-icon">Apple Pay</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" aria-label="Scroll to top" title="Back to top">↑</button>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="modal">
+      <button class="modal__close" data-modal-close aria-label="Close quick view">✕</button>
+      <div class="modal__body">
+        <div class="qv-gallery">
+          <div class="qv-gallery__main">
+            <img src="" alt="Product image" id="qv-main-img" />
+          </div>
+          <div class="qv-gallery__thumbs"></div>
+        </div>
+        <div class="qv-info">
+          <div class="qv-info__category"></div>
+          <h2 class="qv-info__title" id="qv-title"></h2>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stars qv-stars"></div>
+            <span class="text-muted text-sm qv-reviews"></span>
+          </div>
+          <div class="qv-info__price-row">
+            <span class="price-current qv-price-current"></span>
+            <span class="price-original qv-price-original"></span>
+            <span class="badge badge-sale qv-discount"></span>
+          </div>
+          <p class="qv-info__desc"></p>
+          <div class="qv-info__variants">
+            <div class="qv-info__variant-label">Color</div>
+            <div class="variant-options qv-colors"></div>
+          </div>
+          <div class="qv-info__qty">
+            <div class="qty-control">
+              <button class="qty-btn" data-action="dec" data-key="qv" aria-label="Decrease">−</button>
+              <input class="qty-input" type="number" value="1" min="1" data-key="qv" aria-label="Quantity" />
+              <button class="qty-btn" data-action="inc" data-key="qv" aria-label="Increase">+</button>
+            </div>
+            <span class="qv-stock text-sm font-semibold"></span>
+          </div>
+          <div class="qv-info__actions">
+            <button class="btn btn-primary flex-1 qv-add-cart">🛒 Add to Cart</button>
+            <button class="btn btn-ghost btn-icon qv-wishlist-btn" aria-label="Add to wishlist">♥</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar"></aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>☰</button>
+      <div><div class="page-title">Profile</div><div class="page-subtitle">Manage your account</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <button class="btn btn-ghost btn-sm" data-theme-toggle><span class="theme-toggle-icon">🌙</span></button>
+      <button class="btn btn-primary btn-sm" id="editProfileBtn" onclick="toggleEditMode()">✏️ Edit Profile</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Profile Header -->
+    <div class="profile-header animate-fadeInDown" style="position:relative;overflow:hidden">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=400&fit=crop&crop=center"
+           class="profile-cover-img" alt="" aria-hidden="true"/>
+      <div style="position:relative;z-index:1;display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
+        <div class="profile-avatar-wrap">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=176&h=176&fit=crop&crop=faces"
+               class="profile-avatar-img user-avatar-img" id="profileAvatarImg" alt="Altaye Ayfokru"/>
+          <!-- Hidden file input -->
+          <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)"/>
+          <div class="profile-avatar-edit" onclick="document.getElementById('avatarFileInput').click()" title="Upload photo" style="cursor:pointer">📷</div>
+        </div>
+        <div style="flex:1">
+          <div class="profile-name" id="displayName">Altaye Ayfokru</div>
+          <div class="profile-bio" id="displayBio">Fitness enthusiast • Marathon runner • Healthy living advocate</div>
+          <div class="profile-stats-row">
+            <div class="profile-stat"><div class="profile-stat-value">7</div><div class="profile-stat-label">Day Streak</div></div>
+            <div class="profile-stat"><div class="profile-stat-value">142</div><div class="profile-stat-label">Workouts</div></div>
+            <div class="profile-stat"><div class="profile-stat-value">8.2kg</div><div class="profile-stat-label">Lost</div></div>
+            <div class="profile-stat"><div class="profile-stat-value">12</div><div class="profile-stat-label">Badges</div></div>
+          </div>
+        </div>
+        <span class="badge badge-primary" style="font-size:0.8rem;padding:6px 14px">⭐ Premium</span>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Personal Info Form -->
+      <div class="card animate-fadeInUp">
+        <div class="card-header"><span class="font-semibold">Personal Information</span></div>
+        <div class="card-body">
+          <form id="profileForm">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input class="form-control" id="firstName" type="text" value="Altaye" disabled/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input class="form-control" id="lastName" type="text" value="Ayfokru" disabled/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-control" id="profileEmail" type="email" value="altaye@example.com" disabled/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Bio</label>
+              <textarea class="form-control" id="profileBio" rows="2" disabled>Fitness enthusiast • Marathon runner • Healthy living advocate</textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+              <div class="form-group">
+                <label class="form-label">Age</label>
+                <input class="form-control" id="profileAge" type="number" value="28" disabled/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Height (cm)</label>
+                <input class="form-control" id="profileHeight" type="number" value="178" disabled/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Weight (kg)</label>
+                <input class="form-control" id="profileWeight" type="number" value="74" disabled/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fitness Goal</label>
+              <select class="form-control" id="profileGoal" disabled>
+                <option value="weight-loss" selected>Weight Loss</option>
+                <option value="muscle-gain">Muscle Gain</option>
+                <option value="endurance">Endurance</option>
+                <option value="maintenance">Maintenance</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Activity Level</label>
+              <select class="form-control" id="profileActivity" disabled>
+                <option>Sedentary</option>
+                <option>Lightly Active</option>
+                <option selected>Moderately Active</option>
+                <option>Very Active</option>
+                <option>Extremely Active</option>
+              </select>
+            </div>
+            <div id="saveProfileBtn" style="display:none">
+              <button type="button" class="btn btn-primary w-full" onclick="saveProfile()">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- Fitness Stats -->
+        <div class="card animate-fadeInUp delay-1">
+          <div class="card-header"><span class="font-semibold">📊 Fitness Stats</span></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:var(--radius)">
+                <span style="font-size:0.875rem;color:var(--text-secondary)">BMI</span>
+                <span style="font-weight:700">23.4 <span style="font-size:0.75rem;color:#22c55e">Normal</span></span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:var(--radius)">
+                <span style="font-size:0.875rem;color:var(--text-secondary)">Resting Heart Rate</span>
+                <span style="font-weight:700">62 bpm</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:var(--radius)">
+                <span style="font-size:0.875rem;color:var(--text-secondary)">VO2 Max (est.)</span>
+                <span style="font-weight:700">48 ml/kg/min</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:var(--radius)">
+                <span style="font-size:0.875rem;color:var(--text-secondary)">Daily Calorie Goal</span>
+                <span style="font-weight:700">2,200 kcal</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px;background:var(--bg);border-radius:var(--radius)">
+                <span style="font-size:0.875rem;color:var(--text-secondary)">Member Since</span>
+                <span style="font-weight:700">Jan 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="card animate-fadeInUp delay-2">
+          <div class="card-header"><span class="font-semibold">🏅 Recent Achievements</span><a href="challenges.html" class="btn btn-ghost btn-sm">View All</a></div>
+          <div class="card-body">
+            <div class="badge-grid" style="grid-template-columns:repeat(4,1fr)">
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="First Run"/>
+                <div class="badge-name">First Run</div>
+              </div>
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="7-Day Streak"/>
+                <div class="badge-name">7-Day Streak</div>
+              </div>
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="Iron Will"/>
+                <div class="badge-name">Iron Will</div>
+              </div>
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="Goal Crusher"/>
+                <div class="badge-name">Goal Crusher</div>
+              </div>
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="Hydrated"/>
+                <div class="badge-name">Hydrated</div>
+              </div>
+              <div class="achievement-badge">
+                <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px" alt="Sleep Master"/>
+                <div class="badge-name">Sleep Master</div>
+              </div>
+              <div class="achievement-badge locked">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px;filter:grayscale(1);opacity:0.5" alt="Rocket"/>
+                <div class="badge-name">Rocket</div>
+              </div>
+              <div class="achievement-badge locked">
+                <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=60&h=60&fit=crop" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px;filter:grayscale(1);opacity:0.5" alt="Summit"/>
+                <div class="badge-name">Summit</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sidebar.js"></script>
+<script>
+let editMode = false;
+let pendingAvatarDataUrl = null;
+
+const DEFAULT_AVATAR = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=176&h=176&fit=crop&crop=faces';
+
+// Apply an avatar src to every avatar image on the page
+function applyAvatarEverywhere(src) {
+  // Profile header large avatar
+  const profileImg = document.getElementById('profileAvatarImg');
+  if (profileImg) profileImg.src = src;
+  // Sidebar footer + navbar avatars (built by sidebar.js)
+  document.querySelectorAll('.user-avatar-img').forEach(img => img.src = src);
+}
+
+// Load saved avatar and apply across the page
+function loadSavedAvatar() {
+  const saved = Store.get('userAvatar', null);
+  applyAvatarEverywhere(saved || DEFAULT_AVATAR);
+}
+
+// File selected — preview only, nothing saved yet
+function handleAvatarUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    Toast.show('Invalid File', 'Please select an image file', 'error');
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    Toast.show('File Too Large', 'Please choose an image under 5MB', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    pendingAvatarDataUrl = e.target.result;
+    // Preview on profile avatar only — not saved yet
+    document.getElementById('profileAvatarImg').src = pendingAvatarDataUrl;
+    Toast.show('Photo Selected', 'Click "Save Changes" to apply', 'info');
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+function toggleEditMode() {
+  editMode = !editMode;
+  document.querySelectorAll('#profileForm .form-control').forEach(f => f.disabled = !editMode);
+  document.querySelector('.profile-avatar-edit').style.display = editMode ? 'flex' : 'none';
+  document.getElementById('saveProfileBtn').style.display = editMode ? 'block' : 'none';
+  document.getElementById('editProfileBtn').textContent = editMode ? '✕ Cancel' : '✏️ Edit Profile';
+
+  if (!editMode) {
+    // Cancel — discard pending image, restore saved
+    pendingAvatarDataUrl = null;
+    loadSavedAvatar();
+    Toast.show('Cancelled', 'No changes saved', 'info', 2000);
+  }
+}
+
+function saveProfile() {
+  const firstName = document.getElementById('firstName').value;
+  const lastName  = document.getElementById('lastName').value;
+  const bio       = document.getElementById('profileBio').value;
+
+  // Commit avatar if a new one was selected
+  if (pendingAvatarDataUrl) {
+    Store.set('userAvatar', pendingAvatarDataUrl);
+    applyAvatarEverywhere(pendingAvatarDataUrl);
+    pendingAvatarDataUrl = null;
+  }
+
+  document.getElementById('displayName').textContent = `${firstName} ${lastName}`;
+  document.getElementById('displayBio').textContent = bio;
+  const user = Store.get('user', {});
+  Store.set('user', { ...user, name: `${firstName} ${lastName}`, avatar: `${firstName[0]}${lastName[0]}` });
+
+  editMode = false;
+  document.querySelectorAll('#profileForm .form-control').forEach(f => f.disabled = true);
+  document.getElementById('saveProfileBtn').style.display = 'none';
+  document.getElementById('editProfileBtn').textContent = '✏️ Edit Profile';
+  document.querySelector('.profile-avatar-edit').style.display = 'none';
+  Toast.show('Profile Updated!', 'Your changes have been saved', 'success');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Use setTimeout(0) so sidebar.js DOMContentLoaded handlers finish first,
+  // then we overwrite all avatars with the saved one
+  setTimeout(() => {
+    loadSavedAvatar();
+  }, 0);
+  document.querySelector('.profile-avatar-edit').style.display = 'none';
+});
+</script>
+</body>
+</html>

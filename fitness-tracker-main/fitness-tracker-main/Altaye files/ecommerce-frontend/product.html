@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Product details – LuxeShop" />
+  <title>Product – LuxeShop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-page="product">
+
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link">Home</a>
+        <a href="shop.html" class="navbar__nav-link active">Shop</a>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link">Cart</a>
+        <a href="account.html" class="navbar__nav-link">Account</a>
+      </nav>
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input class="navbar__search-input" type="search" placeholder="Search products..." aria-label="Search" autocomplete="off" />
+        <div class="search-dropdown" role="listbox"></div>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒<span class="navbar__badge cart-badge" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥<span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper" id="product-detail">
+    <section class="section-sm">
+      <div class="container">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" id="product-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html" class="breadcrumb__item">Home</a>
+          <span class="breadcrumb__sep" aria-hidden="true">›</span>
+          <a href="shop.html" class="breadcrumb__item">Shop</a>
+          <span class="breadcrumb__sep" aria-hidden="true">›</span>
+          <span class="breadcrumb__item active">Product</span>
+        </nav>
+
+        <!-- Product Detail Grid -->
+        <div class="product-detail-grid">
+
+          <!-- Gallery -->
+          <div>
+            <div style="position:relative;border-radius:var(--radius-2xl);overflow:hidden;background:var(--bg-3);aspect-ratio:1;margin-bottom:var(--space-4);">
+              <img
+                id="pd-main-img"
+                src=""
+                alt="Product"
+                style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;"
+                onmouseover="this.style.transform='scale(1.05)'"
+                onmouseout="this.style.transform='scale(1)'"
+              />
+              <div style="position:absolute;top:16px;left:16px;" id="pd-badges"></div>
+            </div>
+            <!-- Thumbnails (static placeholders, JS fills main) -->
+            <div class="flex gap-3" id="pd-thumbs">
+              <div style="width:72px;height:72px;border-radius:var(--radius-md);background:var(--bg-3);border:2px solid var(--primary);overflow:hidden;cursor:pointer;">
+                <img id="pd-thumb-1" src="" alt="" style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div>
+            <div id="pd-category" class="text-xs font-semibold text-primary uppercase" style="letter-spacing:0.08em;margin-bottom:8px;"></div>
+            <h1 id="pd-name" style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:900;margin-bottom:12px;"></h1>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-3" style="margin-bottom:16px;">
+              <div class="stars" id="pd-stars" aria-label="Product rating"></div>
+              <span class="text-sm text-muted" id="pd-reviews-count"></span>
+            </div>
+
+            <!-- Price -->
+            <div class="flex items-center gap-3" style="margin-bottom:20px;">
+              <span class="price-current" id="pd-price" style="font-size:2rem;"></span>
+              <span class="price-original" id="pd-original"></span>
+              <span class="badge badge-sale" id="pd-discount"></span>
+            </div>
+
+            <!-- Stock -->
+            <div id="pd-stock" class="text-sm font-semibold" style="margin-bottom:20px;"></div>
+
+            <!-- Description -->
+            <p id="pd-desc" class="text-secondary" style="line-height:1.7;margin-bottom:24px;"></p>
+
+            <!-- Colors -->
+            <div style="margin-bottom:20px;">
+              <div class="text-sm font-semibold" style="margin-bottom:8px;">Color</div>
+              <div class="variant-options" id="pd-colors"></div>
+            </div>
+
+            <!-- Size (static) -->
+            <div style="margin-bottom:20px;">
+              <div class="text-sm font-semibold" style="margin-bottom:8px;">Size</div>
+              <div class="variant-options">
+                <button class="variant-btn active">S</button>
+                <button class="variant-btn">M</button>
+                <button class="variant-btn">L</button>
+                <button class="variant-btn">XL</button>
+                <button class="variant-btn">XXL</button>
+              </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="flex items-center gap-4" style="margin-bottom:24px;">
+              <div class="text-sm font-semibold">Quantity</div>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="const i=document.getElementById('pd-qty');i.value=Math.max(1,+i.value-1)" aria-label="Decrease">−</button>
+                <input class="qty-input" type="number" id="pd-qty" value="1" min="1" max="99" aria-label="Quantity" />
+                <button class="qty-btn" onclick="const i=document.getElementById('pd-qty');i.value=+i.value+1" aria-label="Increase">+</button>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3" style="margin-bottom:24px;">
+              <button class="btn btn-primary btn-lg flex-1" id="pd-add-cart">🛒 Add to Cart</button>
+              <button class="btn btn-ghost btn-lg btn-icon" id="pd-wishlist" aria-label="Add to wishlist" title="Wishlist">♥</button>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="flex gap-4 flex-wrap" style="padding:16px;background:var(--bg-3);border-radius:var(--radius-lg);">
+              <div class="flex items-center gap-2 text-sm text-secondary">
+                <span>🚚</span> Free shipping over $100
+              </div>
+              <div class="flex items-center gap-2 text-sm text-secondary">
+                <span>↩️</span> 30-day returns
+              </div>
+              <div class="flex items-center gap-2 text-sm text-secondary">
+                <span>🔒</span> Secure checkout
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs: Description / Reviews / Shipping -->
+        <div style="margin-top: var(--space-12);">
+          <div class="tabs" role="tablist">
+            <button class="tab-btn active" data-tab="description" role="tab" aria-selected="true">Description</button>
+            <button class="tab-btn" data-tab="reviews" role="tab" aria-selected="false">Reviews (4)</button>
+            <button class="tab-btn" data-tab="shipping" role="tab" aria-selected="false">Shipping & Returns</button>
+          </div>
+          <div>
+            <div class="tab-panel active" data-panel="description" role="tabpanel">
+              <div class="card" style="margin-top:0;border-top-left-radius:0;">
+                <p id="pd-desc-full" class="text-secondary" style="line-height:1.8;"></p>
+                <ul style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+                  <li class="flex items-center gap-2 text-sm text-secondary"><span style="color:var(--success)">✓</span> Premium quality materials</li>
+                  <li class="flex items-center gap-2 text-sm text-secondary"><span style="color:var(--success)">✓</span> 1-year manufacturer warranty</li>
+                  <li class="flex items-center gap-2 text-sm text-secondary"><span style="color:var(--success)">✓</span> Authentic product guaranteed</li>
+                  <li class="flex items-center gap-2 text-sm text-secondary"><span style="color:var(--success)">✓</span> Eco-friendly packaging</li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-panel" data-panel="reviews" role="tabpanel">
+              <div class="card" style="margin-top:0;border-top-left-radius:0;">
+                <!-- Review Summary -->
+                <div class="flex gap-8 flex-wrap" style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);">
+                  <div class="text-center">
+                    <div style="font-size:4rem;font-weight:900;color:var(--primary);line-height:1;">4.8</div>
+                    <div class="stars" style="justify-content:center;margin:4px 0;" aria-label="4.8 stars">★★★★★</div>
+                    <div class="text-sm text-muted">Based on 4 reviews</div>
+                  </div>
+                  <div class="flex-1" style="min-width:200px;">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="text-xs text-muted" style="width:20px;">5★</span>
+                      <div style="flex:1;height:6px;background:var(--bg-3);border-radius:99px;overflow:hidden;">
+                        <div style="width:75%;height:100%;background:var(--warning);border-radius:99px;"></div>
+                      </div>
+                      <span class="text-xs text-muted">3</span>
+                    </div>
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="text-xs text-muted" style="width:20px;">4★</span>
+                      <div style="flex:1;height:6px;background:var(--bg-3);border-radius:99px;overflow:hidden;">
+                        <div style="width:25%;height:100%;background:var(--warning);border-radius:99px;"></div>
+                      </div>
+                      <span class="text-xs text-muted">1</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="text-xs text-muted" style="width:20px;">3★</span>
+                      <div style="flex:1;height:6px;background:var(--bg-3);border-radius:99px;overflow:hidden;">
+                        <div style="width:0%;height:100%;background:var(--warning);border-radius:99px;"></div>
+                      </div>
+                      <span class="text-xs text-muted">0</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Individual Reviews -->
+                <div style="display:flex;flex-direction:column;gap:20px;">
+                  <div style="padding-bottom:20px;border-bottom:1px solid var(--border);">
+                    <div class="flex items-center gap-3 mb-2">
+                      <div class="avatar avatar-sm" style="background:rgba(108,99,255,0.1);color:var(--primary);">JD</div>
+                      <div>
+                        <div class="text-sm font-semibold">James D.</div>
+                        <div class="text-xs text-muted">March 15, 2025</div>
+                      </div>
+                      <div class="stars" style="margin-left:auto;font-size:0.75rem;" aria-label="5 stars">★★★★★</div>
+                    </div>
+                    <p class="text-sm text-secondary">Absolutely incredible product. Exceeded all my expectations. The build quality is premium and it works flawlessly. Highly recommend!</p>
+                  </div>
+                  <div style="padding-bottom:20px;border-bottom:1px solid var(--border);">
+                    <div class="flex items-center gap-3 mb-2">
+                      <div class="avatar avatar-sm" style="background:rgba(255,101,132,0.1);color:var(--secondary);">SM</div>
+                      <div>
+                        <div class="text-sm font-semibold">Sarah M.</div>
+                        <div class="text-xs text-muted">March 10, 2025</div>
+                      </div>
+                      <div class="stars" style="margin-left:auto;font-size:0.75rem;" aria-label="5 stars">★★★★★</div>
+                    </div>
+                    <p class="text-sm text-secondary">Fast delivery and exactly as described. The packaging was excellent and the product is stunning. Will definitely buy again.</p>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-3 mb-2">
+                      <div class="avatar avatar-sm" style="background:rgba(67,233,123,0.1);color:var(--accent);">AK</div>
+                      <div>
+                        <div class="text-sm font-semibold">Alex K.</div>
+                        <div class="text-xs text-muted">March 5, 2025</div>
+                      </div>
+                      <div class="stars" style="margin-left:auto;font-size:0.75rem;" aria-label="4 stars">★★★★☆</div>
+                    </div>
+                    <p class="text-sm text-secondary">Great product overall. Minor packaging issue but the product itself is perfect. Customer service was very helpful.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-panel" data-panel="shipping" role="tabpanel">
+              <div class="card" style="margin-top:0;border-top-left-radius:0;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+                  <div>
+                    <div style="font-size:1.5rem;margin-bottom:8px;">🚚</div>
+                    <h3 class="text-base font-bold mb-2">Free Shipping</h3>
+                    <p class="text-sm text-secondary">Free standard shipping on all orders over $100. Estimated delivery: 3-5 business days.</p>
+                  </div>
+                  <div>
+                    <div style="font-size:1.5rem;margin-bottom:8px;">⚡</div>
+                    <h3 class="text-base font-bold mb-2">Express Delivery</h3>
+                    <p class="text-sm text-secondary">Next-day delivery available for $14.99. Order before 2 PM for same-day dispatch.</p>
+                  </div>
+                  <div>
+                    <div style="font-size:1.5rem;margin-bottom:8px;">↩️</div>
+                    <h3 class="text-base font-bold mb-2">Easy Returns</h3>
+                    <p class="text-sm text-secondary">30-day hassle-free returns. Items must be in original condition with tags attached.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Products -->
+        <div style="margin-top: var(--space-16);">
+          <div class="section-header" style="text-align:left;margin-bottom:var(--space-8);">
+            <div class="section-header__eyebrow">You May Also Like</div>
+            <h2 class="section-header__title" style="font-size:var(--text-2xl);">Related Products</h2>
+          </div>
+          <div class="grid-4" id="related-products" aria-label="Related products">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border-top:none;padding-top:0;">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+        <div class="footer__payment-icons">
+          <span class="payment-icon">VISA</span>
+          <span class="payment-icon">MC</span>
+          <span class="payment-icon">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

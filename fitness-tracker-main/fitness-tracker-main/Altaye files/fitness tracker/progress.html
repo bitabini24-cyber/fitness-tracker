@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Progress — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+  <div class="sidebar-header"><a href="index.html" class="sidebar-brand"><div class="brand-icon">🏋️</div>FitTrack Pro</a></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+    <a href="dashboard.html" class="sidebar-link"><span class="link-icon">📊</span> Dashboard</a>
+    <a href="activity.html" class="sidebar-link"><span class="link-icon">⚡</span> Activity</a>
+    <a href="workouts.html" class="sidebar-link"><span class="link-icon">🏋️</span> Workouts</a>
+    <a href="nutrition.html" class="sidebar-link"><span class="link-icon">🥗</span> Nutrition</a>
+    <div class="sidebar-section-label">Progress</div>
+    <a href="progress.html" class="sidebar-link active" aria-current="page"><span class="link-icon">📈</span> Progress</a>
+    <a href="goals.html" class="sidebar-link"><span class="link-icon">🎯</span> Goals</a>
+    <a href="challenges.html" class="sidebar-link"><span class="link-icon">🏆</span> Challenges</a>
+    <a href="sleep.html" class="sidebar-link"><span class="link-icon">😴</span> Sleep</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="profile.html" class="sidebar-link"><span class="link-icon">👤</span> Profile</a>
+    <a href="settings.html" class="sidebar-link"><span class="link-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="sidebar-avatar">AA</div><div class="sidebar-user-info"><div class="sidebar-user-name">Altaye Ayfokru</div><div class="sidebar-user-role">Premium Member</div></div></div>
+  </div>
+</aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>☰</button>
+      <div><div class="page-title">Progress</div><div class="page-subtitle">Track your fitness journey</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <button class="btn btn-ghost btn-sm" data-theme-toggle><span class="theme-toggle-icon">🌙</span></button>
+      <button class="btn btn-outline btn-sm" onclick="Toast.show('Export','Report downloaded as PDF 📄','success')">⬇ Export</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="page-header">
+      <div class="page-header-left"><h1>Your Progress</h1><p>See how far you've come</p></div>
+      <div class="tabs" style="width:auto">
+        <button class="tab-btn active" onclick="switchView('weekly',this)">Weekly</button>
+        <button class="tab-btn" onclick="switchView('monthly',this)">Monthly</button>
+        <button class="tab-btn" onclick="switchView('yearly',this)">Yearly</button>
+      </div>
+    </div>
+
+    <!-- Personal Bests -->
+    <div class="card mb-24">
+      <div class="card-header">
+        <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=48&h=48&fit=crop" style="width:32px;height:32px;border-radius:var(--radius-sm);object-fit:cover" alt="Trophy"/>
+          Personal Bests
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="pb-grid">
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Steps"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value">14,280</div>
+              <div class="pb-label">Most Steps in a Day</div>
+              <div class="pb-date">Feb 14, 2026</div>
+            </div>
+          </div>
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Calories"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value" style="color:var(--secondary)">892</div>
+              <div class="pb-label">Most Calories Burned</div>
+              <div class="pb-date">Jan 28, 2026</div>
+            </div>
+          </div>
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Run"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value" style="color:var(--accent)">12.4km</div>
+              <div class="pb-label">Longest Run</div>
+              <div class="pb-date">Mar 8, 2026</div>
+            </div>
+          </div>
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Workout"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value" style="color:var(--accent2)">95min</div>
+              <div class="pb-label">Longest Workout</div>
+              <div class="pb-date">Feb 22, 2026</div>
+            </div>
+          </div>
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Streak"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value" style="color:#38bdf8">30</div>
+              <div class="pb-label">Day Streak</div>
+              <div class="pb-date">Current</div>
+            </div>
+          </div>
+          <div class="pb-card" style="padding:0;overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=120&fit=crop" style="width:100%;height:100px;object-fit:cover;display:block" alt="Workouts"/>
+            <div style="padding:12px 14px">
+              <div class="pb-value" style="color:#a78bfa">28</div>
+              <div class="pb-label">Workouts This Month</div>
+              <div class="pb-date">March 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="dashboard-grid mb-24">
+      <div class="card">
+        <div class="card-header"><span class="font-semibold">Weight Progress</span><span class="badge badge-success">-8.2 kg total</span></div>
+        <div class="card-body">
+          <div class="chart-container" style="height:240px">
+            <canvas id="weightChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="font-semibold">Monthly Workouts</span></div>
+        <div class="card-body">
+          <div class="chart-container" style="height:240px">
+            <canvas id="monthlyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header"><span class="font-semibold">Weekly Activity</span></div>
+        <div class="card-body">
+          <div class="chart-container" style="height:220px">
+            <canvas id="progressActivityChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="font-semibold">Fitness Score Breakdown</span></div>
+        <div class="card-body">
+          <div class="chart-container" style="height:220px">
+            <canvas id="progressRadarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/charts.js"></script>
+<script>
+function switchView(view, btn) {
+  document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  Toast.show('View Updated', `Showing ${view} progress`, 'info', 2000);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  createWeightChart('weightChart');
+  createMonthlyProgressChart('monthlyChart');
+  createWeeklyActivityChart('progressActivityChart');
+  createActivityRadarChart('progressRadarChart');
+});
+</script>
+</body>
+</html>

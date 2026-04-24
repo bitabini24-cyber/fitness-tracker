@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="My Account – LuxeShop" />
+  <title>My Account – LuxeShop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .account-layout { display:grid; grid-template-columns:260px 1fr; gap:var(--space-8); align-items:start; }
+    .account-sidebar { position:sticky; top:calc(var(--navbar-height) + 24px); }
+    .account-nav { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; }
+    .account-nav__header { padding:var(--space-6); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:var(--space-4); }
+    .account-nav__avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--secondary)); display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:800; color:white; flex-shrink:0; }
+    .account-nav__name { font-weight:700; font-size:0.95rem; }
+    .account-nav__email { font-size:0.75rem; color:var(--text-muted); }
+    .account-nav__links { padding:var(--space-3) 0; }
+    .account-nav__link { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-5); font-size:0.875rem; font-weight:500; color:var(--text-secondary); transition:all .2s; cursor:pointer; border:none; background:none; width:100%; text-align:left; }
+    .account-nav__link:hover { background:var(--bg-3); color:var(--text-primary); }
+    .account-nav__link.active { background:rgba(108,99,255,.08); color:var(--primary); font-weight:600; border-right:3px solid var(--primary); }
+    .account-nav__link-icon { font-size:1rem; width:20px; text-align:center; flex-shrink:0; }
+    .account-nav__divider { height:1px; background:var(--border); margin:var(--space-2) 0; }
+    .account-panel { display:none; }
+    .account-panel.active { display:block; }
+    .auth-tabs { display:flex; border-bottom:2px solid var(--border); margin-bottom:var(--space-6); }
+    .auth-tab { flex:1; padding:var(--space-3); text-align:center; font-weight:600; font-size:0.9rem; color:var(--text-muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all .2s; background:none; border-top:none; border-left:none; border-right:none; }
+    .auth-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+    .auth-form { display:none; }
+    .auth-form.active { display:block; }
+    .form-group { display:flex; flex-direction:column; gap:6px; margin-bottom:var(--space-4); }
+    .form-label { font-size:0.8rem; font-weight:600; color:var(--text-secondary); }
+    .form-input { background:var(--bg-3); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:10px 14px; font-size:0.9rem; color:var(--text-primary); transition:border-color .2s; width:100%; }
+    .form-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(108,99,255,.12); }
+    .form-textarea { height:auto; padding:var(--space-3) var(--space-4); resize:vertical; min-height:90px; }
+    .form-input-wrap { position:relative; }
+    .form-input-wrap .form-input { padding-right:44px; }
+    .form-input-wrap .toggle-pw { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1rem; }
+    .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); }
+    .order-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-xl); padding:var(--space-5); margin-bottom:var(--space-4); transition:all .2s; }
+    .order-card:hover { border-color:var(--primary-light); box-shadow:var(--shadow-sm); }
+    .order-card__header { display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--space-4); flex-wrap:wrap; gap:var(--space-3); }
+    .order-card__id { font-weight:700; font-size:0.9rem; }
+    .order-card__date { font-size:0.8rem; color:var(--text-muted); }
+    .order-status { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:var(--radius-full); font-size:0.75rem; font-weight:700; }
+    .order-status--delivered { background:rgba(0,196,140,.12); color:var(--success); }
+    .order-status--shipped { background:rgba(24,144,255,.12); color:var(--info); }
+    .order-status--processing { background:rgba(255,184,0,.12); color:var(--warning); }
+    .order-status--cancelled { background:rgba(255,77,79,.12); color:var(--error); }
+    .order-card__items { display:flex; gap:var(--space-2); margin-bottom:var(--space-4); flex-wrap:wrap; }
+    .order-card__img { width:52px; height:52px; border-radius:var(--radius-md); object-fit:cover; border:1px solid var(--border); }
+    .order-card__footer { display:flex; align-items:center; justify-content:space-between; padding-top:var(--space-3); border-top:1px solid var(--border); }
+    .order-card__total { font-weight:800; color:var(--primary); }
+    .profile-avatar-wrap { display:flex; align-items:center; gap:var(--space-5); margin-bottom:var(--space-6); }
+    .profile-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--secondary)); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:800; color:white; flex-shrink:0; }
+    .address-card { background:var(--surface); border:2px solid var(--border); border-radius:var(--radius-xl); padding:var(--space-5); position:relative; transition:all .2s; }
+    .address-card:hover { border-color:var(--primary-light); }
+    .address-card.default { border-color:var(--primary); }
+    .address-card__badge { position:absolute; top:var(--space-3); right:var(--space-3); background:var(--primary); color:white; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:var(--radius-full); }
+    .address-card__name { font-weight:700; margin-bottom:var(--space-2); }
+    .address-card__text { font-size:0.875rem; color:var(--text-secondary); line-height:1.6; }
+    .address-card__actions { display:flex; gap:var(--space-2); margin-top:var(--space-4); flex-wrap:wrap; }
+    .empty-state { text-align:center; padding:var(--space-12) var(--space-6); }
+    .empty-state__icon { font-size:3.5rem; margin-bottom:var(--space-4); }
+    .empty-state__title { font-size:1.25rem; font-weight:700; margin-bottom:var(--space-2); }
+    .empty-state__text { color:var(--text-secondary); margin-bottom:var(--space-6); }
+    /* ── Auth section ── */
+    #auth-section { animation:fadeInUp .4s ease; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .auth-hero { background:linear-gradient(135deg,var(--primary),var(--primary-dark)); border-radius:var(--radius-xl) var(--radius-xl) 0 0; padding:var(--space-8) var(--space-6); text-align:center; color:white; position:relative; overflow:hidden; }
+    .auth-hero::before { content:''; position:absolute; width:300px; height:300px; background:rgba(255,255,255,.06); border-radius:50%; top:-100px; right:-80px; }
+    .auth-hero__logo { font-family:var(--font-display); font-size:1.75rem; font-weight:900; margin-bottom:var(--space-2); }
+    .auth-hero__sub { font-size:0.875rem; opacity:.8; }
+    .auth-body { padding:var(--space-6); }
+    .auth-tabs { display:flex; border-bottom:2px solid var(--border); margin-bottom:var(--space-6); }
+    .auth-tab { flex:1; padding:var(--space-3); text-align:center; font-weight:600; font-size:0.9rem; color:var(--text-muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all .2s; background:none; border-top:none; border-left:none; border-right:none; }
+    .auth-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+    .auth-form { display:none; }
+    .auth-form.active { display:block; }
+    .auth-divider { display:flex; align-items:center; gap:var(--space-3); margin:var(--space-5) 0; color:var(--text-muted); font-size:0.8rem; }
+    .auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+    .quick-login { display:flex; flex-direction:column; gap:var(--space-2); }
+    .quick-login__btn { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); border:1.5px solid var(--border); border-radius:var(--radius-lg); background:var(--bg-3); cursor:pointer; transition:all .2s; width:100%; text-align:left; }
+    .quick-login__btn:hover { border-color:var(--primary); background:rgba(108,99,255,.05); transform:translateX(4px); }
+    .quick-login__avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--secondary)); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:white; flex-shrink:0; }
+    .quick-login__name { font-weight:600; font-size:0.875rem; color:var(--text-primary); }
+    .quick-login__email { font-size:0.75rem; color:var(--text-muted); }
+    /* ── Avatar upload ── */
+    .avatar-upload-wrap { position:relative; display:inline-block; }
+    .avatar-upload-overlay { position:absolute; inset:0; border-radius:50%; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .2s; cursor:pointer; font-size:1.2rem; color:white; }
+    .avatar-upload-wrap:hover .avatar-upload-overlay { opacity:1; }
+    .pref-row { display:flex; align-items:center; justify-content:space-between; padding:var(--space-4) 0; }
+    .pref-row + .pref-row { border-top:1px solid var(--border); }
+    .pref-row__info { flex:1; }
+    .pref-row__title { font-weight:600; font-size:0.9rem; }
+    .pref-row__desc { font-size:0.8rem; color:var(--text-muted); margin-top:2px; }
+    @media (max-width:768px) {
+      .account-layout { grid-template-columns:1fr; }
+      .account-sidebar { position:static; }
+      .account-nav { margin-bottom:var(--space-4); }
+      .account-nav__links { display:flex; overflow-x:auto; padding:var(--space-2); gap:var(--space-1); }
+      .account-nav__link { flex-direction:column; gap:4px; padding:var(--space-2) var(--space-3); border-radius:var(--radius-md); white-space:nowrap; font-size:0.75rem; border-right:none !important; }
+      .account-nav__link.active { border-bottom:2px solid var(--primary); background:rgba(108,99,255,.08); }
+      .account-nav__divider { display:none; }
+      .form-grid-2 { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body data-page="account">
+
+  <!-- Page Loader -->
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link">Home</a>
+        <a href="shop.html" class="navbar__nav-link">Shop</a>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link">Cart</a>
+        <a href="account.html" class="navbar__nav-link active">Account</a>
+      </nav>
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input class="navbar__search-input" type="search" placeholder="Search products..." aria-label="Search" autocomplete="off" />
+        <div class="search-dropdown" role="listbox"></div>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒<span class="navbar__badge cart-badge" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥<span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link active">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper">
+
+    <div class="page-hero">
+      <div class="container">
+        <h1 class="page-hero__title">👤 My Account</h1>
+        <p class="page-hero__subtitle">Manage your profile, orders, and preferences</p>
+      </div>
+    </div>
+
+    <section class="section-sm">
+      <div class="container">
+        <div class="account-layout">
+
+          <!-- ══ SIDEBAR ══ -->
+          <aside class="account-sidebar" aria-label="Account navigation">
+            <nav class="account-nav">
+              <div class="account-nav__header">
+                <div class="account-nav__avatar" id="nav-avatar" aria-hidden="true">JD</div>
+                <div>
+                  <div class="account-nav__name" id="nav-name">John Doe</div>
+                  <div class="account-nav__email" id="nav-email">john@example.com</div>
+                </div>
+              </div>
+              <div class="account-nav__links" role="tablist" aria-label="Account sections">
+                <button class="account-nav__link active" data-panel="dashboard" role="tab" aria-selected="true" aria-controls="panel-dashboard">
+                  <span class="account-nav__link-icon" aria-hidden="true">🏠</span> Dashboard
+                </button>
+                <button class="account-nav__link" data-panel="orders" role="tab" aria-selected="false" aria-controls="panel-orders">
+                  <span class="account-nav__link-icon" aria-hidden="true">📦</span> My Orders
+                </button>
+                <button class="account-nav__link" data-panel="wishlist" role="tab" aria-selected="false" aria-controls="panel-wishlist">
+                  <span class="account-nav__link-icon" aria-hidden="true">♥</span> Wishlist
+                </button>
+                <button class="account-nav__link" data-panel="profile" role="tab" aria-selected="false" aria-controls="panel-profile">
+                  <span class="account-nav__link-icon" aria-hidden="true">✏️</span> Edit Profile
+                </button>
+                <button class="account-nav__link" data-panel="addresses" role="tab" aria-selected="false" aria-controls="panel-addresses">
+                  <span class="account-nav__link-icon" aria-hidden="true">📍</span> Addresses
+                </button>
+                <button class="account-nav__link" data-panel="settings" role="tab" aria-selected="false" aria-controls="panel-settings">
+                  <span class="account-nav__link-icon" aria-hidden="true">⚙️</span> Settings
+                </button>
+                <div class="account-nav__divider" role="separator"></div>
+                <button class="account-nav__link" id="logout-btn">
+                  <span class="account-nav__link-icon" aria-hidden="true">🚪</span> Sign Out
+                </button>
+              </div>
+            </nav>
+          </aside>
+
+          <!-- ══ PANELS ══ -->
+          <div>
+
+            <!-- ── Dashboard ── -->
+            <div class="account-panel active" id="panel-dashboard" role="tabpanel" aria-labelledby="nav-dashboard">
+
+              <!-- Stats row -->
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-bottom:var(--space-6);">
+                <div class="card" style="text-align:center;">
+                  <div style="font-size:2rem;margin-bottom:var(--space-2);" aria-hidden="true">📦</div>
+                  <div style="font-size:1.75rem;font-weight:800;color:var(--primary);" id="stat-orders">3</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);">Total Orders</div>
+                </div>
+                <div class="card" style="text-align:center;">
+                  <div style="font-size:2rem;margin-bottom:var(--space-2);" aria-hidden="true">♥</div>
+                  <div style="font-size:1.75rem;font-weight:800;color:var(--secondary);" id="stat-wishlist">0</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);">Wishlist Items</div>
+                </div>
+                <div class="card" style="text-align:center;">
+                  <div style="font-size:2rem;margin-bottom:var(--space-2);" aria-hidden="true">💰</div>
+                  <div style="font-size:1.75rem;font-weight:800;color:var(--accent);" id="stat-spent">$0</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);">Total Spent</div>
+                </div>
+              </div>
+
+              <!-- Recent orders -->
+              <div class="card">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);">
+                  <h2 style="font-size:1rem;font-weight:700;">Recent Orders</h2>
+                  <button class="btn btn-ghost btn-sm" data-panel="orders">View All →</button>
+                </div>
+                <div id="recent-orders-preview"></div>
+              </div>
+            </div>
+
+            <!-- ── Orders ── -->
+            <div class="account-panel" id="panel-orders" role="tabpanel">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);">
+                <h2 style="font-size:1.1rem;font-weight:700;">My Orders</h2>
+                <select class="form-input" id="order-filter" style="width:auto;height:36px;font-size:0.8rem;" aria-label="Filter orders">
+                  <option value="all">All Orders</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="processing">Processing</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div id="orders-list"></div>
+            </div>
+
+            <!-- ── Wishlist ── -->
+            <div class="account-panel" id="panel-wishlist" role="tabpanel">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);">
+                <h2 style="font-size:1.1rem;font-weight:700;">My Wishlist</h2>
+                <a href="shop.html" class="btn btn-ghost btn-sm">Browse Shop →</a>
+              </div>
+              <div class="grid-4" id="wishlist-grid"></div>
+            </div>
+
+            <!-- ── Edit Profile ── -->
+            <div class="account-panel" id="panel-profile" role="tabpanel">
+              <div class="card">
+                <h2 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-6);">Edit Profile</h2>
+
+                <div class="profile-avatar-wrap">
+                  <div class="avatar-upload-wrap">
+                    <div class="profile-avatar" id="profile-avatar-initials" aria-hidden="true">JD</div>
+                    <div class="avatar-upload-overlay" id="avatar-upload-btn" role="button" tabindex="0" aria-label="Change profile photo">📷</div>
+                    <input type="file" id="avatar-file-input" accept="image/*" style="display:none;" aria-label="Upload profile photo" />
+                  </div>
+                  <div>
+                    <div style="font-weight:700;margin-bottom:4px;">Profile Photo</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:var(--space-3);">Click the avatar to upload from your device</div>
+                    <button type="button" class="btn btn-ghost btn-sm" id="avatar-upload-btn-text">📁 Choose Photo</button>
+                  </div>
+                </div>
+
+                <form id="profile-form" novalidate>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" for="pf-first">First Name</label>
+                      <input class="form-input" type="text" id="pf-first" value="John" autocomplete="given-name" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="pf-last">Last Name</label>
+                      <input class="form-input" type="text" id="pf-last" value="Doe" autocomplete="family-name" />
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="pf-email">Email Address</label>
+                    <input class="form-input" type="email" id="pf-email" value="john@example.com" autocomplete="email" />
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="pf-phone">Phone Number</label>
+                    <input class="form-input" type="tel" id="pf-phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="pf-bio">Bio (optional)</label>
+                    <textarea class="form-input form-textarea" id="pf-bio" placeholder="Tell us a little about yourself..."></textarea>
+                  </div>
+
+                  <div style="margin-top:var(--space-6);padding-top:var(--space-5);border-top:1px solid var(--border);">
+                    <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:var(--space-4);">Change Password</h3>
+                    <div class="form-group">
+                      <label class="form-label" for="pf-current-pw">Current Password</label>
+                      <div class="form-input-wrap">
+                        <input class="form-input" type="password" id="pf-current-pw" placeholder="••••••••" autocomplete="current-password" />
+                        <button type="button" class="toggle-pw" aria-label="Show/hide password">👁</button>
+                      </div>
+                    </div>
+                    <div class="form-grid-2" style="margin-top:var(--space-4);">
+                      <div class="form-group">
+                        <label class="form-label" for="pf-new-pw">New Password</label>
+                        <div class="form-input-wrap">
+                          <input class="form-input" type="password" id="pf-new-pw" placeholder="Min. 8 characters" autocomplete="new-password" />
+                          <button type="button" class="toggle-pw" aria-label="Show/hide password">👁</button>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="pf-confirm-pw">Confirm Password</label>
+                        <div class="form-input-wrap">
+                          <input class="form-input" type="password" id="pf-confirm-pw" placeholder="••••••••" autocomplete="new-password" />
+                          <button type="button" class="toggle-pw" aria-label="Show/hide password">👁</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;gap:var(--space-3);margin-top:var(--space-6);">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="reset" class="btn btn-ghost">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- ── Addresses ── -->
+            <div class="account-panel" id="panel-addresses" role="tabpanel">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);">
+                <h2 style="font-size:1.1rem;font-weight:700;">Saved Addresses</h2>
+                <button class="btn btn-primary btn-sm" id="add-address-btn">+ Add Address</button>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4);" id="addresses-grid">
+
+                <div class="address-card default">
+                  <span class="address-card__badge">Default</span>
+                  <div class="address-card__name">John Doe</div>
+                  <div class="address-card__text">
+                    123 Main Street, Apt 4B<br>
+                    New York, NY 10001<br>
+                    United States<br>
+                    +1 (555) 123-4567
+                  </div>
+                  <div class="address-card__actions">
+                    <button class="btn btn-ghost btn-sm">Edit</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--error);">Delete</button>
+                  </div>
+                </div>
+
+                <div class="address-card">
+                  <div class="address-card__name">John Doe</div>
+                  <div class="address-card__text">
+                    456 Oak Avenue<br>
+                    Los Angeles, CA 90001<br>
+                    United States<br>
+                    +1 (555) 987-6543
+                  </div>
+                  <div class="address-card__actions">
+                    <button class="btn btn-ghost btn-sm">Edit</button>
+                    <button class="btn btn-ghost btn-sm">Set Default</button>
+                    <button class="btn btn-ghost btn-sm" style="color:var(--error);">Delete</button>
+                  </div>
+                </div>
+
+                <div class="address-card" id="add-address-card"
+                  style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:160px;cursor:pointer;gap:var(--space-3);"
+                  role="button" tabindex="0" aria-label="Add new address">
+                  <div style="font-size:2rem;color:var(--text-muted);" aria-hidden="true">+</div>
+                  <div style="font-size:0.875rem;color:var(--text-muted);font-weight:600;">Add New Address</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ── Settings ── -->
+            <div class="account-panel" id="panel-settings" role="tabpanel">
+
+              <div class="card" style="margin-bottom:var(--space-5);">
+                <h2 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-2);">Notifications</h2>
+                <div>
+                  <div class="pref-row">
+                    <div class="pref-row__info">
+                      <div class="pref-row__title">Email Notifications</div>
+                      <div class="pref-row__desc">Order updates and promotions</div>
+                    </div>
+                    <input type="checkbox" id="pref-email-notif" checked style="accent-color:var(--primary);width:18px;height:18px;cursor:pointer;" aria-label="Email notifications" />
+                  </div>
+                  <div class="pref-row">
+                    <div class="pref-row__info">
+                      <div class="pref-row__title">SMS Notifications</div>
+                      <div class="pref-row__desc">Shipping updates via text message</div>
+                    </div>
+                    <input type="checkbox" id="pref-sms-notif" style="accent-color:var(--primary);width:18px;height:18px;cursor:pointer;" aria-label="SMS notifications" />
+                  </div>
+                  <div class="pref-row">
+                    <div class="pref-row__info">
+                      <div class="pref-row__title">Newsletter</div>
+                      <div class="pref-row__desc">Weekly deals and new arrivals</div>
+                    </div>
+                    <input type="checkbox" id="pref-newsletter" checked style="accent-color:var(--primary);width:18px;height:18px;cursor:pointer;" aria-label="Newsletter" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" style="margin-bottom:var(--space-5);">
+                <h2 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-4);">Appearance</h2>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-weight:600;font-size:0.9rem;">Theme</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);">Switch between light and dark mode</div>
+                  </div>
+                  <button class="btn btn-ghost btn-sm theme-toggle" aria-label="Toggle theme">🌙 Toggle</button>
+                </div>
+              </div>
+
+              <div class="card" style="border-color:rgba(255,77,79,.25);background:rgba(255,77,79,.03);">
+                <h2 style="font-size:1rem;font-weight:700;color:var(--error);margin-bottom:var(--space-3);">Danger Zone</h2>
+                <p style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:var(--space-4);">Deleting your account is permanent and cannot be undone.</p>
+                <button class="btn btn-danger btn-sm" id="delete-account-btn">Delete My Account</button>
+              </div>
+
+            </div>
+
+          </div><!-- end panels -->
+        </div><!-- end account-layout -->
+
+        <!-- ══ AUTH SECTION (shown when logged out) ══ -->
+        <div id="auth-section" style="display:none;max-width:460px;margin:var(--space-8) auto 0;">
+          <div class="card" style="padding:0;overflow:hidden;">
+
+            <!-- Hero banner -->
+            <div class="auth-hero">
+              <div class="auth-hero__logo">✦ LuxeShop</div>
+              <div class="auth-hero__sub">Sign in to access your orders, wishlist & more</div>
+            </div>
+
+            <div class="auth-body">
+              <div class="auth-tabs" role="tablist">
+                <button class="auth-tab active" id="tab-login" role="tab" aria-selected="true" aria-controls="login-form">Sign In</button>
+                <button class="auth-tab" id="tab-register" role="tab" aria-selected="false" aria-controls="register-form">Create Account</button>
+              </div>
+
+              <!-- Login -->
+              <div class="auth-form active" id="login-form" role="tabpanel">
+                <form id="login-form-el" novalidate>
+                  <div class="form-group">
+                    <label class="form-label" for="login-email">Email Address</label>
+                    <input class="form-input" type="email" id="login-email" placeholder="you@example.com" autocomplete="email" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <div class="form-input-wrap">
+                      <input class="form-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required />
+                      <button type="button" class="toggle-pw" aria-label="Show/hide password">👁</button>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-5);">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;cursor:pointer;">
+                      <input type="checkbox" style="accent-color:var(--primary);" /> Remember me
+                    </label>
+                    <a href="#" style="font-size:0.85rem;color:var(--primary);">Forgot password?</a>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-full btn-lg">Sign In →</button>
+                  <p style="text-align:center;margin-top:var(--space-4);font-size:0.875rem;color:var(--text-muted);">
+                    No account? <button type="button" id="show-register" style="background:none;border:none;color:var(--primary);font-weight:600;cursor:pointer;font-size:inherit;">Create one free</button>
+                  </p>
+                </form>
+              </div>
+
+              <!-- Register -->
+              <div class="auth-form" id="register-form" role="tabpanel">
+                <form id="register-form-el" novalidate>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" for="reg-first">First Name</label>
+                      <input class="form-input" type="text" id="reg-first" placeholder="John" autocomplete="given-name" required />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="reg-last">Last Name</label>
+                      <input class="form-input" type="text" id="reg-last" placeholder="Doe" autocomplete="family-name" required />
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="reg-email">Email Address</label>
+                    <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" autocomplete="email" required />
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="reg-password">Password</label>
+                    <div class="form-input-wrap">
+                      <input class="form-input" type="password" id="reg-password" placeholder="Min. 8 characters" autocomplete="new-password" required />
+                      <button type="button" class="toggle-pw" aria-label="Show/hide password">👁</button>
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;cursor:pointer;">
+                      <input type="checkbox" style="accent-color:var(--primary);margin-top:2px;flex-shrink:0;" required />
+                      I agree to the <a href="#" style="color:var(--primary);">Terms</a> and <a href="#" style="color:var(--primary);">Privacy Policy</a>
+                    </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:var(--space-5);">Create Account →</button>
+                  <p style="text-align:center;margin-top:var(--space-4);font-size:0.875rem;color:var(--text-muted);">
+                    Already have an account? <button type="button" id="show-login" style="background:none;border:none;color:var(--primary);font-weight:600;cursor:pointer;font-size:inherit;">Sign in</button>
+                  </p>
+                </form>
+              </div>
+
+            </div><!-- end auth-body -->
+          </div>
+        </div><!-- end auth-section -->
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="navbar__logo" style="margin-bottom:0;">
+            <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+            Luxe<span>Shop</span>
+          </a>
+          <p class="footer__brand-desc">Your premium destination for electronics, fashion, and lifestyle products.</p>
+          <div class="footer__social" aria-label="Social media links">
+            <a href="#" class="footer__social-link" aria-label="Twitter">𝕏</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="footer__social-link" aria-label="Facebook">f</a>
+            <a href="#" class="footer__social-link" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Shop</h3>
+          <ul class="footer__links">
+            <li><a href="shop.html?category=electronics" class="footer__link">Electronics</a></li>
+            <li><a href="shop.html?category=clothing" class="footer__link">Clothing</a></li>
+            <li><a href="shop.html?category=footwear" class="footer__link">Footwear</a></li>
+            <li><a href="shop.html?badge=sale" class="footer__link">🔥 Deals</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Support</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Help Center</a></li>
+            <li><a href="#" class="footer__link">Track Order</a></li>
+            <li><a href="#" class="footer__link">Returns</a></li>
+            <li><a href="#" class="footer__link">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Company</h3>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">About Us</a></li>
+            <li><a href="#" class="footer__link">Privacy Policy</a></li>
+            <li><a href="#" class="footer__link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+        <div class="footer__payment-icons" aria-label="Accepted payment methods">
+          <span class="payment-icon">VISA</span>
+          <span class="payment-icon">MC</span>
+          <span class="payment-icon">AMEX</span>
+          <span class="payment-icon">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

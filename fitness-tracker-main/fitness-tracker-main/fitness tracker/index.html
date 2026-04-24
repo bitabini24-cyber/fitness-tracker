@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitTrack Pro — Your Premium Fitness Companion</title>
+  <meta name="description" content="Track workouts, nutrition, sleep and reach your fitness goals with FitTrack Pro."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <style>
+    /* ---- Image-based icon styles ---- */
+    .img-icon {
+      width: 64px; height: 64px; border-radius: var(--radius-lg);
+      object-fit: cover; display: block;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .img-icon-sm { width: 44px; height: 44px; border-radius: var(--radius); object-fit: cover; }
+    .img-icon-xs { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .img-icon-round { border-radius: 50%; }
+
+    /* Feature card image */
+    .feature-img-wrap {
+      width: 80px; height: 80px; border-radius: var(--radius-lg);
+      overflow: hidden; margin: 0 auto 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .feature-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .feature-card:hover .feature-img-wrap img { transform: scale(1.1); }
+
+    /* Hero image card */
+    .hero-img-card {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+    }
+    .hero-img-card img { width: 100%; height: 320px; object-fit: cover; display: block; }
+    .hero-img-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+      padding: 24px;
+      color: white;
+    }
+
+    /* Step image */
+    .step-img {
+      width: 100%; height: 160px; border-radius: var(--radius-lg);
+      object-fit: cover; margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    /* Testimonial avatar image */
+    .testimonial-avatar-img {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover; flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+
+    /* Brand logo image */
+    .brand-logo-img {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+
+    /* Social icon images */
+    .social-img-btn {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08); transition: all var(--transition);
+      cursor: pointer;
+    }
+    .social-img-btn:hover { transform: translateY(-2px); background: var(--primary); }
+    .social-img-btn img { width: 18px; height: 18px; filter: brightness(0) invert(1); }
+
+    /* Stats icon images */
+    .stat-img-icon {
+      width: 48px; height: 48px; border-radius: var(--radius);
+      object-fit: cover; margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    /* CTA background image */
+    .cta-banner {
+      position: relative; overflow: hidden;
+    }
+    .cta-bg-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.18; mix-blend-mode: luminosity;
+    }
+
+    /* Hero floating stats card */
+    .hero-stat-img {
+      width: 28px; height: 28px; border-radius: 6px;
+      object-fit: cover; flex-shrink: 0;
+    }
+
+    /* Navbar brand image */
+    .navbar-brand-img {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=72&h=72&fit=crop&crop=center" 
+           alt="FitTrack Pro" class="navbar-brand-img" aria-hidden="true"/>
+      FitTrack Pro
+    </a>
+    <ul class="navbar-nav" role="list">
+      <li><a href="#features" class="nav-link">Features</a></li>
+      <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+      <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <div class="theme-picker-wrap" style="position:relative"></div>
+      <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+      <a href="signup.html" class="btn btn-primary btn-sm">Get Started</a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <a href="#features" class="nav-link">Features</a>
+  <a href="#how-it-works" class="nav-link">How It Works</a>
+  <a href="#testimonials" class="nav-link">Reviews</a>
+  <a href="dashboard.html" class="nav-link">Dashboard</a>
+  <div style="display:flex;gap:10px;margin-top:12px;">
+    <a href="login.html" class="btn btn-outline btn-sm w-full" style="flex:1">Log In</a>
+    <a href="signup.html" class="btn btn-primary btn-sm w-full" style="flex:1">Get Started</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero section">
+  <div class="hero-shape" style="width:300px;height:300px;top:-80px;right:10%"></div>
+  <div class="hero-shape" style="width:180px;height:180px;bottom:10%;left:5%;animation-delay:1s"></div>
+  <div class="hero-shape" style="width:100px;height:100px;top:30%;right:30%;animation-delay:2s"></div>
+  <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding-top:40px;padding-bottom:60px;">
+    <div class="hero-content animate-fadeInUp">
+      <div class="hero-badge">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=24&h=24&fit=crop&crop=center" 
+             style="width:18px;height:18px;border-radius:4px;object-fit:cover" alt=""/>
+        #1 Fitness Tracker App
+      </div>
+      <h1>Transform Your <span>Fitness Journey</span> Today</h1>
+      <p>Track workouts, monitor nutrition, analyze sleep, and crush your goals with the most advanced fitness platform built for serious athletes and beginners alike.</p>
+      <div class="hero-actions">
+        <a href="signup.html" class="btn btn-primary btn-lg">Start Free Trial</a>
+        <a href="dashboard.html" class="btn btn-outline btn-lg" style="color:white;border-color:rgba(255,255,255,0.4)">View Dashboard</a>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:32px;align-items:center">
+        <div style="display:flex;align-items:center;gap:8px">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=40&h=40&fit=crop&crop=faces" 
+               style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.4)" alt="User"/>
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=faces" 
+               style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.4);margin-left:-10px" alt="User"/>
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=faces" 
+               style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.4);margin-left:-10px" alt="User"/>
+          <div style="color:rgba(255,255,255,0.85);font-size:0.8rem;margin-left:6px">
+            <span style="color:white;font-weight:700">50K+</span> Active Users
+          </div>
+        </div>
+        <div style="color:rgba(255,255,255,0.7);font-size:0.8rem;">
+          <span style="color:white;font-weight:700;font-size:1.1rem;">4.9★</span><br>App Rating
+        </div>
+        <div style="color:rgba(255,255,255,0.7);font-size:0.8rem;">
+          <span style="color:white;font-weight:700;font-size:1.1rem;">2M+</span><br>Workouts Logged
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Visual: Real image card -->
+    <div class="hero-visual animate-fadeInUp delay-3" style="display:flex;flex-direction:column;gap:16px;align-items:center">
+      <div class="hero-img-card animate-float">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=840&h=640&fit=crop&crop=center" 
+             alt="Athlete working out" loading="lazy"/>
+        <div class="hero-img-overlay">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=40&h=40&fit=crop&crop=faces" 
+                 style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.5)" alt="Altaye"/>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem">Altaye's Workout</div>
+              <div style="font-size:0.72rem;opacity:0.75">Today · 52 min active</div>
+            </div>
+          </div>
+          <div class="hero-stats-grid">
+            <div class="hero-stat"><div class="value">8,432</div><div class="label">Steps</div></div>
+            <div class="hero-stat"><div class="value">487</div><div class="label">Calories</div></div>
+            <div class="hero-stat"><div class="value">52</div><div class="label">Active Min</div></div>
+            <div class="hero-stat"><div class="value">7.5h</div><div class="label">Sleep</div></div>
+          </div>
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:5px">
+              <span>Daily Goal</span><span style="font-weight:700">84%</span>
+            </div>
+            <div class="progress-bar-wrap"><div class="progress-bar" style="width:84%"></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating mini cards -->
+      <div style="display:flex;gap:12px;width:100%;max-width:420px">
+        <div style="flex:1;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-lg);padding:14px;display:flex;align-items:center;gap:10px">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=60&h=60&fit=crop&crop=center" 
+               style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover" alt="Nutrition"/>
+          <div style="color:white"><div style="font-weight:700;font-size:0.85rem">Nutrition</div><div style="font-size:0.72rem;opacity:0.7">1,847 kcal</div></div>
+        </div>
+        <div style="flex:1;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-lg);padding:14px;display:flex;align-items:center;gap:10px">
+          <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=60&h=60&fit=crop&crop=center" 
+               style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover" alt="Sleep"/>
+          <div style="color:white"><div style="font-weight:700;font-size:0.85rem">Sleep</div><div style="font-size:0.72rem;opacity:0.7">7h 30m</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features" aria-label="Features">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Features</div>
+      <h2>Everything You Need to Succeed</h2>
+      <p>A complete fitness ecosystem designed to help you track, analyze, and improve every aspect of your health.</p>
+    </div>
+    <div class="grid grid-3 gap-24" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+
+      <div class="feature-card reveal card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=160&fit=crop&crop=center" alt="Workout Tracking"/>
+        </div>
+        <h3>Workout Tracking</h3>
+        <p>Log hundreds of exercises with detailed sets, reps, and weights. Access guided workouts for every fitness level.</p>
+      </div>
+
+      <div class="feature-card reveal delay-1 card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=160&h=160&fit=crop&crop=center" alt="Nutrition Monitoring"/>
+        </div>
+        <h3>Nutrition Monitoring</h3>
+        <p>Track macros, calories, and micronutrients. Get personalized meal recommendations based on your goals.</p>
+      </div>
+
+      <div class="feature-card reveal delay-2 card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=160&h=160&fit=crop&crop=center" alt="Sleep Analysis"/>
+        </div>
+        <h3>Sleep Analysis</h3>
+        <p>Monitor sleep stages, quality scores, and recovery metrics to optimize your rest and performance.</p>
+      </div>
+
+      <div class="feature-card reveal delay-1 card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=160&h=160&fit=crop&crop=center" alt="Goal Setting"/>
+        </div>
+        <h3>Goal Setting</h3>
+        <p>Set SMART fitness goals with deadlines and track your progress with visual indicators and milestones.</p>
+      </div>
+
+      <div class="feature-card reveal delay-2 card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=160&fit=crop&crop=center" alt="Advanced Analytics"/>
+        </div>
+        <h3>Advanced Analytics</h3>
+        <p>Deep insights with interactive charts showing trends, personal bests, and performance comparisons.</p>
+      </div>
+
+      <div class="feature-card reveal delay-3 card-hover">
+        <div class="feature-img-wrap">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=160&h=160&fit=crop&crop=center" alt="Challenges and Badges"/>
+        </div>
+        <h3>Challenges & Badges</h3>
+        <p>Stay motivated with community challenges, achievement badges, and leaderboard competitions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works" style="background:var(--border-light)" aria-label="How it works">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Process</div>
+      <h2>How It Works</h2>
+      <p>Get started in minutes and see results in weeks. Our simple 4-step process makes fitness tracking effortless.</p>
+    </div>
+    <div class="grid grid-4 gap-24" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+
+      <div class="step-card reveal">
+        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=440&h=320&fit=crop&crop=center" 
+             alt="Create Account" class="step-img" loading="lazy"/>
+        <div class="step-number">1</div>
+        <h3 style="margin-bottom:10px">Create Account</h3>
+        <p style="font-size:0.875rem;color:var(--text-secondary)">Sign up in seconds and set up your fitness profile with your goals and preferences.</p>
+      </div>
+
+      <div class="step-card reveal delay-1">
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=440&h=320&fit=crop&crop=center" 
+             alt="Set Goals" class="step-img" loading="lazy"/>
+        <div class="step-number">2</div>
+        <h3 style="margin-bottom:10px">Set Your Goals</h3>
+        <p style="font-size:0.875rem;color:var(--text-secondary)">Define your fitness objectives — weight loss, muscle gain, endurance, or overall wellness.</p>
+      </div>
+
+      <div class="step-card reveal delay-2">
+        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=440&h=320&fit=crop&crop=center" 
+             alt="Track Daily" class="step-img" loading="lazy"/>
+        <div class="step-number">3</div>
+        <h3 style="margin-bottom:10px">Track Daily</h3>
+        <p style="font-size:0.875rem;color:var(--text-secondary)">Log workouts, meals, water intake, and sleep every day with our intuitive interface.</p>
+      </div>
+
+      <div class="step-card reveal delay-3">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=440&h=320&fit=crop&crop=center" 
+             alt="Analyze and Improve" class="step-img" loading="lazy"/>
+        <div class="step-number">4</div>
+        <h3 style="margin-bottom:10px">Analyze & Improve</h3>
+        <p style="font-size:0.875rem;color:var(--text-secondary)">Review your progress with detailed analytics and adjust your plan to keep improving.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS PREVIEW -->
+<section class="section stats-preview" aria-label="Statistics">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Impact</div>
+      <h2>Real Results, Real People</h2>
+    </div>
+    <div class="grid grid-4 gap-24" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+      <div class="stat-card reveal text-center card-hover">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=96&h=96&fit=crop&crop=center" 
+             class="stat-img-icon" style="margin:0 auto 14px" alt="Active Users"/>
+        <div style="font-size:2.5rem;font-weight:900;color:var(--primary)">
+          <span data-count="50000" data-suffix="+">0</span>
+        </div>
+        <div style="font-size:0.875rem;color:var(--text-muted);margin-top:6px">Active Users</div>
+      </div>
+      <div class="stat-card reveal delay-1 text-center card-hover">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=96&h=96&fit=crop&crop=center" 
+             class="stat-img-icon" style="margin:0 auto 14px" alt="Workouts Logged"/>
+        <div style="font-size:2.5rem;font-weight:900;color:#22c55e">
+          <span data-count="2000000" data-suffix="+">0</span>
+        </div>
+        <div style="font-size:0.875rem;color:var(--text-muted);margin-top:6px">Workouts Logged</div>
+      </div>
+      <div class="stat-card reveal delay-2 text-center card-hover">
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=96&h=96&fit=crop&crop=center" 
+             class="stat-img-icon" style="margin:0 auto 14px" alt="Goal Achievement"/>
+        <div style="font-size:2.5rem;font-weight:900;color:var(--secondary)">
+          <span data-count="98" data-suffix="%">0</span>
+        </div>
+        <div style="font-size:0.875rem;color:var(--text-muted);margin-top:6px">Goal Achievement Rate</div>
+      </div>
+      <div class="stat-card reveal delay-3 text-center card-hover">
+        <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=96&h=96&fit=crop&crop=center" 
+             class="stat-img-icon" style="margin:0 auto 14px" alt="App Rating"/>
+        <div style="font-size:2.5rem;font-weight:900;color:var(--accent2)">
+          <span data-count="4" data-suffix=".9★">0</span>
+        </div>
+        <div style="font-size:0.875rem;color:var(--text-muted);margin-top:6px">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials" style="background:var(--border-light)" aria-label="Testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Testimonials</div>
+      <h2>What Our Users Say</h2>
+      <p>Join thousands of people who have transformed their fitness with FitTrack Pro.</p>
+    </div>
+    <div class="grid grid-3 gap-24" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+
+      <div class="testimonial-card reveal card-hover">
+        <div style="margin-bottom:14px;border-radius:var(--radius-lg);overflow:hidden;height:140px">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=280&fit=crop&crop=top" 
+               style="width:100%;height:100%;object-fit:cover" alt="Sarah running" loading="lazy"/>
+        </div>
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"FitTrack Pro completely changed how I approach fitness. The analytics are incredible and the UI is so clean. Lost 15kg in 4 months!"</p>
+        <div class="testimonial-author">
+          <img src="assets/images/pogba.jpg" 
+               class="testimonial-avatar-img" alt="Pogba Mengistu"
+               onerror="this.src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&crop=faces'"/>
+          <div><div class="testimonial-name">Pogba Mengistu</div><div class="testimonial-role">Marathon Runner</div></div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-1 card-hover">
+        <div style="margin-bottom:14px;border-radius:var(--radius-lg);overflow:hidden;height:140px">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&h=280&fit=crop&crop=top" 
+               style="width:100%;height:100%;object-fit:cover" alt="Mike training" loading="lazy"/>
+        </div>
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The nutrition tracking is spot on. I can see exactly what I'm eating and how it affects my performance. Best fitness app I've used."</p>
+        <div class="testimonial-author">
+          <img src="assets/images/bereket.jpg" 
+               class="testimonial-avatar-img" alt="Sisay Wondifrw"
+               onerror="this.src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=96&h=96&fit=crop&crop=faces'"/>
+          <div><div class="testimonial-name">Sisay Wondifrw</div><div class="testimonial-role">Bodybuilder</div></div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-2 card-hover">
+        <div style="margin-bottom:14px;border-radius:var(--radius-lg);overflow:hidden;height:140px">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=280&fit=crop&crop=top" 
+               style="width:100%;height:100%;object-fit:cover" alt="Emma yoga" loading="lazy"/>
+        </div>
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The sleep tracking feature helped me understand my recovery patterns. My performance improved dramatically once I optimized my sleep."</p>
+        <div class="testimonial-author">
+          <img src="assets/images/bitaniya.jpg" 
+               class="testimonial-avatar-img" alt="Bitaniya Biniyam"
+               onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&h=96&fit=crop&crop=faces'"/>
+          <div><div class="testimonial-name">Bitaniya Biniyam</div><div class="testimonial-role">CrossFit Athlete</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="section" aria-label="Call to action">
+  <div class="container">
+    <div class="cta-banner reveal">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=400&fit=crop&crop=center" 
+           class="cta-bg-img" alt="" aria-hidden="true" loading="lazy"/>
+      <div style="position:relative;z-index:1">
+        <div class="hero-badge" style="margin:0 auto 16px;display:inline-flex">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=24&h=24&fit=crop" 
+               style="width:18px;height:18px;border-radius:3px;object-fit:cover" alt=""/>
+          Start Today — It's Free
+        </div>
+        <h2>Ready to Transform Your Fitness?</h2>
+        <p>Join 50,000+ users already crushing their goals. No credit card required.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a href="signup.html" class="btn btn-lg" style="background:white;color:var(--primary);font-weight:700">Start Free Trial</a>
+          <a href="dashboard.html" class="btn btn-lg btn-outline" style="border-color:rgba(255,255,255,0.5);color:white">View Demo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=68&h=68&fit=crop&crop=center" 
+                 style="width:34px;height:34px;border-radius:8px;object-fit:cover" alt="FitTrack Pro"/>
+            <span class="brand-name">FitTrack Pro</span>
+          </div>
+        </div>
+        <p class="footer-desc">Your premium fitness companion for tracking workouts, nutrition, sleep, and achieving your health goals.</p>
+        <div class="footer-social" style="margin-top:16px;display:flex;gap:10px">
+          <a href="#" class="social-btn" aria-label="Twitter" style="font-size:0.85rem;font-weight:700">𝕏</a>
+          <a href="#" class="social-btn" aria-label="Instagram" style="font-size:0.85rem">IG</a>
+          <a href="#" class="social-btn" aria-label="Facebook" style="font-size:0.85rem;font-weight:700">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube" style="font-size:0.85rem">YT</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Product</div>
+        <ul class="footer-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="workouts.html">Workouts</a></li>
+          <li><a href="nutrition.html">Nutrition</a></li>
+          <li><a href="progress.html">Progress</a></li>
+          <li><a href="challenges.html">Challenges</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Pages</div>
+        <ul class="footer-links">
+          <li><a href="activity.html">Activity</a></li>
+          <li><a href="goals.html">Goals</a></li>
+          <li><a href="sleep.html">Sleep</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="settings.html">Settings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Account</div>
+        <ul class="footer-links">
+          <li><a href="login.html">Log In</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+          <li><a href="forgot-password.html">Reset Password</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FitTrack Pro. All rights reserved.</span>
+      <span style="display:flex;align-items:center;gap:6px">
+        Made with 
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=24&h=24&fit=crop" 
+             style="width:18px;height:18px;border-radius:4px;object-fit:cover" alt=""/>
+        for fitness enthusiasts
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
+

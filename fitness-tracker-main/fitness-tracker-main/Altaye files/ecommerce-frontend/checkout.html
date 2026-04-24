@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout – LuxeShop" />
+  <title>Checkout – LuxeShop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    /* ── Stepper ── */
+    .checkout-stepper { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:var(--space-10); }
+    .step { display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; }
+    .step:not(:last-child)::after { content:''; position:absolute; top:18px; left:calc(50% + 20px); width:calc(100% - 8px); height:2px; background:var(--border); z-index:0; }
+    .step.completed:not(:last-child)::after { background:var(--primary); }
+    .step__circle { width:36px; height:36px; border-radius:50%; border:2px solid var(--border); background:var(--bg-2); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--text-muted); z-index:1; transition:all .3s; }
+    .step.active .step__circle { border-color:var(--primary); background:var(--primary); color:white; }
+    .step.completed .step__circle { border-color:var(--primary); background:var(--primary); color:white; }
+    .step__label { font-size:0.75rem; font-weight:600; color:var(--text-muted); white-space:nowrap; }
+    .step.active .step__label, .step.completed .step__label { color:var(--primary); }
+    /* ── Checkout layout ── */
+    .checkout-layout { display:grid; grid-template-columns:1fr 360px; gap:var(--space-8); align-items:start; }
+    .checkout-panel { display:none; }
+    .checkout-panel.active { display:block; }
+    /* ── Form sections ── */
+    .form-section { background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius-xl); padding:var(--space-6); margin-bottom:var(--space-5); }
+    .form-section__title { font-size:1rem; font-weight:700; margin-bottom:var(--space-5); display:flex; align-items:center; gap:8px; }
+    .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); }
+    .form-group { display:flex; flex-direction:column; gap:6px; }
+    .form-label { font-size:0.8rem; font-weight:600; color:var(--text-secondary); }
+    .form-input { background:var(--bg-3); border:1px solid var(--border); border-radius:var(--radius-md); padding:10px 14px; font-size:0.9rem; color:var(--text-primary); transition:border-color .2s; width:100%; }
+    .form-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(108,99,255,.15); }
+    .form-input.error { border-color:var(--error); }
+    .form-error { font-size:0.75rem; color:var(--error); display:none; }
+    .form-error.visible { display:block; }
+    /* ── Payment methods ── */
+    .payment-methods { display:flex; flex-direction:column; gap:var(--space-3); }
+    .payment-option { display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); border:2px solid var(--border); border-radius:var(--radius-lg); cursor:pointer; transition:all .2s; }
+    .payment-option:hover { border-color:var(--primary); }
+    .payment-option.selected { border-color:var(--primary); background:rgba(108,99,255,.05); }
+    .payment-option input[type="radio"] { accent-color:var(--primary); width:18px; height:18px; flex-shrink:0; }
+    .payment-option__icon { font-size:1.5rem; }
+    .payment-option__label { font-weight:600; font-size:0.9rem; }
+    .payment-option__desc { font-size:0.75rem; color:var(--text-muted); }
+    .card-fields { margin-top:var(--space-4); display:none; }
+    .card-fields.visible { display:grid; gap:var(--space-4); }
+    /* ── Order summary sidebar ── */
+    .summary-card { background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius-xl); padding:var(--space-6); position:sticky; top:calc(var(--navbar-height) + 24px); }
+    .summary-items { display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-5); max-height:280px; overflow-y:auto; }
+    .summary-item { display:flex; align-items:center; gap:var(--space-3); }
+    .summary-item__img { width:52px; height:52px; border-radius:var(--radius-md); object-fit:cover; flex-shrink:0; }
+    .summary-item__name { font-size:0.85rem; font-weight:600; line-height:1.3; }
+    .summary-item__qty { font-size:0.75rem; color:var(--text-muted); }
+    .summary-item__price { font-weight:700; color:var(--primary); font-size:0.9rem; margin-left:auto; flex-shrink:0; }
+    .summary-row { display:flex; justify-content:space-between; align-items:center; font-size:0.875rem; padding:4px 0; }
+    .summary-total { font-size:1.1rem; font-weight:800; padding-top:var(--space-3); border-top:2px solid var(--border); margin-top:var(--space-3); }
+    /* ── Confirmation ── */
+    .confirm-icon { width:80px; height:80px; border-radius:50%; background:rgba(67,233,123,.15); display:flex; align-items:center; justify-content:center; font-size:2.5rem; margin:0 auto var(--space-5); }
+    .order-details-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin:var(--space-6) 0; }
+    .order-detail-item { background:var(--bg-3); border-radius:var(--radius-lg); padding:var(--space-4); }
+    .order-detail-item__label { font-size:0.75rem; color:var(--text-muted); margin-bottom:4px; }
+    .order-detail-item__value { font-weight:700; font-size:0.95rem; }
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .checkout-layout { grid-template-columns:1fr; }
+      .summary-card { position:static; }
+      .form-grid-2 { grid-template-columns:1fr; }
+      .order-details-grid { grid-template-columns:1fr 1fr; }
+      .checkout-stepper { gap:0; }
+      .step__label { display:none; }
+    }
+  </style>
+</head>
+<body data-page="checkout">
+
+
+  <!-- Page Loader -->
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link">Home</a>
+        <a href="shop.html" class="navbar__nav-link">Shop</a>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link">Cart</a>
+        <a href="account.html" class="navbar__nav-link">Account</a>
+      </nav>
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input class="navbar__search-input" type="search" placeholder="Search products..." aria-label="Search" autocomplete="off" />
+        <div class="search-dropdown" role="listbox"></div>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒<span class="navbar__badge cart-badge" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥<span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="page-hero">
+      <div class="container">
+        <h1 class="page-hero__title">🔒 Secure Checkout</h1>
+        <p class="page-hero__subtitle">Complete your order in just a few steps</p>
+      </div>
+    </div>
+
+    <section class="section-sm">
+      <div class="container">
+
+        <!-- Stepper -->
+        <nav class="checkout-stepper" aria-label="Checkout steps">
+          <div class="step active" data-step="0" aria-current="step">
+            <div class="step__circle">1</div>
+            <div class="step__label">Shipping</div>
+          </div>
+          <div class="step" data-step="1">
+            <div class="step__circle">2</div>
+            <div class="step__label">Payment</div>
+          </div>
+          <div class="step" data-step="2">
+            <div class="step__circle">3</div>
+            <div class="step__label">Review</div>
+          </div>
+          <div class="step" data-step="3">
+            <div class="step__circle">✓</div>
+            <div class="step__label">Confirmed</div>
+          </div>
+        </nav>
+
+        <div class="checkout-layout">
+          <!-- ── LEFT: Panels ── -->
+          <div>
+
+            <!-- STEP 0: Shipping -->
+            <div class="checkout-panel active" id="panel-0" role="tabpanel" aria-labelledby="step-label-0">
+              <form id="shipping-form" novalidate>
+
+                <div class="form-section">
+                  <div class="form-section__title">📦 Shipping Address</div>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" for="first-name">First Name *</label>
+                      <input class="form-input" type="text" id="first-name" name="firstName" autocomplete="given-name" required placeholder="John" />
+                      <span class="form-error" id="err-first-name">First name is required</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="last-name">Last Name *</label>
+                      <input class="form-input" type="text" id="last-name" name="lastName" autocomplete="family-name" required placeholder="Doe" />
+                      <span class="form-error" id="err-last-name">Last name is required</span>
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="email">Email Address *</label>
+                    <input class="form-input" type="email" id="email" name="email" autocomplete="email" required placeholder="john@example.com" />
+                    <span class="form-error" id="err-email">Valid email is required</span>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="phone">Phone Number</label>
+                    <input class="form-input" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+1 (555) 000-0000" />
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="address">Street Address *</label>
+                    <input class="form-input" type="text" id="address" name="address" autocomplete="street-address" required placeholder="123 Main Street" />
+                    <span class="form-error" id="err-address">Address is required</span>
+                  </div>
+                  <div class="form-group" style="margin-top:var(--space-4);">
+                    <label class="form-label" for="address2">Apartment, suite, etc. (optional)</label>
+                    <input class="form-input" type="text" id="address2" name="address2" autocomplete="address-line2" placeholder="Apt 4B" />
+                  </div>
+                  <div class="form-grid-2" style="margin-top:var(--space-4);">
+                    <div class="form-group">
+                      <label class="form-label" for="city">City *</label>
+                      <input class="form-input" type="text" id="city" name="city" autocomplete="address-level2" required placeholder="New York" />
+                      <span class="form-error" id="err-city">City is required</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="state">State / Province *</label>
+                      <input class="form-input" type="text" id="state" name="state" autocomplete="address-level1" required placeholder="NY" />
+                      <span class="form-error" id="err-state">State is required</span>
+                    </div>
+                  </div>
+                  <div class="form-grid-2" style="margin-top:var(--space-4);">
+                    <div class="form-group">
+                      <label class="form-label" for="zip">ZIP / Postal Code *</label>
+                      <input class="form-input" type="text" id="zip" name="zip" autocomplete="postal-code" required placeholder="10001" />
+                      <span class="form-error" id="err-zip">ZIP code is required</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="country">Country *</label>
+                      <select class="form-input" id="country" name="country" autocomplete="country" required>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="JP">Japan</option>
+                        <option value="OTHER">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <div class="form-section__title">🚚 Shipping Method</div>
+                  <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+                    <label class="payment-option selected" id="ship-standard">
+                      <input type="radio" name="shipping" value="standard" checked />
+                      <span class="payment-option__icon">📦</span>
+                      <div style="flex:1;">
+                        <div class="payment-option__label">Standard Shipping</div>
+                        <div class="payment-option__desc">5–7 business days</div>
+                      </div>
+                      <span id="ship-standard-price" style="font-weight:700;color:var(--primary);">FREE</span>
+                    </label>
+                    <label class="payment-option" id="ship-express">
+                      <input type="radio" name="shipping" value="express" />
+                      <span class="payment-option__icon">⚡</span>
+                      <div style="flex:1;">
+                        <div class="payment-option__label">Express Shipping</div>
+                        <div class="payment-option__desc">2–3 business days</div>
+                      </div>
+                      <span style="font-weight:700;color:var(--primary);">$14.99</span>
+                    </label>
+                    <label class="payment-option" id="ship-overnight">
+                      <input type="radio" name="shipping" value="overnight" />
+                      <span class="payment-option__icon">🚀</span>
+                      <div style="flex:1;">
+                        <div class="payment-option__label">Overnight Shipping</div>
+                        <div class="payment-option__desc">Next business day</div>
+                      </div>
+                      <span style="font-weight:700;color:var(--primary);">$29.99</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="flex-between" style="margin-top:var(--space-6);">
+                  <a href="cart.html" class="btn btn-ghost">← Back to Cart</a>
+                  <button type="submit" class="btn btn-primary btn-lg checkout-next">Continue to Payment →</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- STEP 1: Payment -->
+            <div class="checkout-panel" id="panel-1" role="tabpanel" aria-labelledby="step-label-1">
+              <form id="payment-form" novalidate>
+
+                <div class="form-section">
+                  <div class="form-section__title">💳 Payment Method</div>
+                  <div class="payment-methods">
+                    <label class="payment-option selected" id="pay-card">
+                      <input type="radio" name="payment" value="card" checked />
+                      <span class="payment-option__icon">💳</span>
+                      <div>
+                        <div class="payment-option__label">Credit / Debit Card</div>
+                        <div class="payment-option__desc">Visa, Mastercard, Amex</div>
+                      </div>
+                    </label>
+                    <label class="payment-option" id="pay-paypal">
+                      <input type="radio" name="payment" value="paypal" />
+                      <span class="payment-option__icon">🅿️</span>
+                      <div>
+                        <div class="payment-option__label">PayPal</div>
+                        <div class="payment-option__desc">Pay with your PayPal account</div>
+                      </div>
+                    </label>
+                    <label class="payment-option" id="pay-apple">
+                      <input type="radio" name="payment" value="apple" />
+                      <span class="payment-option__icon">🍎</span>
+                      <div>
+                        <div class="payment-option__label">Apple Pay</div>
+                        <div class="payment-option__desc">Touch ID or Face ID</div>
+                      </div>
+                    </label>
+                  </div>
+
+                  <!-- Card fields -->
+                  <div class="card-fields visible" id="card-fields">
+                    <div class="form-group">
+                      <label class="form-label" for="card-name">Name on Card *</label>
+                      <input class="form-input" type="text" id="card-name" autocomplete="cc-name" placeholder="John Doe" />
+                      <span class="form-error" id="err-card-name">Name on card is required</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="card-number">Card Number *</label>
+                      <input class="form-input" type="text" id="card-number" autocomplete="cc-number" placeholder="1234 5678 9012 3456" maxlength="19" inputmode="numeric" />
+                      <span class="form-error" id="err-card-number">Valid card number is required</span>
+                    </div>
+                    <div class="form-grid-2">
+                      <div class="form-group">
+                        <label class="form-label" for="card-expiry">Expiry Date *</label>
+                        <input class="form-input" type="text" id="card-expiry" autocomplete="cc-exp" placeholder="MM / YY" maxlength="7" />
+                        <span class="form-error" id="err-card-expiry">Expiry date is required</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="card-cvv">CVV *</label>
+                        <input class="form-input" type="text" id="card-cvv" autocomplete="cc-csc" placeholder="123" maxlength="4" inputmode="numeric" />
+                        <span class="form-error" id="err-card-cvv">CVV is required</span>
+                      </div>
+                    </div>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;cursor:pointer;">
+                      <input type="checkbox" id="save-card" style="accent-color:var(--primary);width:16px;height:16px;" />
+                      Save card for future purchases
+                    </label>
+                  </div>
+
+                  <!-- PayPal / Apple Pay placeholder -->
+                  <div id="alt-payment-msg" style="display:none;padding:var(--space-5);text-align:center;color:var(--text-muted);font-size:0.9rem;">
+                    You'll be redirected to complete payment after reviewing your order.
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <div class="form-section__title">🧾 Billing Address</div>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;cursor:pointer;margin-bottom:var(--space-4);">
+                    <input type="checkbox" id="same-as-shipping" checked style="accent-color:var(--primary);width:16px;height:16px;" />
+                    Same as shipping address
+                  </label>
+                  <div id="billing-fields" style="display:none;">
+                    <div class="form-grid-2">
+                      <div class="form-group">
+                        <label class="form-label" for="bill-first">First Name</label>
+                        <input class="form-input" type="text" id="bill-first" autocomplete="billing given-name" placeholder="John" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="bill-last">Last Name</label>
+                        <input class="form-input" type="text" id="bill-last" autocomplete="billing family-name" placeholder="Doe" />
+                      </div>
+                    </div>
+                    <div class="form-group" style="margin-top:var(--space-4);">
+                      <label class="form-label" for="bill-address">Street Address</label>
+                      <input class="form-input" type="text" id="bill-address" autocomplete="billing street-address" placeholder="123 Main Street" />
+                    </div>
+                    <div class="form-grid-2" style="margin-top:var(--space-4);">
+                      <div class="form-group">
+                        <label class="form-label" for="bill-city">City</label>
+                        <input class="form-input" type="text" id="bill-city" autocomplete="billing address-level2" placeholder="New York" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label" for="bill-zip">ZIP Code</label>
+                        <input class="form-input" type="text" id="bill-zip" autocomplete="billing postal-code" placeholder="10001" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-between" style="margin-top:var(--space-6);">
+                  <button type="button" class="btn btn-ghost checkout-back">← Back</button>
+                  <button type="submit" class="btn btn-primary btn-lg checkout-next">Review Order →</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- STEP 2: Review -->
+            <div class="checkout-panel" id="panel-2" role="tabpanel" aria-labelledby="step-label-2">
+              <div class="form-section">
+                <div class="form-section__title">📋 Review Your Order</div>
+                <div id="review-items" style="display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-5);"></div>
+                <div class="divider"></div>
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);margin-top:var(--space-4);">
+                  <div class="summary-row"><span class="text-secondary">Subtotal</span><span class="font-semibold" id="review-subtotal">$0.00</span></div>
+                  <div class="summary-row"><span class="text-secondary">Shipping</span><span class="font-semibold" id="review-shipping">FREE</span></div>
+                  <div class="summary-row"><span class="text-secondary">Tax (8%)</span><span class="font-semibold" id="review-tax">$0.00</span></div>
+                  <div class="summary-row summary-total"><span>Total</span><span class="text-primary" id="review-total">$0.00</span></div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section__title">📦 Shipping To</div>
+                <p id="review-address" style="font-size:0.9rem;color:var(--text-secondary);line-height:1.7;"></p>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section__title">💳 Payment</div>
+                <p id="review-payment" style="font-size:0.9rem;color:var(--text-secondary);"></p>
+              </div>
+
+              <div class="form-section" style="background:rgba(108,99,255,.05);border-color:rgba(108,99,255,.2);">
+                <div style="display:flex;align-items:center;gap:var(--space-3);">
+                  <span style="font-size:1.5rem;">🔒</span>
+                  <div>
+                    <div style="font-weight:700;font-size:0.9rem;">Secure & Encrypted</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);">Your payment info is protected with 256-bit SSL encryption</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex-between" style="margin-top:var(--space-6);">
+                <button type="button" class="btn btn-ghost checkout-back">← Back</button>
+                <button type="button" class="btn btn-primary btn-lg" id="place-order-btn">
+                  Place Order 🎉
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Confirmation -->
+            <div class="checkout-panel" id="panel-3" role="tabpanel" aria-labelledby="step-label-3">
+              <div class="form-section" style="text-align:center;padding:var(--space-10) var(--space-6);">
+                <div class="confirm-icon" aria-hidden="true">✅</div>
+                <h2 style="font-size:1.75rem;font-weight:800;margin-bottom:var(--space-3);">Order Confirmed!</h2>
+                <p style="color:var(--text-secondary);margin-bottom:var(--space-2);">Thank you for your purchase. We've sent a confirmation to your email.</p>
+                <p style="font-size:0.875rem;color:var(--text-muted);">Order ID: <strong id="confirm-order-id" style="color:var(--primary);">#LX-000000</strong></p>
+
+                <div class="order-details-grid">
+                  <div class="order-detail-item">
+                    <div class="order-detail-item__label">Estimated Delivery</div>
+                    <div class="order-detail-item__value" id="confirm-delivery">5–7 business days</div>
+                  </div>
+                  <div class="order-detail-item">
+                    <div class="order-detail-item__label">Total Paid</div>
+                    <div class="order-detail-item__value text-primary" id="confirm-total">$0.00</div>
+                  </div>
+                  <div class="order-detail-item">
+                    <div class="order-detail-item__label">Shipping To</div>
+                    <div class="order-detail-item__value" id="confirm-city">—</div>
+                  </div>
+                  <div class="order-detail-item">
+                    <div class="order-detail-item__label">Payment</div>
+                    <div class="order-detail-item__value" id="confirm-payment">—</div>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap;margin-top:var(--space-6);">
+                  <a href="shop.html" class="btn btn-primary btn-lg">Continue Shopping →</a>
+                  <a href="index.html" class="btn btn-ghost btn-lg">Back to Home</a>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end left -->
+
+          <!-- ── RIGHT: Order Summary ── -->
+          <aside aria-label="Order summary">
+            <div class="summary-card">
+              <h2 style="font-size:1rem;font-weight:700;margin-bottom:var(--space-4);">Order Summary</h2>
+              <div class="summary-items" id="checkout-summary">
+                <!-- Rendered by JS -->
+              </div>
+              <div class="divider"></div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2);margin-top:var(--space-3);">
+                <div class="summary-row"><span class="text-secondary text-sm">Subtotal</span><span class="font-semibold" id="sidebar-subtotal">$0.00</span></div>
+                <div class="summary-row"><span class="text-secondary text-sm">Shipping</span><span class="font-semibold" id="sidebar-shipping">FREE</span></div>
+                <div class="summary-row"><span class="text-secondary text-sm">Tax (8%)</span><span class="font-semibold" id="sidebar-tax">$0.00</span></div>
+                <div class="summary-row summary-total"><span>Total</span><span class="text-primary" id="checkout-total">$0.00</span></div>
+              </div>
+              <div class="flex-center gap-3" style="margin-top:var(--space-5);">
+                <span class="text-xs text-muted">🔒 SSL Secured</span>
+                <span class="text-xs text-muted">·</span>
+                <span class="text-xs text-muted">↩️ Free Returns</span>
+              </div>
+              <div class="flex-center gap-2" style="margin-top:var(--space-3);">
+                <span class="payment-icon">VISA</span>
+                <span class="payment-icon">MC</span>
+                <span class="payment-icon">AMEX</span>
+                <span class="payment-icon">PayPal</span>
+              </div>
+            </div>
+          </aside>
+
+        </div><!-- end checkout-layout -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border-top:none;padding-top:0;">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

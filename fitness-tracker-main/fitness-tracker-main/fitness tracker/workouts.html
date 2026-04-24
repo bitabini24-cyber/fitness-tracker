@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workouts — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a href="index.html" class="sidebar-brand"><div class="brand-icon">🏋️</div>FitTrack Pro</a>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+    <a href="dashboard.html" class="sidebar-link"><span class="link-icon">📊</span> Dashboard</a>
+    <a href="activity.html" class="sidebar-link"><span class="link-icon">⚡</span> Activity</a>
+    <a href="workouts.html" class="sidebar-link active" aria-current="page"><span class="link-icon">🏋️</span> Workouts</a>
+    <a href="nutrition.html" class="sidebar-link"><span class="link-icon">🥗</span> Nutrition</a>
+    <div class="sidebar-section-label">Progress</div>
+    <a href="progress.html" class="sidebar-link"><span class="link-icon">📈</span> Progress</a>
+    <a href="goals.html" class="sidebar-link"><span class="link-icon">🎯</span> Goals</a>
+    <a href="challenges.html" class="sidebar-link"><span class="link-icon">🏆</span> Challenges</a>
+    <a href="sleep.html" class="sidebar-link"><span class="link-icon">😴</span> Sleep</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="profile.html" class="sidebar-link"><span class="link-icon">👤</span> Profile</a>
+    <a href="settings.html" class="sidebar-link"><span class="link-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar user-avatar-text">AA</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Altaye Ayfokru</div>
+        <div class="sidebar-user-role">Premium Member</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle aria-label="Toggle sidebar">☰</button>
+      <div><div class="page-title">Workouts</div><div class="page-subtitle">Find and track your workouts</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <div class="search-bar"><span>🔍</span><input type="search" placeholder="Search workouts..." aria-label="Search workouts"/></div>
+      <div class="theme-picker-wrap" style="position:relative"></div>
+      <button class="btn btn-primary btn-sm" data-modal-open="addWorkoutModal">+ Log Workout</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Filters -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1>Workout Library</h1>
+        <p>Browse and start workouts tailored to your goals</p>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div style="margin-bottom:24px">
+      <div class="tabs" role="tablist" aria-label="Workout categories">
+        <button class="tab-btn active" data-tab="all" role="tab">All</button>
+        <button class="tab-btn" data-tab="cardio" role="tab">🏃 Cardio</button>
+        <button class="tab-btn" data-tab="strength" role="tab">💪 Strength</button>
+        <button class="tab-btn" data-tab="yoga" role="tab">🧘 Yoga</button>
+        <button class="tab-btn" data-tab="hiit" role="tab">⚡ HIIT</button>
+      </div>
+    </div>
+
+    <!-- Filter chips -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px" role="group" aria-label="Difficulty filters">
+      <button class="chip active" onclick="filterWorkouts('all')">All Levels</button>
+      <button class="chip" onclick="filterWorkouts('beginner')">Beginner</button>
+      <button class="chip" onclick="filterWorkouts('intermediate')">Intermediate</button>
+      <button class="chip" onclick="filterWorkouts('advanced')">Advanced</button>
+      <button class="chip" onclick="filterWorkouts('short')">Under 30 min</button>
+      <button class="chip" onclick="filterWorkouts('long')">30+ min</button>
+    </div>
+
+    <!-- Workout Grid -->
+    <div class="grid grid-3 gap-24" id="workoutGrid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Active Workout Timer Section -->
+    <div class="card mt-32" id="activeWorkoutSection" style="display:none">
+      <div class="card-header">
+        <span class="font-semibold">🏋️ Active Workout: <span id="activeWorkoutName">-</span></span>
+        <button class="btn btn-secondary btn-sm" onclick="endWorkout()">End Workout</button>
+      </div>
+      <div class="card-body">
+        <div class="timer-display" style="border-radius:var(--radius-lg)">
+          <div class="timer-time" id="workoutTimerDisplay">00:00</div>
+          <div class="timer-label">Elapsed Time</div>
+          <div class="timer-controls">
+            <button class="timer-btn" id="workoutTimerReset" aria-label="Reset">⏹</button>
+            <button class="timer-btn primary-btn" id="workoutTimerStart" aria-label="Start">▶</button>
+            <button class="timer-btn" id="workoutTimerPause" style="display:none" aria-label="Pause">⏸</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Workout Detail Modal -->
+<div class="modal-overlay" id="workoutModal" role="dialog" aria-modal="true" aria-labelledby="workoutModalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="workoutModalTitle">Workout Details</h3>
+      <button class="modal-close" data-modal-close="workoutModal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="workoutModalBody"><!-- JS --></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close="workoutModal">Close</button>
+      <button class="btn btn-primary" id="startWorkoutBtn">▶ Start Workout</button>
+    </div>
+  </div>
+</div>
+
+<!-- Log Workout Modal -->
+<div class="modal-overlay" id="addWorkoutModal" role="dialog" aria-modal="true" aria-labelledby="addWorkoutTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="addWorkoutTitle">Log Workout</h3>
+      <button class="modal-close" data-modal-close="addWorkoutModal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="logWorkoutForm">
+        <div class="form-group">
+          <label class="form-label" for="logWorkoutName">Workout Name</label>
+          <input class="form-control" id="logWorkoutName" type="text" placeholder="e.g. Morning Run" required/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label" for="logDuration">Duration (min)</label>
+            <input class="form-control" id="logDuration" type="number" placeholder="45" min="1"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="logCalories">Calories Burned</label>
+            <input class="form-control" id="logCalories" type="number" placeholder="300" min="0"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="logCategory">Category</label>
+          <select class="form-control" id="logCategory">
+            <option value="cardio">Cardio</option>
+            <option value="strength">Strength</option>
+            <option value="yoga">Yoga</option>
+            <option value="hiit">HIIT</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="logNotes">Notes</label>
+          <textarea class="form-control" id="logNotes" rows="3" placeholder="How did it go?"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close="addWorkoutModal">Cancel</button>
+      <button class="btn btn-primary" onclick="logWorkout()">Save Workout</button>
+    </div>
+  </div>
+</div>
+
+<button class="fab" data-modal-open="addWorkoutModal" aria-label="Log workout">+</button>
+
+<script src="js/utils.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script>
+const WORKOUTS = [
+  { id:1, name:'Morning Run', category:'cardio', difficulty:'beginner', duration:30, calories:280,
+    img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=560&h=360&fit=crop',
+    color:'#6c63ff', desc:'A refreshing morning run to kickstart your day. Perfect for building cardiovascular endurance.', exercises:['5 min warm-up walk','20 min steady run','5 min cool-down walk'] },
+  { id:2, name:'Upper Body Blast', category:'strength', difficulty:'intermediate', duration:45, calories:320,
+    img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=560&h=360&fit=crop',
+    color:'#ff6584', desc:'Comprehensive upper body workout targeting chest, back, shoulders, and arms.', exercises:['Push-ups 3×15','Pull-ups 3×8','Dumbbell rows 3×12','Shoulder press 3×10','Bicep curls 3×12'] },
+  { id:3, name:'Yoga Flow', category:'yoga', difficulty:'beginner', duration:30, calories:150,
+    img:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=560&h=360&fit=crop',
+    color:'#43e97b', desc:'A calming yoga flow to improve flexibility, balance, and mindfulness.', exercises:['Sun salutation ×5','Warrior I & II','Tree pose','Child\'s pose','Savasana'] },
+  { id:4, name:'HIIT Cardio', category:'hiit', difficulty:'advanced', duration:25, calories:400,
+    img:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=560&h=360&fit=crop',
+    color:'#f7971e', desc:'High-intensity interval training for maximum calorie burn in minimum time.', exercises:['Burpees 4×10','Jump squats 4×15','Mountain climbers 4×20','High knees 4×30s','Rest 30s between sets'] },
+  { id:5, name:'Lower Body Power', category:'strength', difficulty:'intermediate', duration:50, calories:360,
+    img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=560&h=360&fit=crop',
+    color:'#38bdf8', desc:'Build strong legs and glutes with this comprehensive lower body session.', exercises:['Squats 4×12','Deadlifts 3×10','Lunges 3×12 each','Leg press 3×15','Calf raises 4×20'] },
+  { id:6, name:'Cycling Sprint', category:'cardio', difficulty:'intermediate', duration:40, calories:350,
+    img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=560&h=360&fit=crop',
+    color:'#a89cff', desc:'Indoor cycling session with sprint intervals to boost cardiovascular fitness.', exercises:['10 min warm-up','6×2 min sprints','2 min recovery between','10 min cool-down'] },
+  { id:7, name:'Core Crusher', category:'hiit', difficulty:'beginner', duration:20, calories:180,
+    img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=560&h=360&fit=crop',
+    color:'#ff6584', desc:'Targeted core workout to build a strong, stable midsection.', exercises:['Plank 3×45s','Crunches 3×20','Russian twists 3×15','Leg raises 3×12','Side plank 2×30s each'] },
+  { id:8, name:'Power Yoga', category:'yoga', difficulty:'intermediate', duration:60, calories:250,
+    img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=560&h=360&fit=crop',
+    color:'#43e97b', desc:'Dynamic yoga combining strength and flexibility for a full-body challenge.', exercises:['Vinyasa flow','Crow pose','Headstand prep','Wheel pose','Deep stretching'] },
+  { id:9, name:'5K Training', category:'cardio', difficulty:'beginner', duration:35, calories:300,
+    img:'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=560&h=360&fit=crop',
+    color:'#6c63ff', desc:'Structured 5K training run with intervals to improve your pace and endurance.', exercises:['5 min walk','3×5 min run / 2 min walk','5 min cool-down'] },
+];
+
+let activeFilter = 'all';
+let workoutTimerSeconds = 0, workoutTimerInterval = null, workoutTimerRunning = false;
+
+function renderWorkouts(filter = 'all') {
+  const grid = document.getElementById('workoutGrid');
+  const filtered = filter === 'all' ? WORKOUTS : WORKOUTS.filter(w => w.category === filter || w.difficulty === filter || (filter === 'short' && w.duration < 30) || (filter === 'long' && w.duration >= 30));
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-state-icon">🏋️</div><div class="empty-state-title">No workouts found</div><div class="empty-state-desc">Try a different filter</div></div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(w => `
+    <div class="workout-card card-hover animate-fadeInUp" data-category="${w.category}" data-difficulty="${w.difficulty}" data-duration="${w.duration}">
+      <div class="workout-card-img" style="overflow:hidden;height:180px">
+        <img src="${w.img}" class="workout-card-cover" alt="${w.name}" loading="lazy"/>
+      </div>
+      <div class="workout-card-body">
+        <div class="workout-card-title">${w.name}</div>
+        <div class="workout-card-meta">
+          <span>⏱ ${w.duration} min</span>
+          <span>🔥 ${w.calories} kcal</span>
+        </div>
+        <div class="workout-card-tags">
+          <span class="badge badge-primary">${w.category}</span>
+          <span class="badge difficulty-${w.difficulty}">${w.difficulty}</span>
+        </div>
+        <div class="workout-card-footer">
+          <button class="btn btn-ghost btn-sm" onclick="openWorkoutDetail(${w.id})">Details</button>
+          <button class="btn btn-primary btn-sm" onclick="startWorkout(${w.id})">▶ Start</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function filterWorkouts(filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  renderWorkouts(filter);
+}
+
+function openWorkoutDetail(id) {
+  const w = WORKOUTS.find(x => x.id === id);
+  if (!w) return;
+  document.getElementById('workoutModalTitle').textContent = w.name;
+  document.getElementById('workoutModalBody').innerHTML = `
+    <div style="border-radius:var(--radius-lg);overflow:hidden;height:180px;margin-bottom:16px">
+      <img src="${w.img}" style="width:100%;height:100%;object-fit:cover" alt="${w.name}"/>
+    </div>
+    <p style="color:var(--text-secondary);margin-bottom:20px;line-height:1.6">${w.desc}</p>
+    <div style="display:flex;gap:16px;margin-bottom:20px;justify-content:center">
+      <div class="text-center"><div style="font-weight:800;font-size:1.3rem;color:var(--primary)">${w.duration}</div><div style="font-size:0.75rem;color:var(--text-muted)">Minutes</div></div>
+      <div class="text-center"><div style="font-weight:800;font-size:1.3rem;color:var(--secondary)">${w.calories}</div><div style="font-size:0.75rem;color:var(--text-muted)">Calories</div></div>
+      <div class="text-center"><div style="font-weight:800;font-size:1.3rem;color:var(--accent)">${w.difficulty}</div><div style="font-size:0.75rem;color:var(--text-muted)">Level</div></div>
+    </div>
+    <div class="section-title">Exercises</div>
+    <ul style="display:flex;flex-direction:column;gap:8px">
+      ${w.exercises.map((ex,i) => `<li style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:var(--radius);font-size:0.875rem"><span style="width:24px;height:24px;border-radius:50%;background:var(--gradient-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0">${i+1}</span>${ex}</li>`).join('')}
+    </ul>`;
+  document.getElementById('startWorkoutBtn').onclick = () => { Modal.close('workoutModal'); startWorkout(id); };
+  Modal.open('workoutModal');
+}
+
+function startWorkout(id) {
+  const w = WORKOUTS.find(x => x.id === id);
+  if (!w) return;
+  document.getElementById('activeWorkoutName').textContent = w.name;
+  document.getElementById('activeWorkoutSection').style.display = 'block';
+  document.getElementById('activeWorkoutSection').scrollIntoView({ behavior: 'smooth' });
+  Toast.show('Workout Started!', `${w.name} — Let's go! 💪`, 'success');
+  startWorkoutTimer();
+}
+
+function endWorkout() {
+  stopWorkoutTimer();
+  document.getElementById('activeWorkoutSection').style.display = 'none';
+  Toast.show('Workout Complete!', 'Great job! Workout saved 🎉', 'success');
+}
+
+function startWorkoutTimer() {
+  if (workoutTimerRunning) return;
+  workoutTimerRunning = true;
+  workoutTimerInterval = setInterval(() => {
+    workoutTimerSeconds++;
+    updateWorkoutTimerDisplay();
+  }, 1000);
+  document.getElementById('workoutTimerStart').style.display = 'none';
+  document.getElementById('workoutTimerPause').style.display = 'flex';
+}
+
+function stopWorkoutTimer() {
+  workoutTimerRunning = false;
+  clearInterval(workoutTimerInterval);
+  workoutTimerSeconds = 0;
+  updateWorkoutTimerDisplay();
+  document.getElementById('workoutTimerPause').style.display = 'none';
+  document.getElementById('workoutTimerStart').style.display = 'flex';
+}
+
+function updateWorkoutTimerDisplay() {
+  const m = Math.floor(workoutTimerSeconds / 60);
+  const s = workoutTimerSeconds % 60;
+  document.getElementById('workoutTimerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function logWorkout() {
+  const name = document.getElementById('logWorkoutName').value;
+  if (!name.trim()) { Toast.show('Error', 'Please enter a workout name', 'error'); return; }
+  Toast.show('Workout Logged!', `${name} has been saved 💪`, 'success');
+  Modal.close('addWorkoutModal');
+  document.getElementById('logWorkoutForm').reset();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderWorkouts();
+  document.getElementById('workoutTimerStart').addEventListener('click', startWorkoutTimer);
+  document.getElementById('workoutTimerPause').addEventListener('click', () => {
+    workoutTimerRunning = false; clearInterval(workoutTimerInterval);
+    document.getElementById('workoutTimerPause').style.display = 'none';
+    document.getElementById('workoutTimerStart').style.display = 'flex';
+  });
+  document.getElementById('workoutTimerReset').addEventListener('click', stopWorkoutTimer);
+});
+</script>
+</body>
+</html>
+
+

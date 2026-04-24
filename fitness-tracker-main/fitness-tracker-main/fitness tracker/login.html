@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Log In — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .spinner { display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite; }
+    .password-strength { margin-top:8px; }
+    .strength-bar-wrap { height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px; }
+    .strength-bar { height:100%;border-radius:2px;transition:width 0.3s,background 0.3s; }
+    .strength-label { font-size:0.72rem;color:var(--text-muted); }
+    .strength-weak .strength-bar { width:20%;background:#ef4444; }
+    .strength-fair .strength-bar { width:40%;background:#f97316; }
+    .strength-good .strength-bar { width:60%;background:#eab308; }
+    .strength-strong .strength-bar { width:80%;background:#22c55e; }
+    .strength-very-strong .strength-bar { width:100%;background:#16a34a; }
+    /* Google button container sizing */
+    #googleLoginBtn { width:100%;min-height:44px;display:flex;justify-content:center;margin-bottom:10px; }
+    #googleLoginBtn .google-btn {
+      width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 16px;border:1px solid var(--border);border-radius:var(--radius);
+      background:var(--surface);color:var(--text-primary);font-size:0.9rem;font-weight:500;
+      cursor:pointer;transition:all var(--transition);
+    }
+    #googleLoginBtn .google-btn:hover { background:var(--border-light);border-color:var(--primary); }
+  </style>
+</head>
+<body>
+<div class="auth-page">
+  <!-- Left Panel -->
+  <div class="auth-left" style="position:relative">
+    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=960&h=1200&fit=crop&crop=center"
+         class="auth-bg-img" alt="" aria-hidden="true" loading="lazy"/>
+    <div style="position:relative;z-index:1;text-align:center;color:white;max-width:400px">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=160&fit=crop&crop=center"
+           style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 24px;border:3px solid rgba(255,255,255,0.4);box-shadow:0 8px 24px rgba(0,0,0,0.3);display:block;animation:float 3s ease-in-out infinite" alt="Fitness"/>
+      <h2 style="font-size:2rem;color:white;margin-bottom:14px">Welcome Back!</h2>
+      <p style="opacity:0.85;line-height:1.7;margin-bottom:32px">Track your fitness journey, monitor your progress, and achieve your goals with FitTrack Pro.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.12);border-radius:var(--radius);padding:14px;backdrop-filter:blur(8px)">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=60&h=60&fit=crop" style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Analytics"/>
+          <div style="text-align:left"><div style="font-weight:700;font-size:0.9rem">Advanced Analytics</div><div style="font-size:0.78rem;opacity:0.75">Deep insights into your performance</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.12);border-radius:var(--radius);padding:14px;backdrop-filter:blur(8px)">
+          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=60&h=60&fit=crop" style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Goals"/>
+          <div style="text-align:left"><div style="font-weight:700;font-size:0.9rem">Goal Tracking</div><div style="font-size:0.78rem;opacity:0.75">Set and crush your fitness goals</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.12);border-radius:var(--radius);padding:14px;backdrop-filter:blur(8px)">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=60&h=60&fit=crop" style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Challenges"/>
+          <div style="text-align:left"><div style="font-weight:700;font-size:0.9rem">Challenges & Badges</div><div style="font-size:0.78rem;opacity:0.75">Stay motivated with rewards</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <div class="auth-logo">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=80&h=80&fit=crop&crop=center" style="width:44px;height:44px;border-radius:50%;object-fit:cover" alt="FitTrack Pro"/>
+        <span class="brand-name">FitTrack Pro</span>
+      </div>
+      <h1 class="auth-title">Sign In</h1>
+      <p class="auth-subtitle">Welcome back! Enter your credentials to continue.</p>
+
+      <!-- Google Sign-In -->
+      <div id="googleLoginBtn"></div>
+
+      <div class="auth-divider">or sign in with email</div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <div class="input-group">
+            <span class="input-icon">📧</span>
+            <input class="form-control" id="loginEmail" type="email" placeholder="altaye@example.com" autocomplete="email" required aria-required="true"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">
+            Password
+            <a href="forgot-password.html" style="float:right;font-weight:400;color:var(--primary);font-size:0.8rem">Forgot password?</a>
+          </label>
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input class="form-control" id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required aria-required="true"/>
+            <span class="input-icon-right" data-password-toggle="loginPassword" role="button" tabindex="0" aria-label="Toggle password visibility">👁</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px">
+          <input type="checkbox" id="rememberMe" style="width:16px;height:16px;accent-color:var(--primary)"/>
+          <label for="rememberMe" style="font-size:0.875rem;color:var(--text-secondary);cursor:pointer">Remember me for 30 days</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg w-full">Sign In</button>
+      </form>
+
+      <div class="auth-footer-text">
+        Don't have an account? <a href="signup.html">Create one free</a>
+      </div>
+
+      <!-- Info hint -->
+      <div style="margin-top:16px;padding:12px;background:rgba(108,99,255,0.06);border-radius:var(--radius);border:1px solid rgba(108,99,255,0.15);font-size:0.78rem;color:var(--text-secondary);text-align:center">
+        💡 New here? <a href="signup.html" style="color:var(--primary);font-weight:600">Create a free account</a> to get started
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nutrition — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar"></aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>☰</button>
+      <div><div class="page-title">Nutrition</div><div class="page-subtitle">Track your daily food intake</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <div class="theme-picker-wrap" style="position:relative"></div>
+      <button class="btn btn-primary btn-sm" data-modal-open="addMealModal">+ Add Meal</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="page-header">
+      <div class="page-header-left"><h1>Today's Nutrition</h1><p>Saturday, March 21, 2026</p></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost btn-sm">← Yesterday</button>
+        <button class="btn btn-ghost btn-sm">Today</button>
+      </div>
+    </div>
+
+    <!-- Calorie Summary Cards -->
+    <div class="stats-grid mb-24" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+      <div class="stat-card text-center">
+        <div style="font-size:2rem;font-weight:900;color:var(--primary)" id="totalCalories">1,847</div>
+        <div class="stat-label">Calories Eaten</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">Goal: 2,200</div>
+      </div>
+      <div class="stat-card text-center">
+        <div style="font-size:2rem;font-weight:900;color:#22c55e" id="remainingCalories">353</div>
+        <div class="stat-label">Remaining</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">Keep going!</div>
+      </div>
+      <div class="stat-card text-center">
+        <div style="font-size:2rem;font-weight:900;color:var(--secondary)">487</div>
+        <div class="stat-label">Burned</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">From exercise</div>
+      </div>
+      <div class="stat-card text-center">
+        <div style="font-size:2rem;font-weight:900;color:var(--accent2)" id="netCalories">1,360</div>
+        <div class="stat-label">Net Calories</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">Eaten - Burned</div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- LEFT: Meal sections -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <!-- Breakfast -->
+        <div class="card">
+          <div class="card-header">
+            <div class="meal-title">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=60&h=60&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover" alt="Breakfast"/>
+              Breakfast
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="meal-calories" id="breakfastKcal">315 kcal</span>
+              <button class="btn btn-ghost btn-sm" onclick="openAddMeal('breakfast')">+ Add</button>
+            </div>
+          </div>
+          <div class="card-body" id="breakfastList">
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Oatmeal"/>
+              <div class="food-name">Oatmeal with Berries</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>32g</span>Carbs</div>
+                <div class="food-macro"><span>8g</span>Protein</div>
+                <div class="food-macro"><span>5g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">210 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Yogurt"/>
+              <div class="food-name">Greek Yogurt</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>8g</span>Carbs</div>
+                <div class="food-macro"><span>17g</span>Protein</div>
+                <div class="food-macro"><span>0g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">100 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lunch -->
+        <div class="card">
+          <div class="card-header">
+            <div class="meal-title">
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=60&h=60&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover" alt="Lunch"/>
+              Lunch
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="meal-calories" id="lunchKcal">500 kcal</span>
+              <button class="btn btn-ghost btn-sm" onclick="openAddMeal('lunch')">+ Add</button>
+            </div>
+          </div>
+          <div class="card-body" id="lunchList">
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Salad"/>
+              <div class="food-name">Grilled Chicken Salad</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>15g</span>Carbs</div>
+                <div class="food-macro"><span>42g</span>Protein</div>
+                <div class="food-macro"><span>12g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">340 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Bread"/>
+              <div class="food-name">Whole Grain Bread (2 slices)</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>28g</span>Carbs</div>
+                <div class="food-macro"><span>6g</span>Protein</div>
+                <div class="food-macro"><span>2g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">160 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dinner -->
+        <div class="card">
+          <div class="card-header">
+            <div class="meal-title">
+              <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=60&h=60&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover" alt="Dinner"/>
+              Dinner
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="meal-calories" id="dinnerKcal">580 kcal</span>
+              <button class="btn btn-ghost btn-sm" onclick="openAddMeal('dinner')">+ Add</button>
+            </div>
+          </div>
+          <div class="card-body" id="dinnerList">
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Salmon"/>
+              <div class="food-name">Baked Salmon (200g)</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>0g</span>Carbs</div>
+                <div class="food-macro"><span>40g</span>Protein</div>
+                <div class="food-macro"><span>18g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">320 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Broccoli Rice"/>
+              <div class="food-name">Steamed Broccoli & Rice</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>52g</span>Carbs</div>
+                <div class="food-macro"><span>8g</span>Protein</div>
+                <div class="food-macro"><span>2g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">260 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Snacks -->
+        <div class="card">
+          <div class="card-header">
+            <div class="meal-title">
+              <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=60&h=60&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover" alt="Snacks"/>
+              Snacks
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="meal-calories" id="snacksKcal">105 kcal</span>
+              <button class="btn btn-ghost btn-sm" onclick="openAddMeal('snacks')">+ Add</button>
+            </div>
+          </div>
+          <div class="card-body" id="snacksList">
+            <div class="food-item">
+              <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=48&h=48&fit=crop" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="Banana"/>
+              <div class="food-name">Banana</div>
+              <div class="food-macros">
+                <div class="food-macro"><span>27g</span>Carbs</div>
+                <div class="food-macro"><span>1g</span>Protein</div>
+                <div class="food-macro"><span>0g</span>Fat</div>
+              </div>
+              <div class="food-calories-val">105 kcal</div>
+              <button onclick="this.closest('.food-item').remove();updateTotalCalories();Toast.show('Removed','Food item removed','info',2000)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">✕</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end left col -->
+
+      <!-- RIGHT: Macros + Charts + Water -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <!-- Macronutrients -->
+        <div class="card">
+          <div class="card-header"><span class="font-semibold">Macronutrients</span></div>
+          <div class="card-body">
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-bar-label" style="color:var(--primary)">🔵 Carbohydrates</span>
+                <span class="macro-bar-value">162g / 220g</span>
+              </div>
+              <div class="progress-bar-wrap progress-bar-lg">
+                <div class="progress-bar" data-width="74" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-bar-label" style="color:var(--secondary)">🔴 Protein</span>
+                <span class="macro-bar-value">122g / 150g</span>
+              </div>
+              <div class="progress-bar-wrap progress-bar-lg">
+                <div class="progress-bar secondary" data-width="81" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-bar-label" style="color:var(--accent2)">🟡 Fat</span>
+                <span class="macro-bar-value">39g / 60g</span>
+              </div>
+              <div class="progress-bar-wrap progress-bar-lg">
+                <div class="progress-bar warning" data-width="65" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="macro-bar-item">
+              <div class="macro-bar-header">
+                <span class="macro-bar-label" style="color:#22c55e">🟢 Fiber</span>
+                <span class="macro-bar-value">22g / 30g</span>
+              </div>
+              <div class="progress-bar-wrap progress-bar-lg">
+                <div class="progress-bar accent" data-width="73" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Macro Distribution Chart -->
+        <div class="card">
+          <div class="card-header"><span class="font-semibold">Macro Distribution</span></div>
+          <div class="card-body">
+            <div class="chart-container" style="height:200px">
+              <canvas id="nutritionChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Water Intake -->
+        <div class="card">
+          <div class="card-header">
+            <span class="font-semibold">💧 Water Intake</span>
+            <span style="font-size:0.875rem;color:var(--text-muted)" id="waterCountNutr">6/8</span>
+          </div>
+          <div class="card-body">
+            <div class="water-tracker">
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup"><div class="water-fill" style="height:0%"></div></div>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:10px">1,500ml / 2,000ml daily goal</p>
+          </div>
+        </div>
+
+        <!-- Weekly Calories Chart -->
+        <div class="card">
+          <div class="card-header"><span class="font-semibold">Weekly Calories</span></div>
+          <div class="card-body">
+            <div class="chart-container" style="height:180px">
+              <canvas id="caloriesChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end right col -->
+    </div>
+  </main>
+</div>
+
+<!-- Add Meal Modal -->
+<div class="modal-overlay" id="addMealModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🥗 Add Food Item</h3>
+      <button class="modal-close" data-modal-close="addMealModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Meal</label>
+        <select class="form-control" id="mealType">
+          <option value="breakfast">🌅 Breakfast</option>
+          <option value="lunch">☀️ Lunch</option>
+          <option value="dinner">🌙 Dinner</option>
+          <option value="snacks">🍎 Snacks</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Food Name</label>
+        <input class="form-control" id="foodName" type="text" placeholder="e.g. Grilled Chicken"/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group">
+          <label class="form-label">Calories (kcal)</label>
+          <input class="form-control" id="foodCalories" type="number" placeholder="250" min="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Serving Size</label>
+          <input class="form-control" id="foodServing" type="text" placeholder="100g"/>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="form-group">
+          <label class="form-label">Protein (g)</label>
+          <input class="form-control" id="foodProtein" type="number" placeholder="25" min="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Carbs (g)</label>
+          <input class="form-control" id="foodCarbs" type="number" placeholder="30" min="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fat (g)</label>
+          <input class="form-control" id="foodFat" type="number" placeholder="10" min="0"/>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close="addMealModal">Cancel</button>
+      <button class="btn btn-primary" onclick="addFoodItem()">Add Food</button>
+    </div>
+  </div>
+</div>
+
+<button class="fab" data-modal-open="addMealModal" aria-label="Add meal">+</button>
+
+<script src="js/utils.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script>
+const MEAL_IMAGES = {
+  breakfast: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=48&h=48&fit=crop',
+  lunch:     'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=48&h=48&fit=crop',
+  dinner:    'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=48&h=48&fit=crop',
+  snacks:    'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=48&h=48&fit=crop',
+};
+const MEAL_CONTAINERS = {
+  breakfast: 'breakfastList', lunch: 'lunchList',
+  dinner: 'dinnerList', snacks: 'snacksList',
+};
+const CALORIE_GOAL = 2200;
+const BURNED = 487;
+
+function loadFoods() {
+  return Store.get('nutritionFoods', { breakfast:[], lunch:[], dinner:[], snacks:[] });
+}
+function saveFoods(foods) { Store.set('nutritionFoods', foods); }
+
+function foodItemHTML(item) {
+  return `
+    <div class="food-item" data-id="${item.id}">
+      <img src="${MEAL_IMAGES[item.meal]}" style="width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0" alt="${item.name}"/>
+      <div class="food-name">${item.name}${item.serving ? ' <span style="font-size:0.72rem;color:var(--text-muted);">('+item.serving+')</span>' : ''}</div>
+      <div class="food-macros">
+        <div class="food-macro"><span>${item.carbs}g</span>Carbs</div>
+        <div class="food-macro"><span>${item.protein}g</span>Protein</div>
+        <div class="food-macro"><span>${item.fat}g</span>Fat</div>
+      </div>
+      <div class="food-calories-val">${item.calories} kcal</div>
+      <button onclick="removeFoodItem('${item.meal}','${item.id}')" style="background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;font-size:1rem">✕</button>
+    </div>`;
+}
+
+function renderSavedFoods() {
+  const foods = loadFoods();
+  Object.entries(MEAL_CONTAINERS).forEach(([meal, cid]) => {
+    const container = document.getElementById(cid);
+    if (!container) return;
+    (foods[meal] || []).forEach(item => {
+      if (!container.querySelector(`[data-id="${item.id}"]`)) {
+        container.insertAdjacentHTML('beforeend', foodItemHTML(item));
+      }
+    });
+  });
+  updateTotalCalories();
+}
+
+function removeFoodItem(meal, id) {
+  const foods = loadFoods();
+  foods[meal] = (foods[meal] || []).filter(f => String(f.id) !== String(id));
+  saveFoods(foods);
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) el.remove();
+  updateTotalCalories();
+  Toast.show('Removed', 'Food item removed', 'info', 2000);
+}
+
+function updateTotalCalories() {
+  let total = 0;
+  document.querySelectorAll('.food-calories-val').forEach(el => {
+    total += parseInt(el.textContent) || 0;
+  });
+  const remaining = Math.max(0, CALORIE_GOAL - total);
+  const net = total - BURNED;
+  const el = document.getElementById('totalCalories');
+  const rem = document.getElementById('remainingCalories');
+  const netEl = document.getElementById('netCalories');
+  if (el) el.textContent = total.toLocaleString();
+  if (rem) rem.textContent = remaining.toLocaleString();
+  if (netEl) netEl.textContent = net.toLocaleString();
+}
+
+function openAddMeal(meal) {
+  document.getElementById('mealType').value = meal;
+  Modal.open('addMealModal');
+}
+
+function addFoodItem() {
+  const name     = document.getElementById('foodName').value.trim();
+  const calories = parseInt(document.getElementById('foodCalories').value) || 0;
+  const serving  = document.getElementById('foodServing').value.trim();
+  const protein  = parseInt(document.getElementById('foodProtein').value) || 0;
+  const carbs    = parseInt(document.getElementById('foodCarbs').value) || 0;
+  const fat      = parseInt(document.getElementById('foodFat').value) || 0;
+  const meal     = document.getElementById('mealType').value;
+
+  if (!name)     { Toast.show('Error', 'Please enter a food name', 'error'); return; }
+  if (!calories) { Toast.show('Error', 'Please enter calories', 'error'); return; }
+
+  const item = { id: Date.now(), meal, name, calories, serving, protein, carbs, fat };
+
+  const foods = loadFoods();
+  if (!foods[meal]) foods[meal] = [];
+  foods[meal].push(item);
+  saveFoods(foods);
+
+  const container = document.getElementById(MEAL_CONTAINERS[meal]);
+  if (container) container.insertAdjacentHTML('beforeend', foodItemHTML(item));
+
+  updateTotalCalories();
+  Modal.close('addMealModal');
+  ['foodName','foodCalories','foodServing','foodProtein','foodCarbs','foodFat'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  Toast.show('Food Added!', `${name} (${calories} kcal) logged`, 'success');
+}
+
+// Water tracker
+let waterFilled = 6;
+document.querySelectorAll('.water-cup').forEach((cup, i) => {
+  const fill = cup.querySelector('.water-fill');
+  if (i < waterFilled) { cup.classList.add('filled'); if (fill) fill.style.height = '100%'; }
+  cup.addEventListener('click', () => {
+    waterFilled = i < waterFilled ? i : i + 1;
+    document.querySelectorAll('.water-cup').forEach((c, j) => {
+      const f = c.querySelector('.water-fill');
+      c.classList.toggle('filled', j < waterFilled);
+      if (f) f.style.height = j < waterFilled ? '100%' : '0%';
+    });
+    document.getElementById('waterCountNutr').textContent = `${waterFilled}/8`;
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSavedFoods();
+  createNutritionChart('nutritionChart');
+  createCaloriesChart('caloriesChart');
+});
+</script>
+</body>
+</html>
+
+

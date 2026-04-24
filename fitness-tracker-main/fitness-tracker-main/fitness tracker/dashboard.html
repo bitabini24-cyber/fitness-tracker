@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" role="navigation" aria-label="Sidebar navigation"></aside>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <!-- TOP NAVBAR -->
+  <header class="top-navbar" role="banner">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle aria-label="Toggle sidebar">☰</button>
+      <div>
+        <div class="page-title">Dashboard</div>
+        <div class="page-subtitle" id="userGreeting">Good morning, Altaye! 👋</div>
+      </div>
+    </div>
+    <div class="top-navbar-right">
+      <div class="search-bar" role="search">
+        <span aria-hidden="true">🔍</span>
+        <input type="search" placeholder="Search workouts, meals..." aria-label="Search"/>
+      </div>
+      <button class="icon-btn" aria-label="Notifications">
+        🔔<span class="notif-dot" aria-hidden="true"></span>
+      </button>
+      <div class="theme-picker-wrap" style="position:relative"></div>
+      <div class="dropdown">
+        <div class="profile-dropdown-btn" data-dropdown="profileMenu" aria-haspopup="true">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=faces"
+               class="user-avatar-img" alt="Altaye Ayfokru"/>
+          <span class="name user-display-name">Altaye</span>
+          <span>▾</span>
+        </div>
+        <div class="dropdown-menu" id="profileMenu" role="menu">
+          <a href="profile.html" class="dropdown-item" role="menuitem">👤 Profile</a>
+          <a href="settings.html" class="dropdown-item" role="menuitem">⚙️ Settings</a>
+          <div class="dropdown-divider"></div>
+          <a href="login.html" class="dropdown-item danger" role="menuitem">🚪 Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content" role="main">
+
+    <!-- Motivational Banner -->
+    <div class="motivational-banner animate-fadeInDown" style="position:relative;overflow:hidden">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=300&fit=crop&crop=center"
+           class="motivational-bg-img" alt="" aria-hidden="true"/>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <h3>Keep it up, Altaye! You're on a 7-day streak 🔥</h3>
+          <p>You've burned 487 calories today. Just 13 more to hit your goal!</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=80&h=80&fit=crop&crop=center"
+             style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.3);flex-shrink:0" alt="Trophy"/>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card animate-fadeInUp">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=104&h=104&fit=crop&crop=center"
+             class="stat-card-img" alt="Steps"/>
+        <div class="stat-value" id="statSteps">0</div>
+        <div class="stat-label">Steps Today</div>
+        <div class="stat-change up">↑ 12% vs yesterday</div>
+        <div style="margin-top:10px">
+          <div class="progress-bar-wrap"><div class="progress-bar" data-width="84" style="width:0%"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">8,432 / 10,000</div>
+        </div>
+      </div>
+      <div class="stat-card animate-fadeInUp delay-1">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=104&h=104&fit=crop&crop=center"
+             class="stat-card-img" alt="Calories"/>
+        <div class="stat-value" id="statCalories">0</div>
+        <div class="stat-label">Calories Burned</div>
+        <div class="stat-change up">↑ 8% vs yesterday</div>
+        <div style="margin-top:10px">
+          <div class="progress-bar-wrap"><div class="progress-bar secondary" data-width="97" style="width:0%"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">487 / 500</div>
+        </div>
+      </div>
+      <div class="stat-card animate-fadeInUp delay-2">
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=104&h=104&fit=crop&crop=center"
+             class="stat-card-img" alt="Active Minutes"/>
+        <div class="stat-value" id="statMinutes">0</div>
+        <div class="stat-label">Active Minutes</div>
+        <div class="stat-change up">↑ 5% vs yesterday</div>
+        <div style="margin-top:10px">
+          <div class="progress-bar-wrap"><div class="progress-bar accent" data-width="87" style="width:0%"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">52 / 60 min</div>
+        </div>
+      </div>
+      <div class="stat-card animate-fadeInUp delay-3">
+        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=104&h=104&fit=crop&crop=center"
+             class="stat-card-img" alt="Water Intake"/>
+        <div class="stat-value"><span id="statWater">0</span>/8</div>
+        <div class="stat-label">Water Intake</div>
+        <div class="stat-change up">↑ On track</div>
+        <div style="margin-top:10px">
+          <div class="progress-bar-wrap"><div class="progress-bar" data-width="75" style="width:0%;background:linear-gradient(90deg,#38bdf8,#7dd3fc)"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">6 / 8 glasses</div>
+        </div>
+      </div>
+      <div class="stat-card animate-fadeInUp delay-4">
+        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=104&h=104&fit=crop&crop=center"
+             class="stat-card-img" alt="Sleep"/>
+        <div class="stat-value"><span id="statSleep">0</span>h</div>
+        <div class="stat-label">Sleep Last Night</div>
+        <div class="stat-change down">↓ 30min vs goal</div>
+        <div style="margin-top:10px">
+          <div class="progress-bar-wrap"><div class="progress-bar" data-width="94" style="width:0%;background:linear-gradient(90deg,#a89cff,#6c63ff)"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">7.5 / 8 hours</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="dashboard-grid">
+      <div class="card animate-fadeInUp">
+        <div class="card-header">
+          <span class="font-semibold">Weekly Activity</span>
+          <div class="chart-filters">
+            <button class="chart-filter-btn active" data-period="week">Week</button>
+            <button class="chart-filter-btn" data-period="month">Month</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-container" style="height:240px">
+            <canvas id="weeklyActivityChart" aria-label="Weekly activity chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card animate-fadeInUp delay-1">
+        <div class="card-header">
+          <span class="font-semibold">Goal Progress</span>
+          <a href="goals.html" class="btn btn-ghost btn-sm">View All</a>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;justify-content:space-around;margin-bottom:20px">
+            <div class="circular-progress" data-percent="84" data-size="100" data-stroke="9" data-color="#6c63ff" aria-label="Steps goal 84%"></div>
+            <div class="circular-progress" data-percent="97" data-size="100" data-stroke="9" data-color="#ff6584" aria-label="Calories goal 97%"></div>
+            <div class="circular-progress" data-percent="87" data-size="100" data-stroke="9" data-color="#43e97b" aria-label="Active minutes goal 87%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-around;text-align:center">
+            <div style="font-size:0.75rem;color:var(--text-muted)">Steps</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">Calories</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">Active Min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="dashboard-grid-3">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div class="card animate-fadeInUp">
+          <div class="card-header">
+            <span class="font-semibold">Steps This Week</span>
+            <span class="badge badge-success">↑ 12%</span>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:180px">
+              <canvas id="stepsChart" aria-label="Steps chart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card animate-fadeInUp delay-1">
+          <div class="card-header">
+            <span class="font-semibold">Recent Workouts</span>
+            <a href="workouts.html" class="btn btn-ghost btn-sm">View All</a>
+          </div>
+          <div class="card-body" id="recentWorkouts"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <!-- Water Tracker -->
+        <div class="card animate-fadeInUp delay-2">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=40&h=40&fit=crop"
+                   style="width:24px;height:24px;border-radius:4px;object-fit:cover" alt="Water"/>
+              <span class="font-semibold">Water Intake</span>
+            </div>
+            <span style="font-size:0.875rem;color:var(--text-muted)"><span id="waterCount">6</span>/8 glasses</span>
+          </div>
+          <div class="card-body">
+            <div class="water-tracker" role="group" aria-label="Water intake tracker">
+              <div class="water-cup" aria-label="Glass 1"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 2"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 3"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 4"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 5"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 6"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 7"><div class="water-fill" style="height:0%"></div></div>
+              <div class="water-cup" aria-label="Glass 8"><div class="water-fill" style="height:0%"></div></div>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:10px">Click cups to log water intake</p>
+          </div>
+        </div>
+
+        <!-- Workout Timer -->
+        <div class="card animate-fadeInUp delay-3">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;gap:8px">
+              <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=40&h=40&fit=crop"
+                   style="width:24px;height:24px;border-radius:4px;object-fit:cover" alt="Timer"/>
+              <span class="font-semibold">Workout Timer</span>
+            </div>
+          </div>
+          <div class="card-body" style="text-align:center">
+            <div style="font-size:3rem;font-weight:900;font-family:var(--font-heading);color:var(--primary);letter-spacing:0.05em" id="timerDisplay">00:00</div>
+            <div class="timer-controls" style="margin-top:16px">
+              <button class="timer-btn" id="timerReset" aria-label="Reset timer">⏹</button>
+              <button class="timer-btn primary-btn" id="timerStart" aria-label="Start timer">▶</button>
+              <button class="timer-btn" id="timerPause" style="display:none" aria-label="Pause timer">⏸</button>
+              <button class="timer-btn" onclick="Toast.show('Workout Saved!','Great session logged 💪','success')" aria-label="Save workout">💾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card animate-fadeInUp delay-4">
+          <div class="card-header">
+            <span class="font-semibold">Notifications</span>
+            <button class="btn btn-ghost btn-sm">Mark all read</button>
+          </div>
+          <div class="card-body" id="notificationsList"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="window.location.href='workouts.html'" aria-label="Start workout">+</button>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+// Apply saved avatar + user name to navbar dropdown on load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedAvatar = localStorage.getItem('ft-userAvatar')
+    ? JSON.parse(localStorage.getItem('ft-userAvatar'))
+    : null;
+  const savedUser = localStorage.getItem('ft-user')
+    ? JSON.parse(localStorage.getItem('ft-user'))
+    : null;
+
+  if (savedAvatar) {
+    document.querySelectorAll('.user-avatar-img').forEach(img => img.src = savedAvatar);
+  }
+  if (savedUser && savedUser.name) {
+    const firstName = savedUser.name.split(' ')[0];
+    document.querySelectorAll('.user-display-name').forEach(el => el.textContent = savedUser.name);
+    const greeting = document.getElementById('userGreeting');
+    if (greeting) {
+      const hour = new Date().getHours();
+      const tod = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+      greeting.textContent = `Good ${tod}, ${firstName}! 👋`;
+    }
+  }
+});
+</script>
+<script>
+// Override renderRecentWorkouts to use images
+const WORKOUT_IMAGES = {
+  cardio: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=88&h=88&fit=crop',
+  strength: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=88&h=88&fit=crop',
+  yoga: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=88&h=88&fit=crop',
+  hiit: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=88&h=88&fit=crop',
+};
+function renderRecentWorkouts() {
+  const container = document.getElementById('recentWorkouts');
+  if (!container) return;
+  const workouts = [
+    { name:'Morning Run', type:'cardio', duration:35, calories:320, time:'7:30 AM' },
+    { name:'Upper Body Strength', type:'strength', duration:45, calories:280, time:'Yesterday' },
+    { name:'Yoga Flow', type:'yoga', duration:30, calories:150, time:'2 days ago' },
+    { name:'HIIT Cardio', type:'hiit', duration:25, calories:380, time:'3 days ago' },
+  ];
+  container.innerHTML = workouts.map(w => `
+    <div class="workout-item">
+      <img src="${WORKOUT_IMAGES[w.type]}" class="workout-list-img" alt="${w.name}"/>
+      <div class="workout-info">
+        <div class="workout-name">${w.name}</div>
+        <div class="workout-meta">${w.duration} min • ${w.time}</div>
+      </div>
+      <div class="workout-calories">${w.calories} kcal</div>
+    </div>`).join('');
+}
+
+function renderNotifications() {
+  const container = document.getElementById('notificationsList');
+  if (!container) return;
+  const notifs = [
+    { img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=72&h=72&fit=crop', text:'You reached your step goal today!', time:'2 min ago', read:false },
+    { img:'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=72&h=72&fit=crop', text:'New challenge: 30-Day Plank', time:'1 hour ago', read:false },
+    { img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=72&h=72&fit=crop', text:'Weekly report is ready to view', time:'3 hours ago', read:true },
+    { img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=72&h=72&fit=crop', text:'Reminder: Log your lunch meal', time:'5 hours ago', read:true },
+  ];
+  container.innerHTML = notifs.map(n => `
+    <div class="notif-item">
+      <img src="${n.img}" class="notif-img" alt=""/>
+      <div style="flex:1">
+        <div class="notif-text">${n.text}</div>
+        <div class="notif-time">${n.time}</div>
+      </div>
+      <div class="notif-dot-indicator ${n.read ? 'read' : ''}"></div>
+    </div>`).join('');
+}
+</script>
+</body>
+</html>
+
+

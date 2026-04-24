@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenges — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+  <div class="sidebar-header"><a href="index.html" class="sidebar-brand"><div class="brand-icon">🏋️</div>FitTrack Pro</a></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+    <a href="dashboard.html" class="sidebar-link"><span class="link-icon">📊</span> Dashboard</a>
+    <a href="activity.html" class="sidebar-link"><span class="link-icon">⚡</span> Activity</a>
+    <a href="workouts.html" class="sidebar-link"><span class="link-icon">🏋️</span> Workouts</a>
+    <a href="nutrition.html" class="sidebar-link"><span class="link-icon">🥗</span> Nutrition</a>
+    <div class="sidebar-section-label">Progress</div>
+    <a href="progress.html" class="sidebar-link"><span class="link-icon">📈</span> Progress</a>
+    <a href="goals.html" class="sidebar-link"><span class="link-icon">🎯</span> Goals</a>
+    <a href="challenges.html" class="sidebar-link active" aria-current="page"><span class="link-icon">🏆</span> Challenges</a>
+    <a href="sleep.html" class="sidebar-link"><span class="link-icon">😴</span> Sleep</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="profile.html" class="sidebar-link"><span class="link-icon">👤</span> Profile</a>
+    <a href="settings.html" class="sidebar-link"><span class="link-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="sidebar-avatar">AA</div><div class="sidebar-user-info"><div class="sidebar-user-name">Altaye Ayfokru</div><div class="sidebar-user-role">Premium Member</div></div></div>
+  </div>
+</aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>☰</button>
+      <div><div class="page-title">Challenges</div><div class="page-subtitle">Compete and earn badges</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <div class="theme-picker-wrap" style="position:relative"></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <!-- Streak + Stats -->
+    <div class="grid gap-20 mb-24" style="grid-template-columns:1fr 2fr">
+      <div class="streak-display animate-scaleIn">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-number">7</div>
+        <div class="streak-label">Day Streak</div>
+        <div style="margin-top:12px;font-size:0.8rem;opacity:0.8">Keep going! Best: 30 days</div>
+      </div>
+      <div class="grid gap-16" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card text-center">
+          <div style="font-size:2rem;font-weight:900;color:var(--primary)">3</div>
+          <div style="font-size:0.78rem;color:var(--text-muted)">Active Challenges</div>
+        </div>
+        <div class="stat-card text-center">
+          <div style="font-size:2rem;font-weight:900;color:#22c55e">8</div>
+          <div style="font-size:0.78rem;color:var(--text-muted)">Completed</div>
+        </div>
+        <div class="stat-card text-center">
+          <div style="font-size:2rem;font-weight:900;color:var(--accent2)">12</div>
+          <div style="font-size:0.78rem;color:var(--text-muted)">Badges Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Active Challenges -->
+      <div>
+        <div class="section-title">Active Challenges</div>
+        <div style="display:flex;flex-direction:column;gap:16px" id="challengesList">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="section-title mt-24">Available Challenges</div>
+        <div class="grid gap-16" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))" id="availableChallenges">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- Achievements -->
+        <div class="card">
+          <div class="card-header"><span class="font-semibold">🏅 Achievements</span><span class="badge badge-primary">12/24</span></div>
+          <div class="card-body">
+            <div class="badge-grid" id="achievementBadges"><!-- Rendered by JS --></div>
+          </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="card">
+          <div class="card-header"><span class="font-semibold">🏆 Leaderboard</span><span class="badge badge-warning">This Week</span></div>
+          <div class="card-body" id="leaderboard"><!-- Rendered by JS --></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sidebar.js"></script>
+<script>
+const ACTIVE_CHALLENGES = [
+  { name:'30-Day Plank Challenge', desc:'Hold a plank for increasing durations each day', progress:7, total:30,
+    img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=88&h=88&fit=crop', color:'#6c63ff' },
+  { name:'10K Steps Daily', desc:'Walk 10,000 steps every day for 2 weeks', progress:5, total:14,
+    img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=88&h=88&fit=crop', color:'#43e97b' },
+  { name:'Hydration Hero', desc:'Drink 8 glasses of water daily for 7 days', progress:6, total:7,
+    img:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=88&h=88&fit=crop', color:'#38bdf8' },
+];
+
+const AVAILABLE_CHALLENGES = [
+  { name:'100 Push-ups Challenge', desc:'Build up to 100 push-ups in 30 days', duration:'30 days', participants:1240,
+    img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=560&h=240&fit=crop', color:'#ff6584' },
+  { name:'5K Run Challenge', desc:'Complete a 5K run under 30 minutes', duration:'2 weeks', participants:890,
+    img:'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=560&h=240&fit=crop', color:'#f7971e' },
+  { name:'Yoga Every Day', desc:'Practice yoga for 15 minutes daily', duration:'21 days', participants:2100,
+    img:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=560&h=240&fit=crop', color:'#a78bfa' },
+];
+
+const ACHIEVEMENTS = [
+  { img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop', name:'First Run', earned:true },
+  { img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=80&h=80&fit=crop', name:'Iron Will', earned:true },
+  { img:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=80&h=80&fit=crop', name:'7-Day Streak', earned:true },
+  { img:'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=80&h=80&fit=crop', name:'HIIT Hero', earned:true },
+  { img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=80&h=80&fit=crop', name:'Nutrition Pro', earned:true },
+  { img:'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=80&h=80&fit=crop', name:'Sleep Master', earned:true },
+  { img:'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=80&h=80&fit=crop', name:'Goal Crusher', earned:true },
+  { img:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=80&h=80&fit=crop', name:'Hydrated', earned:true },
+  { img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=80&h=80&fit=crop', name:'Champion', earned:true },
+  { img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&h=80&fit=crop', name:'Consistent', earned:true },
+  { img:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=80&h=80&fit=crop', name:'All-Star', earned:true },
+  { img:'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=80&h=80&fit=crop', name:'Beast Mode', earned:true },
+  { img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop', name:'Rocket', earned:false },
+  { img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=80&h=80&fit=crop', name:'Rainbow', earned:false },
+  { img:'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=80&h=80&fit=crop', name:'Performer', earned:false },
+  { img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80&h=80&fit=crop', name:'Summit', earned:false },
+];
+
+const LEADERBOARD = [
+  { name:'Sarah J.', score:9840, img:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=76&h=76&fit=crop&crop=faces' },
+  { name:'Mike C.', score:9210, img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=76&h=76&fit=crop&crop=faces' },
+  { name:'Altaye A.', score:8750, img:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=76&h=76&fit=crop&crop=faces', isYou:true },
+  { name:'Emma P.', score:8320, img:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=76&h=76&fit=crop&crop=faces' },
+  { name:'David K.', score:7980, img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=76&h=76&fit=crop&crop=faces' },
+  { name:'Lisa M.', score:7640, img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=76&h=76&fit=crop&crop=faces' },
+];
+
+function renderChallenges() {
+  document.getElementById('challengesList').innerHTML = ACTIVE_CHALLENGES.map(c => {
+    const pct = Math.round((c.progress / c.total) * 100);
+    return `
+    <div class="card">
+      <div class="card-body" style="padding:18px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <img src="${c.img}" style="width:48px;height:48px;border-radius:var(--radius);object-fit:cover;flex-shrink:0;box-shadow:0 3px 10px rgba(0,0,0,0.15)" alt="${c.name}"/>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:0.9rem">${c.name}</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">${c.desc}</div>
+          </div>
+          <span class="badge badge-primary">${pct}%</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar" data-width="${pct}" style="width:0%;background:${c.color}"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:0.75rem;color:var(--text-muted)">
+          <span>Day ${c.progress} of ${c.total}</span>
+          <span>${c.total - c.progress} days left</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('availableChallenges').innerHTML = AVAILABLE_CHALLENGES.map(c => `
+    <div class="challenge-card">
+      <div style="overflow:hidden;height:120px">
+        <img src="${c.img}" class="challenge-banner-img" alt="${c.name}" loading="lazy"/>
+      </div>
+      <div class="challenge-body">
+        <div class="challenge-title">${c.name}</div>
+        <div class="challenge-desc">${c.desc}</div>
+        <div class="challenge-stats">
+          <span class="challenge-stat">⏱ ${c.duration}</span>
+          <span class="challenge-stat">👥 ${c.participants.toLocaleString()}</span>
+        </div>
+        <button class="btn btn-primary btn-sm w-full" onclick="joinChallenge('${c.name}')">Join Challenge</button>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('achievementBadges').innerHTML = ACHIEVEMENTS.map(b => `
+    <div class="achievement-badge ${b.earned ? '' : 'locked'}" title="${b.name}">
+      <img src="${b.img}" class="badge-img" alt="${b.name}" loading="lazy"/>
+      <div class="badge-name">${b.name}</div>
+    </div>`).join('');
+
+  document.getElementById('leaderboard').innerHTML = LEADERBOARD.map((u, i) => `
+    <div class="leaderboard-item" style="${u.isYou ? 'background:rgba(108,99,255,0.06);border-radius:var(--radius);padding:4px 8px;margin:0 -8px' : ''}">
+      <div class="leaderboard-rank rank-${i < 3 ? i+1 : 'other'}">${i+1}</div>
+      <img src="${u.img}" class="leaderboard-avatar-img" style="${u.isYou ? 'border:2px solid var(--primary)' : ''}" alt="${u.name}"/>
+      <div class="leaderboard-name">${u.name}${u.isYou ? ' <span style="font-size:0.7rem;color:var(--primary)">(You)</span>' : ''}</div>
+      <div class="leaderboard-score">${u.score.toLocaleString()}</div>
+    </div>`).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.progress-bar[data-width]').forEach(b => b.style.width = b.dataset.width + '%');
+  }, 100);
+}
+
+function joinChallenge(name) {
+  Toast.show('Challenge Joined!', `You joined "${name}" 🎉`, 'success');
+}
+
+document.addEventListener('DOMContentLoaded', renderChallenges);
+</script>
+</body>
+</html>
+
+

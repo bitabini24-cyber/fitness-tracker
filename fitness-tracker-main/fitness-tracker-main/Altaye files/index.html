@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="neon">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altaye Ayfokru — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== CANVAS PARTICLES ===== -->
+  <canvas id="canvas"></canvas>
+
+  <!-- ===== SCROLL PROGRESS ===== -->
+  <div id="scrollProgress" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--p),var(--p2));z-index:9999;width:0;transition:width 0.1s;"></div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div id="cursorDot"  style="position:fixed;width:8px;height:8px;background:var(--p);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.1s;"></div>
+  <div id="cursorRing" style="position:fixed;width:36px;height:36px;border:2px solid var(--p);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s,width 0.3s,height 0.3s;opacity:0.6;"></div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div id="toastContainer" style="position:fixed;bottom:2rem;right:2rem;z-index:99999;display:flex;flex-direction:column;gap:0.6rem;"></div>
+
+  <!-- ===== LEFT THEME PANEL ===== -->
+  <div class="theme-panel">
+    <button class="theme-icon-btn" id="themeIconBtn" aria-label="Toggle theme picker">
+      <i class="fa fa-palette"></i>
+    </button>
+    <div class="theme-popup" id="themePopup">
+      <div class="tp-title"><i class="fa fa-swatchbook"></i> Themes</div>
+      <div class="tp-grid">
+        <button class="tp-btn active" data-theme="neon">    <span style="background:#6c63ff"></span>Neon</button>
+        <button class="tp-btn"        data-theme="sun">     <span style="background:#f59e0b"></span>Sun</button>
+        <button class="tp-btn"        data-theme="ocean">   <span style="background:#06b6d4"></span>Ocean</button>
+        <button class="tp-btn"        data-theme="rose">    <span style="background:#f43f5e"></span>Rose</button>
+        <button class="tp-btn"        data-theme="forest">  <span style="background:#22c55e"></span>Forest</button>
+        <button class="tp-btn"        data-theme="candy">   <span style="background:#ec4899"></span>Candy</button>
+        <button class="tp-btn"        data-theme="midnight"><span style="background:#818cf8"></span>Night</button>
+        <button class="tp-btn"        data-theme="aurora">  <span style="background:#34d399"></span>Aurora</button>
+        <button class="tp-btn"        data-theme="fire">    <span style="background:#fb923c"></span>Fire</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RIGHT SIDE PANEL ===== -->
+  <div class="side-panel" id="sidePanel">
+    <!-- Skill orbit box -->
+    <div class="side-skill-rect" id="ssrBox">
+      <div class="ssr-corner ssr-c1"></div>
+      <div class="ssr-corner ssr-c2"></div>
+      <div class="ssr-corner ssr-c3"></div>
+      <div class="ssr-corner ssr-c4"></div>
+      <div class="ssr-inner">
+        <i class="fa fa-code ssr-center-icon"></i>
+        <span class="ssr-label">Skills</span>
+      </div>
+      <div id="orbitContainer"></div>
+    </div>
+    <div class="side-gap"></div>
+    <!-- Profile card -->
+    <div class="side-profile">
+      <div class="side-profile-ring">
+        <img src="images/altaye.jpg" alt="Altaye Ayfokru" class="side-profile-img" />
+      </div>
+      <span class="side-profile-name">Altaye<br>Ayfokru</span>
+      <span class="side-profile-role">Developer</span>
+    </div>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="nav-logo">
+      <span class="logo-bracket">[</span>
+      <span class="logo-name">Altaye</span>
+      <span class="logo-bracket">]</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"     class="nav-link active"><i class="fa fa-house"></i> Home</a></li>
+      <li><a href="#about"    class="nav-link"><i class="fa fa-user"></i> About</a></li>
+      <li><a href="#skills"   class="nav-link"><i class="fa fa-code"></i> Skills</a></li>
+      <li><a href="#projects" class="nav-link"><i class="fa fa-diagram-project"></i> Projects</a></li>
+      <li><a href="#contact"  class="nav-link"><i class="fa fa-envelope"></i> Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#contact" class="nav-hire-btn"><i class="fa fa-paper-plane"></i><span>Hire Me</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu"><i class="fa fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero section" id="home">
+    <div class="hero-content reveal">
+      <div class="hero-avatar">
+        <div class="avatar-ring ring1"></div>
+        <div class="avatar-ring ring2"></div>
+        <div class="avatar-ring ring3"></div>
+        <img src="images/altaye.jpg" alt="Altaye Ayfokru" class="avatar-img" />
+      </div>
+      <p class="hero-greeting"><span class="wave">👋</span> Hello, I'm</p>
+      <h1 class="hero-title">
+        <span class="typed-name"></span><span class="cursor-blink">|</span>
+      </h1>
+      <p class="hero-sub">Full-Stack Developer &nbsp;·&nbsp; UI/UX Designer &nbsp;·&nbsp; Problem Solver</p>
+
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-target="15">0</span><span>Projects</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="3">0</span><span>Years Exp.</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="10">0</span><span>Clients</span></div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn glow-btn"><i class="fa fa-eye"></i> View Work</a>
+        <a href="#contact"  class="btn ghost-btn"><i class="fa fa-paper-plane"></i> Contact Me</a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section dark-sec" id="about">
+    <div class="section-head reveal">
+      <span class="sec-tag">Who I Am</span>
+      <h2>About <span class="accent">Me</span></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="about-wrap reveal">
+      <div class="about-img-wrap">
+        <div class="about-img-border"></div>
+        <img src="images/altaye.jpg" alt="Altaye Ayfokru" class="about-img" />
+        <div class="about-badge">✨ Available for Work</div>
+      </div>
+      <div class="about-right">
+        <h3>Hi, I'm <span class="accent">Altaye Ayfokru</span></h3>
+        <p>I'm a passionate full-stack developer who loves crafting clean, performant, and visually stunning web experiences. I bridge the gap between design and engineering to build products people enjoy using.</p>
+        <p>When I'm not coding, I'm exploring new technologies, contributing to open source, or mentoring aspiring developers.</p>
+        <div class="about-details">
+          <div class="detail-item"><i class="fa fa-map-marker-alt"></i> Ethiopia</div>
+          <div class="detail-item"><i class="fa fa-graduation-cap"></i> CS Graduate</div>
+          <div class="detail-item"><i class="fa fa-briefcase"></i> Freelancer</div>
+          <div class="detail-item"><i class="fa fa-language"></i> English / Amharic</div>
+        </div>
+        <a href="#contact" class="btn glow-btn"><i class="fa fa-download"></i> Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section class="section" id="skills">
+    <div class="section-head reveal">
+      <span class="sec-tag">What I Know</span>
+      <h2>My <span class="accent">Skills</span></h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal" style="--sc:#e34f26">
+        <div class="sk-icon-wrap"><i class="fab fa-html5"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">HTML5</span><span class="sk-pct">95%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="95"></div></div>
+          <span class="sk-tag">Markup · Semantics · Accessibility</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="--sc:#1572b6">
+        <div class="sk-icon-wrap"><i class="fab fa-css3-alt"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">CSS3</span><span class="sk-pct">90%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="90"></div></div>
+          <span class="sk-tag">Flexbox · Grid · Animations</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="--sc:#f7df1e">
+        <div class="sk-icon-wrap"><i class="fab fa-js"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">JavaScript</span><span class="sk-pct">88%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="88"></div></div>
+          <span class="sk-tag">ES6+ · DOM · Async</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="--sc:#61dafb">
+        <div class="sk-icon-wrap"><i class="fab fa-react"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">React</span><span class="sk-pct">82%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="82"></div></div>
+          <span class="sk-tag">Hooks · Context · Router</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="--sc:#4b8bbe">
+        <div class="sk-icon-wrap"><i class="fab fa-python"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">Python</span><span class="sk-pct">80%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="80"></div></div>
+          <span class="sk-tag">Django · Flask · Scripting</span>
+        </div>
+      </div>
+      <div class="skill-card reveal" style="--sc:#3c873a">
+        <div class="sk-icon-wrap"><i class="fab fa-node-js"></i></div>
+        <div class="sk-info">
+          <div class="sk-top"><span class="sk-name">Node.js</span><span class="sk-pct">75%</span></div>
+          <div class="sk-bar-track"><div class="sk-bar-fill" data-w="75"></div></div>
+          <span class="sk-tag">Express · REST APIs · Auth</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="tools-section reveal">
+      <div class="tools-title"><i class="fa fa-wrench"></i> Tools &amp; Technologies</div>
+      <div class="tools-grid">
+        <div class="tool-tag"><i class="fab fa-git-alt"></i><span>Git</span></div>
+        <div class="tool-tag"><i class="fab fa-github"></i><span>GitHub</span></div>
+        <div class="tool-tag"><i class="fab fa-figma"></i><span>Figma</span></div>
+        <div class="tool-tag"><i class="fab fa-docker"></i><span>Docker</span></div>
+        <div class="tool-tag"><i class="fa fa-database"></i><span>MongoDB</span></div>
+        <div class="tool-tag"><i class="fa fa-server"></i><span>PostgreSQL</span></div>
+        <div class="tool-tag"><i class="fab fa-sass"></i><span>Sass</span></div>
+        <div class="tool-tag"><i class="fa fa-terminal"></i><span>Linux</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="section dark-sec" id="projects">
+    <div class="section-head reveal">
+      <span class="sec-tag">What I've Built</span>
+      <h2>My <span class="accent">Projects</span></h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="proj-filters reveal">
+      <button class="pf-btn active" data-filter="all">All</button>
+      <button class="pf-btn" data-filter="web">Web</button>
+      <button class="pf-btn" data-filter="app">App</button>
+      <button class="pf-btn" data-filter="design">Design</button>
+    </div>
+
+    <div class="projects-grid">
+      <div class="proj-card reveal" data-cat="web">
+        <div class="proj-img-wrap">
+          <img class="proj-real-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" alt="E-Commerce Project" />
+          <div class="proj-img-shine"></div>
+          <div class="proj-overlay"></div>
+          <span class="proj-cat-label">Web</span>
+          <div class="proj-hover-actions">
+            <a href="ecommerce-frontend/index.html" class="proj-live-btn"><i class="fa fa-eye"></i> Live Demo</a>
+          </div>
+        </div>
+        <div style="padding:1.4rem;">
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;">E-Commerce Frontend</h3>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">A fully responsive e-commerce UI with product listings, cart, checkout, and account pages.</p>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <span style="padding:0.2rem 0.7rem;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:50px;font-size:0.72rem;color:var(--p);font-weight:600;">HTML</span>
+            <span style="padding:0.2rem 0.7rem;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:50px;font-size:0.72rem;color:var(--p);font-weight:600;">CSS</span>
+            <span style="padding:0.2rem 0.7rem;background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);border-radius:50px;font-size:0.72rem;color:var(--p);font-weight:600;">JavaScript</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="app">
+        <div class="proj-img-wrap">
+          <img class="proj-real-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="Fitness Tracker Project" />
+          <div class="proj-img-shine"></div>
+          <div class="proj-overlay"></div>
+          <span class="proj-cat-label">App</span>
+          <div class="proj-hover-actions">
+            <a href="fitness tracker/index.html" class="proj-live-btn"><i class="fa fa-eye"></i> Live Demo</a>
+          </div>
+        </div>
+        <div style="padding:1.4rem;">
+          <h3 style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;">Fitness Tracker</h3>
+          <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">A comprehensive fitness tracking app with dashboard, workouts, nutrition, goals, and progress charts.</p>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <span style="padding:0.2rem 0.7rem;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:50px;font-size:0.72rem;color:#22c55e;font-weight:600;">HTML</span>
+            <span style="padding:0.2rem 0.7rem;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:50px;font-size:0.72rem;color:#22c55e;font-weight:600;">CSS</span>
+            <span style="padding:0.2rem 0.7rem;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:50px;font-size:0.72rem;color:#22c55e;font-weight:600;">JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section" id="contact">
+    <div class="section-head reveal">
+      <span class="sec-tag">Get In Touch</span>
+      <h2>Let's <span class="accent">Work Together</span></h2>
+      <p style="color:var(--muted);margin-top:0.8rem;font-size:0.95rem;">Have a project in mind or just want to say hi? My inbox is always open.</p>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="contact-wrap">
+
+      <!-- LEFT — info cards -->
+      <div class="contact-left reveal">
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="fa fa-envelope"></i></div>
+          <div class="ci-body">
+            <span class="ci-label">Email</span>
+            <a href="mailto:[email]" class="ci-value">[email]</a>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="fa fa-phone"></i></div>
+          <div class="ci-body">
+            <span class="ci-label">Phone</span>
+            <a href="tel:[phone_number]" class="ci-value">[phone_number]</a>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="fa fa-map-marker-alt"></i></div>
+          <div class="ci-body">
+            <span class="ci-label">Location</span>
+            <span class="ci-value">Addis Ababa, Ethiopia</span>
+          </div>
+        </div>
+        <div class="contact-info-card">
+          <div class="ci-icon"><i class="fa fa-clock"></i></div>
+          <div class="ci-body">
+            <span class="ci-label">Availability</span>
+            <span class="ci-value" style="color:#22c55e;">Open to opportunities</span>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="contact-socials">
+          <span class="cs-label">Find me on</span>
+          <div class="cs-icons">
+            <a href="#" class="cs-icon" aria-label="GitHub"   ><i class="fab fa-github"></i></a>
+            <a href="#" class="cs-icon" aria-label="LinkedIn" ><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="cs-icon" aria-label="Twitter"  ><i class="fab fa-twitter"></i></a>
+            <a href="#" class="cs-icon" aria-label="Telegram" ><i class="fab fa-telegram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT — form -->
+      <div class="contact-right reveal">
+        <div class="contact-form-card">
+          <div class="cfc-header">
+            <div class="cfc-dot red"></div><div class="cfc-dot yellow"></div><div class="cfc-dot green"></div>
+            <span class="cfc-title"><i class="fa fa-terminal"></i> send_message.js</span>
+          </div>
+
+          <form id="contactForm" class="cfc-form" novalidate>
+            <div class="cf-row">
+              <div class="cf-group">
+                <label for="fname" class="cf-label"><i class="fa fa-user"></i> Full Name</label>
+                <input id="fname" type="text" class="cf-input" placeholder="Altaye Ayfokru" required />
+              </div>
+              <div class="cf-group">
+                <label for="femail" class="cf-label"><i class="fa fa-envelope"></i> Email</label>
+                <input id="femail" type="email" class="cf-input" placeholder="[email]" required />
+              </div>
+            </div>
+
+            <div class="cf-group">
+              <label for="fsubject" class="cf-label"><i class="fa fa-tag"></i> Subject</label>
+              <input id="fsubject" type="text" class="cf-input" placeholder="Project Inquiry / Collaboration / Just saying hi" />
+            </div>
+
+            <div class="cf-group">
+              <label class="cf-label"><i class="fa fa-briefcase"></i> Service Needed</label>
+              <div class="cf-chips">
+                <button type="button" class="cf-chip active">Web Dev</button>
+                <button type="button" class="cf-chip">UI/UX Design</button>
+                <button type="button" class="cf-chip">Consulting</button>
+                <button type="button" class="cf-chip">Other</button>
+              </div>
+            </div>
+
+            <div class="cf-group">
+              <label for="fmessage" class="cf-label"><i class="fa fa-comment-dots"></i> Message</label>
+              <textarea id="fmessage" class="cf-input cf-textarea" rows="5" placeholder="Tell me about your project..." required></textarea>
+              <span class="cf-char-count" id="charCount">0 / 500</span>
+            </div>
+
+            <button type="submit" class="cf-submit">
+              <span class="cf-submit-text"><i class="fa fa-paper-plane"></i> Send Message</span>
+              <span class="cf-submit-sending" style="display:none;"><i class="fa fa-spinner fa-spin"></i> Sending...</span>
+            </button>
+            <p id="formMsg" class="cf-msg"></p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="text-align:center;padding:2rem;background:var(--bg2);border-top:1px solid var(--border);color:var(--muted);font-size:0.85rem;position:relative;z-index:1;">
+    <p>Designed &amp; Built by <span style="color:var(--p);font-weight:700;">Altaye Ayfokru</span> &nbsp;·&nbsp; <span id="year"></span></p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="script.js"></script>
+</body>
+</html>

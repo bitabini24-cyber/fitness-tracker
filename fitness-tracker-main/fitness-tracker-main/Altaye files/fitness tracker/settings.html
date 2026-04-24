@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+  <div class="sidebar-header"><a href="index.html" class="sidebar-brand"><div class="brand-icon">🏋️</div>FitTrack Pro</a></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+    <a href="dashboard.html" class="sidebar-link"><span class="link-icon">📊</span> Dashboard</a>
+    <a href="activity.html" class="sidebar-link"><span class="link-icon">⚡</span> Activity</a>
+    <a href="workouts.html" class="sidebar-link"><span class="link-icon">🏋️</span> Workouts</a>
+    <a href="nutrition.html" class="sidebar-link"><span class="link-icon">🥗</span> Nutrition</a>
+    <div class="sidebar-section-label">Progress</div>
+    <a href="progress.html" class="sidebar-link"><span class="link-icon">📈</span> Progress</a>
+    <a href="goals.html" class="sidebar-link"><span class="link-icon">🎯</span> Goals</a>
+    <a href="challenges.html" class="sidebar-link"><span class="link-icon">🏆</span> Challenges</a>
+    <a href="sleep.html" class="sidebar-link"><span class="link-icon">😴</span> Sleep</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="profile.html" class="sidebar-link"><span class="link-icon">👤</span> Profile</a>
+    <a href="settings.html" class="sidebar-link active" aria-current="page"><span class="link-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="sidebar-avatar">AA</div><div class="sidebar-user-info"><div class="sidebar-user-name">Altaye Ayfokru</div><div class="sidebar-user-role">Premium Member</div></div></div>
+  </div>
+</aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>☰</button>
+      <div><div class="page-title">Settings</div><div class="page-subtitle">Customize your experience</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <button class="btn btn-ghost btn-sm" data-theme-toggle><span class="theme-toggle-icon">🌙</span></button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="page-header">
+      <div class="page-header-left"><h1>Settings</h1><p>Manage your preferences and account</p></div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- Appearance -->
+        <div class="card animate-fadeInUp">
+          <div class="card-header">
+            <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=48&h=48&fit=crop" style="width:28px;height:28px;border-radius:var(--radius-sm);object-fit:cover" alt="Appearance"/>
+              Appearance
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="settings-section">
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Theme</div>
+                  <div class="settings-item-desc">Choose between light and dark mode</div>
+                </div>
+                <div class="theme-options">
+                  <div class="theme-option theme-light active" data-theme="light" onclick="Theme.set('light')" title="Light mode" role="button" tabindex="0" aria-label="Light theme"></div>
+                  <div class="theme-option theme-dark" data-theme="dark" onclick="Theme.set('dark')" title="Dark mode" role="button" tabindex="0" aria-label="Dark theme"></div>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Dark Mode</div>
+                  <div class="settings-item-desc">Toggle dark/light theme</div>
+                </div>
+                <label class="toggle-switch" aria-label="Dark mode toggle">
+                  <input type="checkbox" id="darkModeToggle" onchange="Theme.set(this.checked ? 'dark' : 'light')"/>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Compact Mode</div>
+                  <div class="settings-item-desc">Reduce spacing for more content</div>
+                </div>
+                <label class="toggle-switch" aria-label="Compact mode toggle">
+                  <input type="checkbox"/>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card animate-fadeInUp delay-1">
+          <div class="card-header">
+            <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+              <img src="https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=48&h=48&fit=crop" style="width:28px;height:28px;border-radius:var(--radius-sm);object-fit:cover" alt="Notifications"/>
+              Notifications
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="settings-section">
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Workout Reminders</div>
+                  <div class="settings-item-desc">Daily workout reminder at 7:00 AM</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Goal Alerts</div>
+                  <div class="settings-item-desc">Notify when you reach a goal milestone</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Water Reminders</div>
+                  <div class="settings-item-desc">Hourly hydration reminders</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Sleep Reminder</div>
+                  <div class="settings-item-desc">Bedtime reminder at 10:30 PM</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Weekly Report</div>
+                  <div class="settings-item-desc">Weekly progress summary email</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox"/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Challenge Updates</div>
+                  <div class="settings-item-desc">Notifications for challenge progress</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- Units -->
+        <div class="card animate-fadeInUp delay-2">
+          <div class="card-header">
+            <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=48&h=48&fit=crop" style="width:28px;height:28px;border-radius:var(--radius-sm);object-fit:cover" alt="Units"/>
+              Units & Measurements
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="settings-section">
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Measurement System</div>
+                  <div class="settings-item-desc">Choose your preferred units</div>
+                </div>
+                <div class="tabs" style="width:auto">
+                  <button class="tab-btn active" onclick="setUnits('metric',this)">Metric</button>
+                  <button class="tab-btn" onclick="setUnits('imperial',this)">Imperial</button>
+                </div>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Weight Unit</div>
+                </div>
+                <select class="form-control" style="width:auto" id="weightUnit">
+                  <option>kg</option><option>lbs</option>
+                </select>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Distance Unit</div>
+                </div>
+                <select class="form-control" style="width:auto" id="distanceUnit">
+                  <option>km</option><option>miles</option>
+                </select>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Energy Unit</div>
+                </div>
+                <select class="form-control" style="width:auto">
+                  <option>kcal</option><option>kJ</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy -->
+        <div class="card animate-fadeInUp delay-3">
+          <div class="card-header">
+            <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=48&h=48&fit=crop" style="width:28px;height:28px;border-radius:var(--radius-sm);object-fit:cover" alt="Privacy"/>
+              Privacy & Security
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="settings-section">
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Public Profile</div>
+                  <div class="settings-item-desc">Allow others to see your profile</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox"/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Share Activity</div>
+                  <div class="settings-item-desc">Show activity on leaderboard</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-info">
+                  <div class="settings-item-title">Two-Factor Auth</div>
+                  <div class="settings-item-desc">Extra security for your account</div>
+                </div>
+                <label class="toggle-switch"><input type="checkbox"/><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <button class="btn btn-ghost btn-sm w-full" onclick="Toast.show('Password Reset','Reset link sent to your email','success')">🔑 Change Password</button>
+          </div>
+        </div>
+
+        <!-- Data -->
+        <div class="card animate-fadeInUp delay-4">
+          <div class="card-header">
+            <span class="font-semibold" style="display:flex;align-items:center;gap:10px">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=48&h=48&fit=crop" style="width:28px;height:28px;border-radius:var(--radius-sm);object-fit:cover" alt="Data"/>
+              Data Management
+            </span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button class="btn btn-ghost btn-sm w-full" onclick="Toast.show('Export Started','Your data export is being prepared 📦','info')">⬇ Export My Data</button>
+              <button class="btn btn-ghost btn-sm w-full" onclick="Toast.show('Sync Complete','Data synced successfully ✅','success')">🔄 Sync Data</button>
+              <button class="btn btn-ghost btn-sm w-full" style="color:var(--secondary)" onclick="confirmDeleteData()">🗑️ Delete All Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div style="margin-top:24px;text-align:right">
+      <button class="btn btn-primary btn-lg" onclick="saveSettings()">💾 Save All Settings</button>
+    </div>
+  </main>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sidebar.js"></script>
+<script>
+function setUnits(system, btn) {
+  document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (system === 'imperial') {
+    document.getElementById('weightUnit').value = 'lbs';
+    document.getElementById('distanceUnit').value = 'miles';
+  } else {
+    document.getElementById('weightUnit').value = 'kg';
+    document.getElementById('distanceUnit').value = 'km';
+  }
+  Store.set('units', system);
+  Toast.show('Units Updated', `Switched to ${system} system`, 'success', 2000);
+}
+
+function saveSettings() {
+  Toast.show('Settings Saved!', 'All your preferences have been saved', 'success');
+}
+
+function confirmDeleteData() {
+  if (confirm('Are you sure? This will permanently delete all your fitness data.')) {
+    localStorage.clear();
+    Toast.show('Data Deleted', 'All data has been removed', 'warning');
+  }
+}
+
+// Sync dark mode toggle with current theme
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('darkModeToggle');
+  if (toggle) toggle.checked = Theme.get() === 'dark';
+});
+</script>
+</body>
+</html>

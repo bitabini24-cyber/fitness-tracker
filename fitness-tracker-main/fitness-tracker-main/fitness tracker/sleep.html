@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sleep — FitTrack Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+  <div class="sidebar-header"><a href="index.html" class="sidebar-brand"><div class="brand-icon">???</div>FitTrack Pro</a></div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Main</div>
+    <a href="dashboard.html" class="sidebar-link"><span class="link-icon">??</span> Dashboard</a>
+    <a href="activity.html" class="sidebar-link"><span class="link-icon">?</span> Activity</a>
+    <a href="workouts.html" class="sidebar-link"><span class="link-icon">???</span> Workouts</a>
+    <a href="nutrition.html" class="sidebar-link"><span class="link-icon">??</span> Nutrition</a>
+    <div class="sidebar-section-label">Progress</div>
+    <a href="progress.html" class="sidebar-link"><span class="link-icon">??</span> Progress</a>
+    <a href="goals.html" class="sidebar-link"><span class="link-icon">??</span> Goals</a>
+    <a href="challenges.html" class="sidebar-link"><span class="link-icon">??</span> Challenges</a>
+    <a href="sleep.html" class="sidebar-link active" aria-current="page"><span class="link-icon">??</span> Sleep</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="profile.html" class="sidebar-link"><span class="link-icon">??</span> Profile</a>
+    <a href="settings.html" class="sidebar-link"><span class="link-icon">??</span> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user"><div class="sidebar-avatar">AA</div><div class="sidebar-user-info"><div class="sidebar-user-name">Altaye Ayfokru</div><div class="sidebar-user-role">Premium Member</div></div></div>
+  </div>
+</aside>
+
+<div class="main-content">
+  <header class="top-navbar">
+    <div class="top-navbar-left">
+      <button class="icon-btn" data-sidebar-toggle>?</button>
+      <div><div class="page-title">Sleep</div><div class="page-subtitle">Track your rest and recovery</div></div>
+    </div>
+    <div class="top-navbar-right">
+      <div class="theme-picker-wrap" style="position:relative"></div>
+      <button class="btn btn-primary btn-sm" data-modal-open="logSleepModal">+ Log Sleep</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="page-header">
+      <div class="page-header-left"><h1>Sleep Tracker</h1><p>Saturday, March 21, 2026</p></div>
+      <div class="tabs" style="width:auto">
+        <button class="tab-btn active" onclick="switchView('week',this)">Week</button>
+        <button class="tab-btn" onclick="switchView('month',this)">Month</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid mb-24">
+      <div class="stat-card">
+        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=104&h=104&fit=crop" class="stat-card-img" alt="Sleep Duration"/>
+        <div class="stat-value">7.5h</div>
+        <div class="stat-label">Last Night</div>
+        <div class="stat-change down">? 30 min vs goal</div>
+      </div>
+      <div class="stat-card">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=104&h=104&fit=crop" class="stat-card-img" alt="Sleep Score"/>
+        <div class="stat-value">82</div>
+        <div class="stat-label">Sleep Score</div>
+        <div class="stat-change up">? Good quality</div>
+      </div>
+      <div class="stat-card">
+        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=104&h=104&fit=crop" class="stat-card-img" alt="Weekly Average"/>
+        <div class="stat-value">7.2h</div>
+        <div class="stat-label">Weekly Avg</div>
+        <div class="stat-change up">? 15 min vs last week</div>
+      </div>
+      <div class="stat-card">
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=104&h=104&fit=crop" class="stat-card-img" alt="Streak"/>
+        <div class="stat-value">5</div>
+        <div class="stat-label">Day Streak</div>
+        <div class="stat-change up">? 8h goal met</div>
+      </div>
+    </div>
+
+    <!-- Main grid: score + bedtime -->
+    <div class="dashboard-grid mb-24">
+
+      <!-- Last night detail -->
+      <div class="card">
+        <div class="card-header">
+          <span class="font-semibold">Last Night's Sleep</span>
+          <span class="badge badge-primary">Mar 20 – 21</span>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+            <!-- Score ring -->
+            <div style="text-align:center;flex-shrink:0;position:relative;display:inline-flex;align-items:center;justify-content:center">
+              <svg width="140" height="140">
+                <circle cx="70" cy="70" r="58" fill="none" stroke="var(--border)" stroke-width="10"/>
+                <circle cx="70" cy="70" r="58" fill="none" stroke="url(#sleepGrad)" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="65.6"
+                  transform="rotate(-90 70 70)"/>
+                <defs>
+                  <linearGradient id="sleepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#a89cff"/>
+                    <stop offset="100%" stop-color="#6c63ff"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div style="position:absolute;text-align:center">
+                <div style="font-size:2.2rem;font-weight:900;font-family:var(--font-heading);color:var(--primary);line-height:1">82</div>
+                <div style="font-size:0.7rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Score</div>
+              </div>
+            </div>
+            <!-- Stages -->
+            <div style="flex:1;min-width:180px;display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-light)">
+                <div style="width:12px;height:12px;border-radius:50%;background:#6c63ff;flex-shrink:0"></div>
+                <div style="font-size:0.875rem;font-weight:600;min-width:80px">Deep</div>
+                <div style="flex:1;background:var(--border);border-radius:9999px;height:8px;overflow:hidden"><div class="progress-bar" data-width="28" style="width:0%;background:#6c63ff"></div></div>
+                <div style="font-size:0.78rem;color:var(--text-muted);min-width:60px;text-align:right">1h 45m</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-light)">
+                <div style="width:12px;height:12px;border-radius:50%;background:#a89cff;flex-shrink:0"></div>
+                <div style="font-size:0.875rem;font-weight:600;min-width:80px">Light</div>
+                <div style="flex:1;background:var(--border);border-radius:9999px;height:8px;overflow:hidden"><div class="progress-bar" data-width="45" style="width:0%;background:#a89cff"></div></div>
+                <div style="font-size:0.78rem;color:var(--text-muted);min-width:60px;text-align:right">3h 20m</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-light)">
+                <div style="width:12px;height:12px;border-radius:50%;background:#43e97b;flex-shrink:0"></div>
+                <div style="font-size:0.875rem;font-weight:600;min-width:80px">REM</div>
+                <div style="flex:1;background:var(--border);border-radius:9999px;height:8px;overflow:hidden"><div class="progress-bar" data-width="22" style="width:0%;background:#43e97b"></div></div>
+                <div style="font-size:0.78rem;color:var(--text-muted);min-width:60px;text-align:right">1h 40m</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 0">
+                <div style="width:12px;height:12px;border-radius:50%;background:#f7971e;flex-shrink:0"></div>
+                <div style="font-size:0.875rem;font-weight:600;min-width:80px">Awake</div>
+                <div style="flex:1;background:var(--border);border-radius:9999px;height:8px;overflow:hidden"><div class="progress-bar" data-width="5" style="width:0%;background:#f7971e"></div></div>
+                <div style="font-size:0.78rem;color:var(--text-muted);min-width:60px;text-align:right">15m</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);text-align:center">?? Bedtime 10:45 PM &nbsp;·&nbsp; ? Wake 6:15 AM</div>
+        </div>
+      </div>
+
+      <!-- Bedtime + goal -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="background:linear-gradient(135deg,#1e1e2e 0%,#2d2b55 60%,#6c63ff 100%);border-radius:var(--radius-xl);padding:28px;color:white;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(168,156,255,.25) 0%,transparent 60%)"></div>
+          <div style="position:relative;z-index:1">
+            <div style="font-size:2.5rem;margin-bottom:10px">??</div>
+            <h3 style="color:white;margin-bottom:4px">Bedtime Schedule</h3>
+            <p style="color:rgba(255,255,255,.7);font-size:0.875rem">Recommended for 8h sleep</p>
+            <div style="font-size:2.2rem;font-weight:900;font-family:var(--font-heading);color:white;margin:12px 0 4px">10:30 PM</div>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,.6)">Bedtime target</div>
+            <div style="margin-top:16px;display:flex;gap:12px">
+              <div style="background:rgba(255,255,255,.1);border-radius:var(--radius);padding:10px 16px;flex:1;text-align:center">
+                <div style="font-size:1.1rem;font-weight:800;color:white">6:30 AM</div>
+                <div style="font-size:0.72rem;color:rgba(255,255,255,.6)">Wake target</div>
+              </div>
+              <div style="background:rgba(255,255,255,.1);border-radius:var(--radius);padding:10px 16px;flex:1;text-align:center">
+                <div style="font-size:1.1rem;font-weight:800;color:white">8h 0m</div>
+                <div style="font-size:0.72rem;color:rgba(255,255,255,.6)">Goal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div style="font-size:0.875rem;font-weight:600;margin-bottom:12px">Goal Progress</div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:0.8rem;color:var(--text-muted)">7.5h / 8h goal</span>
+              <span style="font-size:0.8rem;font-weight:700;color:var(--primary)">94%</span>
+            </div>
+            <div class="progress-bar-wrap progress-bar-lg">
+              <div class="progress-bar" data-width="94" style="width:0%;background:linear-gradient(90deg,#a89cff,#6c63ff)"></div>
+            </div>
+            <div style="margin-top:14px;font-size:0.78rem;color:var(--text-muted)">?? Go to bed 30 min earlier to hit your goal tonight.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart + Log -->
+    <div class="dashboard-grid mb-24">
+      <div class="card">
+        <div class="card-header">
+          <span class="font-semibold">Sleep Duration — Last 7 Days</span>
+          <span class="badge badge-info">Avg 7.2h</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-container" style="height:240px">
+            <canvas id="sleepWeekChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="font-semibold">Sleep Log</span>
+          <a href="#" class="btn btn-ghost btn-sm">View All</a>
+        </div>
+        <div class="card-body" id="sleepLogList"><!-- rendered by JS --></div>
+      </div>
+    </div>
+
+    <!-- Sleep recommendations -->
+    <div class="card mb-24">
+      <div class="card-header">
+        <span class="font-semibold">Sleep Recommendations</span>
+        <span class="badge badge-primary">Personalized</span>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+          <div class="sleep-recommendation">
+            <div class="sleep-rec-icon">??</div>
+            <div><div class="sleep-rec-title">No screens 1h before bed</div><div class="sleep-rec-text">Blue light suppresses melatonin and delays sleep onset by up to 90 minutes.</div></div>
+          </div>
+          <div class="sleep-recommendation">
+            <div class="sleep-rec-icon">???</div>
+            <div><div class="sleep-rec-title">Keep room cool (65–68°F)</div><div class="sleep-rec-text">A cooler room helps your core temperature drop, triggering deeper sleep.</div></div>
+          </div>
+          <div class="sleep-recommendation">
+            <div class="sleep-rec-icon">?</div>
+            <div><div class="sleep-rec-title">Cut caffeine after 2 PM</div><div class="sleep-rec-text">Caffeine has a half-life of ~5 hours and can disrupt sleep quality significantly.</div></div>
+          </div>
+          <div class="sleep-recommendation">
+            <div class="sleep-rec-icon">??</div>
+            <div><div class="sleep-rec-title">Wind-down routine</div><div class="sleep-rec-text">A consistent 20-min routine signals your brain it's time to sleep.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Log Sleep Modal -->
+<div class="modal-overlay" id="logSleepModal" role="dialog" aria-modal="true" aria-labelledby="logSleepTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="logSleepTitle">?? Log Sleep</h3>
+      <button class="modal-close" data-modal-close="logSleepModal" aria-label="Close">?</button>
+    </div>
+    <div class="modal-body">
+      <form id="logSleepForm">
+        <div class="form-group">
+          <label class="form-label" for="sleepDate">Date</label>
+          <input type="date" id="sleepDate" class="form-control" value="2026-03-21"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label" for="bedtime">Bedtime</label>
+            <input type="time" id="bedtime" class="form-control" value="22:45"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="waketime">Wake Time</label>
+            <input type="time" id="waketime" class="form-control" value="06:15"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sleepQuality">Sleep Quality</label>
+          <select id="sleepQuality" class="form-control">
+            <option value="great">?? Great</option>
+            <option value="good" selected>?? Good</option>
+            <option value="fair">?? Fair</option>
+            <option value="poor">?? Poor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sleepNotes">Notes (optional)</label>
+          <textarea id="sleepNotes" class="form-control" rows="2" placeholder="e.g. woke up once, vivid dreams..."></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-modal-close="logSleepModal">Cancel</button>
+      <button class="btn btn-primary" onclick="logSleep()">Save Sleep</button>
+    </div>
+  </div>
+</div>
+
+<button class="fab" data-modal-open="logSleepModal" aria-label="Log sleep">??</button>
+
+<script src="js/utils.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script>
+const SLEEP_LOG = [
+  { date:'Today',      hours:7.5, pct:94,  quality:'good',  label:'Good' },
+  { date:'Fri Mar 20', hours:8.0, pct:100, quality:'great', label:'Great' },
+  { date:'Thu Mar 19', hours:6.5, pct:81,  quality:'fair',  label:'Fair' },
+  { date:'Wed Mar 18', hours:7.0, pct:88,  quality:'good',  label:'Good' },
+  { date:'Tue Mar 17', hours:6.0, pct:75,  quality:'poor',  label:'Poor' },
+  { date:'Mon Mar 16', hours:7.5, pct:94,  quality:'good',  label:'Good' },
+  { date:'Sun Mar 15', hours:8.0, pct:100, quality:'great', label:'Great' },
+];
+
+const QUALITY_BADGE = {
+  great: 'badge-success',
+  good:  'badge-success',
+  fair:  'badge-warning',
+  poor:  'badge-danger',
+};
+
+function renderSleepLog() {
+  const container = document.getElementById('sleepLogList');
+  if (!container) return;
+  container.innerHTML = SLEEP_LOG.map(entry => `
+    <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-light)">
+      <div style="font-size:0.78rem;color:var(--text-muted);min-width:76px">${entry.date}</div>
+      <div style="flex:1;background:var(--border);border-radius:9999px;height:10px;overflow:hidden">
+        <div class="progress-bar" data-width="${entry.pct}" style="width:0%;background:linear-gradient(90deg,#a89cff,#6c63ff)"></div>
+      </div>
+      <div style="font-size:0.875rem;font-weight:700;min-width:40px;text-align:right">${entry.hours}h</div>
+      <span class="badge ${QUALITY_BADGE[entry.quality]}">${entry.label}</span>
+    </div>`).join('');
+  // animate bars after render
+  setTimeout(() => animateProgressBars(), 100);
+}
+
+function renderSleepChart() {
+  const ctx = document.getElementById('sleepWeekChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+      datasets: [
+        {
+          label: 'Hours Slept',
+          data: [8.0, 7.5, 6.0, 7.0, 6.5, 8.0, 7.5],
+          backgroundColor: (c) => c.raw >= 8 ? 'rgba(67,233,123,.75)' : c.raw >= 7 ? 'rgba(108,99,255,.75)' : 'rgba(255,101,132,.75)',
+          borderRadius: 8,
+          borderSkipped: false,
+        },
+        {
+          label: 'Goal',
+          data: [8,8,8,8,8,8,8],
+          type: 'line',
+          borderColor: 'rgba(108,99,255,.4)',
+          borderDash: [6,4],
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` ${c.raw}h` } }
+      },
+      scales: {
+        y: { min:0, max:10, ticks: { callback: v => v+'h', color:'var(--text-muted)' }, grid: { color:'var(--border)' } },
+        x: { ticks: { color:'var(--text-muted)' }, grid: { display:false } }
+      }
+    }
+  });
+}
+
+function switchView(period, btn) {
+  document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // could swap chart data here
+}
+
+function logSleep() {
+  const date = document.getElementById('sleepDate').value;
+  const bed  = document.getElementById('bedtime').value;
+  const wake = document.getElementById('waketime').value;
+  if (!date || !bed || !wake) { Toast.show('Error', 'Please fill in all fields', 'error'); return; }
+  Modal.close('logSleepModal');
+  document.getElementById('logSleepForm').reset();
+  Toast.show('Sleep Logged!', 'Your sleep data has been saved ??', 'success');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSleepLog();
+  renderSleepChart();
+});
+</script>
+</body>
+</html>
+
+

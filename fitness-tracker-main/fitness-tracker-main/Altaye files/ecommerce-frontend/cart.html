@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your shopping cart – LuxeShop" />
+  <title>Cart – LuxeShop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-page="cart">
+
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link">Home</a>
+        <a href="shop.html" class="navbar__nav-link">Shop</a>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link active">Cart</a>
+        <a href="account.html" class="navbar__nav-link">Account</a>
+      </nav>
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input class="navbar__search-input" type="search" placeholder="Search products..." aria-label="Search" autocomplete="off" />
+        <div class="search-dropdown" role="listbox"></div>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒<span class="navbar__badge cart-badge" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥<span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper">
+    <div class="page-hero">
+      <div class="container">
+        <h1 class="page-hero__title">🛒 Shopping Cart</h1>
+        <p class="page-hero__subtitle">Review your items before checkout</p>
+      </div>
+    </div>
+
+    <section class="section-sm">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:var(--space-8);align-items:start;" class="checkout-grid">
+
+          <!-- Cart Items -->
+          <div>
+            <div class="flex-between" style="margin-bottom:var(--space-5);">
+              <h2 class="text-xl font-bold">Your Items</h2>
+              <a href="shop.html" class="btn btn-ghost btn-sm">← Continue Shopping</a>
+            </div>
+            <div id="cart-items" style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div>
+            <div class="card" style="position:sticky;top:calc(var(--navbar-height) + 24px);">
+              <h2 class="text-xl font-bold" style="margin-bottom:var(--space-5);">Order Summary</h2>
+
+              <div style="display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-5);">
+                <div class="flex-between text-sm">
+                  <span class="text-secondary">Subtotal</span>
+                  <span class="font-semibold" id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="flex-between text-sm">
+                  <span class="text-secondary">Shipping</span>
+                  <span class="font-semibold" id="cart-shipping">$9.99</span>
+                </div>
+                <div class="flex-between text-sm" id="discount-row" style="display:none!important;">
+                  <span class="text-secondary">Discount</span>
+                  <span class="font-semibold text-success" id="cart-discount">-$0.00</span>
+                </div>
+              </div>
+
+              <!-- Coupon -->
+              <div style="margin-bottom:var(--space-5);">
+                <div class="flex gap-2">
+                  <input
+                    class="form-input"
+                    type="text"
+                    id="coupon-input"
+                    placeholder="Coupon code (LUXE10)"
+                    aria-label="Coupon code"
+                    style="flex:1;"
+                  />
+                  <button class="btn btn-outline btn-sm" id="coupon-btn" style="flex-shrink:0;">Apply</button>
+                </div>
+                <p id="coupon-msg" class="text-xs" style="margin-top:6px;"></p>
+                <p class="text-xs text-muted" style="margin-top:4px;">Try: LUXE10, SAVE20, FIRST30</p>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="flex-between" style="margin-bottom:var(--space-6);">
+                <span class="font-bold text-lg">Total</span>
+                <span class="font-extrabold text-xl text-primary" id="cart-total">$0.00</span>
+              </div>
+
+              <a href="checkout.html" class="btn btn-primary btn-full btn-lg">
+                Proceed to Checkout →
+              </a>
+
+              <div class="flex-center gap-3" style="margin-top:var(--space-4);">
+                <span class="text-xs text-muted">🔒 Secure checkout</span>
+                <span class="text-xs text-muted">·</span>
+                <span class="text-xs text-muted">↩️ Free returns</span>
+              </div>
+
+              <!-- Payment icons -->
+              <div class="flex-center gap-2" style="margin-top:var(--space-4);">
+                <span class="payment-icon">VISA</span>
+                <span class="payment-icon">MC</span>
+                <span class="payment-icon">AMEX</span>
+                <span class="payment-icon">PayPal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border-top:none;padding-top:0;">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

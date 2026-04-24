@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shop all products at LuxeShop – Electronics, Fashion, Footwear, and more." />
+  <title>Shop – LuxeShop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-page="shop">
+
+  <div class="page-loader" aria-hidden="true">
+    <div class="loader-logo">Luxe<span style="color:var(--secondary)">Shop</span></div>
+    <div class="loader-bar"><div class="loader-bar__fill"></div></div>
+  </div>
+
+  <!-- NAVBAR (same as index) -->
+  <header class="navbar" role="banner">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="LuxeShop Home">
+        <div class="navbar__logo-icon" aria-hidden="true">✦</div>
+        Luxe<span>Shop</span>
+      </a>
+      <nav class="navbar__nav" aria-label="Main navigation">
+        <a href="index.html" class="navbar__nav-link">Home</a>
+        <div class="navbar__mega-trigger">
+          <a href="shop.html" class="navbar__nav-link active">Shop ▾</a>
+          <div class="navbar__mega-menu" role="menu">
+            <a href="shop.html?category=electronics" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(108,99,255,0.1)">💻</div>
+              <div><div class="mega-menu__label">Electronics</div><div class="mega-menu__desc">7 products</div></div>
+            </a>
+            <a href="shop.html?category=clothing" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(255,101,132,0.1)">👕</div>
+              <div><div class="mega-menu__label">Clothing</div><div class="mega-menu__desc">3 products</div></div>
+            </a>
+            <a href="shop.html?category=footwear" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(67,233,123,0.1)">👟</div>
+              <div><div class="mega-menu__label">Footwear</div><div class="mega-menu__desc">2 products</div></div>
+            </a>
+            <a href="shop.html?category=home" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(247,151,30,0.1)">🏠</div>
+              <div><div class="mega-menu__label">Home & Kitchen</div><div class="mega-menu__desc">2 products</div></div>
+            </a>
+            <a href="shop.html?category=accessories" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(79,172,254,0.1)">⌚</div>
+              <div><div class="mega-menu__label">Accessories</div><div class="mega-menu__desc">2 products</div></div>
+            </a>
+            <a href="shop.html?category=computers" class="mega-menu__item" role="menuitem">
+              <div class="mega-menu__icon" style="background:rgba(161,140,209,0.1)">🖥️</div>
+              <div><div class="mega-menu__label">Computers</div><div class="mega-menu__desc">1 product</div></div>
+            </a>
+          </div>
+        </div>
+        <a href="shop.html?badge=sale" class="navbar__nav-link">Deals</a>
+        <a href="cart.html" class="navbar__nav-link">Cart</a>
+        <a href="account.html" class="navbar__nav-link">Account</a>
+      </nav>
+      <div class="navbar__search" role="search">
+        <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+        <input class="navbar__search-input" type="search" placeholder="Search products..." aria-label="Search products" autocomplete="off" />
+        <div class="search-dropdown" role="listbox" aria-label="Search results"></div>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+        <a href="account.html" class="navbar__action-btn" aria-label="Account">👤</a>
+        <a href="cart.html" class="navbar__action-btn" aria-label="Cart">
+          🛒<span class="navbar__badge cart-badge" style="display:none">0</span>
+        </a>
+        <a href="account.html#wishlist" class="navbar__action-btn" aria-label="Wishlist">
+          ♥<span class="navbar__badge wishlist-badge" style="background:var(--secondary);display:none">0</span>
+        </a>
+        <button class="navbar__hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html" class="mobile-nav__link">🏠 Home</a>
+    <a href="shop.html" class="mobile-nav__link">🛍 Shop</a>
+    <a href="shop.html?badge=sale" class="mobile-nav__link">🔥 Deals</a>
+    <a href="cart.html" class="mobile-nav__link">🛒 Cart</a>
+    <a href="account.html" class="mobile-nav__link">👤 Account</a>
+  </nav>
+
+  <main class="page-wrapper">
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+      <div class="container">
+        <h1 class="page-hero__title">All Products</h1>
+        <p class="page-hero__subtitle">Discover our complete collection of premium products</p>
+      </div>
+    </div>
+
+    <section class="section-sm">
+      <div class="container">
+
+        <!-- Toolbar -->
+        <div class="flex-between flex-wrap gap-4" style="margin-bottom: var(--space-6);">
+          <div class="flex items-center gap-3 flex-wrap">
+            <button class="btn btn-ghost btn-sm filter-toggle-btn" aria-label="Toggle filters">⚙ Filters</button>
+            <div class="flex gap-2 flex-wrap" role="group" aria-label="Category filters">
+              <button class="btn btn-sm cat-filter-btn active" data-cat="all">All</button>
+              <button class="btn btn-sm cat-filter-btn" data-cat="electronics">💻 Electronics</button>
+              <button class="btn btn-sm cat-filter-btn" data-cat="clothing">👕 Clothing</button>
+              <button class="btn btn-sm cat-filter-btn" data-cat="footwear">👟 Footwear</button>
+              <button class="btn btn-sm cat-filter-btn" data-cat="home">🏠 Home</button>
+              <button class="btn btn-sm cat-filter-btn" data-cat="accessories">⌚ Accessories</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-sm text-secondary" id="product-count">16 Products</span>
+            <select class="form-select" style="width:auto;height:36px;font-size:0.875rem;" id="sort-select" aria-label="Sort products">
+              <option value="popular">Most Popular</option>
+              <option value="newest">Newest</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="shop-layout">
+
+          <!-- Sidebar Filters -->
+          <aside class="sidebar" aria-label="Product filters">
+            <div class="flex-between" style="margin-bottom: var(--space-5);">
+              <h2 style="font-size:var(--text-base);font-weight:700;">Filters</h2>
+              <button class="btn btn-ghost btn-sm" id="clear-filters" aria-label="Clear all filters">Clear All</button>
+            </div>
+
+            <!-- Search -->
+            <div class="form-group">
+              <div class="form-input-icon">
+                <span class="icon" aria-hidden="true">🔍</span>
+                <input class="form-input" type="search" id="shop-search" placeholder="Search products..." aria-label="Search products" />
+              </div>
+            </div>
+
+            <!-- Price Range -->
+            <div class="filter-section">
+              <div class="filter-section__title" role="button" aria-expanded="true" tabindex="0">
+                Price Range <span class="filter-section__toggle" aria-hidden="true">▾</span>
+              </div>
+              <div class="filter-section__body">
+                <div class="price-range-display">
+                  <span>$0</span>
+                  <span id="price-display">$0 – $2500</span>
+                </div>
+                <input class="range-slider" type="range" id="price-range" min="0" max="2500" value="2500" step="50" aria-label="Maximum price" />
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Rating Filter -->
+            <div class="filter-section">
+              <div class="filter-section__title" role="button" aria-expanded="true" tabindex="0">
+                Rating <span class="filter-section__toggle" aria-hidden="true">▾</span>
+              </div>
+              <div class="filter-section__body">
+                <div class="flex flex-col gap-2">
+                  <button class="filter-option rating-filter active" data-rating="0" aria-pressed="true">
+                    <span class="filter-option__label"><span class="stars">★★★★★</span> All Ratings</span>
+                  </button>
+                  <button class="filter-option rating-filter" data-rating="4.5" aria-pressed="false">
+                    <span class="filter-option__label"><span class="stars">★★★★★</span> 4.5+</span>
+                    <span class="filter-option__count">8</span>
+                  </button>
+                  <button class="filter-option rating-filter" data-rating="4" aria-pressed="false">
+                    <span class="filter-option__label"><span class="stars">★★★★☆</span> 4.0+</span>
+                    <span class="filter-option__count">14</span>
+                  </button>
+                  <button class="filter-option rating-filter" data-rating="3.5" aria-pressed="false">
+                    <span class="filter-option__label"><span class="stars">★★★½☆</span> 3.5+</span>
+                    <span class="filter-option__count">16</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Availability -->
+            <div class="filter-section">
+              <div class="filter-section__title" role="button" aria-expanded="true" tabindex="0">
+                Availability <span class="filter-section__toggle" aria-hidden="true">▾</span>
+              </div>
+              <div class="filter-section__body">
+                <label class="form-check">
+                  <input type="checkbox" checked aria-label="In stock" />
+                  <span class="form-check-label">In Stock</span>
+                </label>
+                <label class="form-check" style="margin-top:8px;">
+                  <input type="checkbox" aria-label="On sale" />
+                  <span class="form-check-label">On Sale</span>
+                </label>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Products Grid -->
+          <div>
+            <div class="grid-3" id="products-grid" aria-label="Products">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- Pagination -->
+            <nav class="pagination" aria-label="Product pagination">
+              <button class="page-btn" aria-label="Previous page" disabled>‹</button>
+              <button class="page-btn active" aria-current="page">1</button>
+              <button class="page-btn" aria-label="Page 2">2</button>
+              <button class="page-btn" aria-label="Page 3">3</button>
+              <button class="page-btn" aria-label="Next page">›</button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border-top:none;padding-top:0;">
+        <p class="footer__copyright">© 2025 LuxeShop. All rights reserved.</p>
+        <div class="footer__payment-icons">
+          <span class="payment-icon">VISA</span>
+          <span class="payment-icon">MC</span>
+          <span class="payment-icon">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="quickview-modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="modal">
+      <button class="modal__close" data-modal-close aria-label="Close">✕</button>
+      <div class="modal__body">
+        <div class="qv-gallery">
+          <div class="qv-gallery__main"><img src="" alt="Product" /></div>
+          <div class="qv-gallery__thumbs"></div>
+        </div>
+        <div class="qv-info">
+          <div class="qv-info__category"></div>
+          <h2 class="qv-info__title" id="qv-title"></h2>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="stars qv-stars"></div>
+            <span class="text-muted text-sm qv-reviews"></span>
+          </div>
+          <div class="qv-info__price-row">
+            <span class="price-current qv-price-current"></span>
+            <span class="price-original qv-price-original"></span>
+            <span class="badge badge-sale qv-discount"></span>
+          </div>
+          <p class="qv-info__desc"></p>
+          <div class="qv-info__variants">
+            <div class="qv-info__variant-label">Color</div>
+            <div class="variant-options qv-colors"></div>
+          </div>
+          <div class="qv-info__qty">
+            <div class="qty-control">
+              <button class="qty-btn" data-action="dec" data-key="qv">−</button>
+              <input class="qty-input" type="number" value="1" min="1" data-key="qv" aria-label="Quantity" />
+              <button class="qty-btn" data-action="inc" data-key="qv">+</button>
+            </div>
+            <span class="qv-stock text-sm font-semibold"></span>
+          </div>
+          <div class="qv-info__actions">
+            <button class="btn btn-primary flex-1 qv-add-cart">🛒 Add to Cart</button>
+            <button class="btn btn-ghost btn-icon qv-wishlist-btn" aria-label="Wishlist">♥</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
